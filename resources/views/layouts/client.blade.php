@@ -98,14 +98,20 @@
                         <i class="fa-regular fa-circle-user"></i>
                     </button>
                     <ul class="dropdown">
-                        <li><a href="register.html">إنشاء حساب</a></li>
-                        <li><a href="client_login.html">تسجيل الدخول</a></li>
-                        <li><a href="account.html">الملف الشخصي</a></li>
-                        <li>
-                            <form action="" method="post">
-                                <button type="submit">خروج</button>
-                            </form>
-                        </li>
+                        @guest()
+                            <li><a href="{{ route('register') }}">إنشاء حساب</a></li>
+                            <li><a href="{{ route('login') }}">تسجيل الدخول</a></li>
+                        @endguest
+                        @auth
+
+
+                            <li><a href="account.html">الملف الشخصي</a></li>
+                            <li>
+                                <form action="" method="post">
+                                    <button type="submit">خروج</button>
+                                </form>
+                            </li>
+                        @endauth
                     </ul>
                 </div>
                 <a href="notifications.html" class="user-action-item notifications-item icon-btn">
