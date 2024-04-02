@@ -8,8 +8,12 @@
 @endpush
 @section('content')
     <main id="faqs">
-        <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.faqs') }}"
-            currValue=" الأسئلة الشائعة" />
+
+        <div class="container">
+            <h1 class="page-title"> الأسئلة الشائعة </h1>
+            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.faqs') }}"
+                currValue=" الأسئلة الشائعة" />
+        </div>
         <div class="container">
             <div class="faqs-grid grid">
                 <div class="tabs-filters">

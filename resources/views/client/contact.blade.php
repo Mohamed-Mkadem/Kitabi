@@ -14,8 +14,11 @@
     <main id="contact">
 
 
-        <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.contact') }}"
-            currValue="اتصل بنا" />
+        <div class="container">
+            <h1 class="page-title"> اتصل بنا </h1>
+            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.contact') }}"
+                currValue="اتصل بنا" />
+        </div>
         <section>
             <h2 class="section-title">
                 نسعد بتواصلك معنا

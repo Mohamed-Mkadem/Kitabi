@@ -13,9 +13,11 @@
 @section('content')
     <main id="about">
 
-
-        <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.about') }}"
-            currValue="من نحن" />
+        <div class="container">
+            <h1 class="page-title">من نحن</h1>
+            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.about') }}"
+                currValue="من نحن" />
+        </div>
 
         <div class="container">
             <div class="row">

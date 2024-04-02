@@ -7,8 +7,12 @@
 @section('content')
     <main id="privacy-terms">
 
-        <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.privacy') }}"
-            currValue="سياسة الخصوصية " />
+
+        <div class="container">
+            <h1 class="page-title"> سياسة الخصوصية </h1>
+            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('client.privacy') }}"
+                currValue="سياسة الخصوصية " />
+        </div>
         <div class="container">
             <div class="tp-wrapper">
                 <div class="header">
