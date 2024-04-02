@@ -1,0 +1,64 @@
+@use "../../Abstracts/" as *;
+
+.stats-grid {
+  &.client-page {
+    .stat-item {
+      background-color: var(--clr-blueGray-0);
+    }
+  }
+  .stat-item {
+    padding: 1em;
+    background-color: var(--clr-white);
+    border-radius: $radius10;
+    box-shadow: $boxShadow3;
+    @include transition(background-color);
+    cursor: pointer;
+
+    .title-value-box {
+      h2 {
+        color: var(--clr-main-500);
+        font-size: 20px;
+        margin-bottom: 0.3em;
+      }
+      p {
+        color: var(--clr-main-600);
+      }
+    }
+    .icon-holder {
+      i {
+        $size: 35px;
+        width: $size;
+        height: $size;
+        border-radius: $radius5;
+        @include flex(0, row, center);
+
+        color: var(--clr-white);
+        background-color: var(--clr-teal-200);
+        &.delivered {
+          background-color: var(--clr-teal-300);
+          color: var(--clr-white);
+        }
+        &.shipped {
+          background-color: var(--clr-teal-300);
+          color: var(--clr-white);
+        }
+        &.cancelled {
+          background-color: var(--clr-red-500);
+          color: var(--clr-white);
+        }
+        &.returned {
+          background-color: var(--clr-purple-500);
+          color: var(--clr-white);
+        }
+        &.pending {
+          background: var(--clr-black-650);
+          color: var(--clr-white-1000);
+        }
+        &.confirmed {
+          background-color: var(--clr-green-700);
+          color: var(--clr-black-400);
+        }
+      }
+    }
+  }
+}

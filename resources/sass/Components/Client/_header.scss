@@ -1,0 +1,352 @@
+@use "../../Abstracts/" as *;
+
+#main-header {
+  display: grid;
+  grid-template-areas:
+    "logo search"
+    " menu actions";
+  justify-content: space-between;
+  padding: 1em;
+  align-items: center;
+  gap: 1em 0.5em;
+  .search-holder {
+    justify-self: self-end;
+    grid-area: search;
+    button {
+    }
+    .modal-holder {
+      #search-form {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 1fr;
+        width: min(80%, 650px);
+        gap: 1em;
+
+        input {
+          background: transparent;
+          border: none;
+          text-align: center;
+          color: var(--clr-white);
+          height: 100px;
+          font-size: 35px;
+          padding-inline: 10px;
+          width: 100%;
+          &::placeholder {
+            color: var(--clr-white);
+          }
+          &:focus {
+            border: none;
+            outline: none;
+          }
+        }
+        button {
+          background-color: var(--clr-white);
+          height: 50px;
+          border-radius: 10px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          color: var(--clr-main-500);
+          @include transition(background-color);
+          &:hover {
+            background-color: var(--clr-accent-500);
+          }
+        }
+      }
+    }
+  }
+  .logo {
+    grid-area: logo;
+  }
+  .nav-holder {
+    grid-area: menu;
+    button {
+    }
+    nav {
+      // display: none;
+      position: fixed;
+      background-color: var(--clr-mustard-700);
+      // background-color: var(--clr-white);
+      top: 0;
+      left: -100%;
+      height: 100%;
+      width: 75%;
+      padding: 1em;
+      @include flex(0, column, center, flex-start);
+      @include transition(left);
+      z-index: 10000;
+      &[aria-expanded="true"] {
+        left: 0;
+      }
+      // Add close button to nav
+      ul {
+        overflow-y: auto;
+        padding-block: 1em;
+        li {
+          margin-block: 0.5em;
+          a {
+            font-size: 25px;
+            color: var(--clr-main-500);
+            display: inline-block;
+            padding: 0.2em 0.75em;
+            &[current-page="true"] {
+              background-color: var(--clr-yellow-900);
+            }
+          }
+        }
+      }
+    }
+  }
+  .user-actions-holder {
+    grid-area: actions;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    .dropdown-holder {
+      &.cart-holder {
+        > a {
+          position: relative;
+          span#cart-count {
+            $size: 20px;
+            position: absolute;
+            background-color: var(--clr-main-400);
+            color: var(--clr-white);
+            font-size: 14px;
+            width: $size;
+            height: $size;
+            text-align: center;
+            border-radius: 50%;
+            @include flex(0, row, center);
+            top: -10px;
+            right: 20px;
+            &:hover + .dropdown {
+              display: block;
+            }
+          }
+        }
+        .dropdown {
+          @include dropdown(
+            min(350px, 100vw),
+            var(--clr-white),
+            $radius5,
+            $boxShadow1,
+            0,
+            100%,
+            "left"
+          );
+          > p {
+            padding: 1em;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+          }
+          // display: block;
+          ul.items-holder {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-bottom: 0.5em;
+            padding-inline-end: 0.5em;
+            li.cart-item {
+              padding-block: 0.5em;
+              display: grid;
+              grid-template-columns: 60px 1fr 15px;
+              gap: 1em;
+              align-items: start;
+              img {
+                width: 60px;
+              }
+              .cart-item-info {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                a.cart-item-title {
+                  color: var(--clr-main-400);
+                  font-weight: bold;
+                  @include transition(color);
+                  &:hover {
+                    color: var(--clr-red-500);
+                  }
+                }
+                p.cart-item-price {
+                  margin-top: 0.5em;
+                  color: var(--clr-main-600);
+                  font-weight: 600;
+                  > span {
+                    margin-inline-start: 10px;
+                  }
+                  sup {
+                    top: -0.2em;
+                    color: var(--clr-red-500);
+                    small {
+                      font-size: 100%;
+                    }
+                  }
+                }
+              }
+              button {
+                i {
+                  pointer-events: none;
+                }
+              }
+            }
+          }
+          .cart-info-holder {
+            padding: 1em;
+            border-top: 1px solid var(--clr-blueGray-100);
+            .info-holder {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 1em;
+              &:not(:last-of-type) {
+                margin-bottom: 1em;
+              }
+              p {
+                &.price {
+                  font-weight: 600;
+                  text-align: end;
+                  color: var(--clr-blueGray-700);
+                }
+              }
+              a {
+                text-align: center;
+                font-weight: 500;
+                padding: 0.5em 1em;
+                border-radius: $radius5;
+                @include transition(background-color);
+                &.cart-link {
+                  border: 2px solid var(--clr-blueGray-500);
+                  color: var(--clr-blueGray-700);
+                  &:hover {
+                    background-color: var(--clr-yellow-900);
+                  }
+                }
+
+                &.checkout-link {
+                  background-color: var(--clr-blueGray-700);
+                  color: var(--clr-white);
+                  &:hover {
+                    background-color: var(--clr-main-100);
+                  }
+                }
+              }
+            }
+          }
+        }
+        &:hover > .dropdown {
+          display: block;
+        }
+      }
+      position: relative;
+
+      &.actions-holder {
+        .dropdown {
+          @include dropdown(
+            160px,
+            var(--clr-white),
+            $radius5,
+            $boxShadow2,
+            null,
+            120%,
+            "center"
+          );
+          li {
+            form button,
+            a {
+              display: block;
+              color: var(--clr-main-600);
+              padding: 0.4em;
+              border-radius: $radius5;
+              @include transition(background-color);
+              &:hover {
+                background-color: var(--clr-main-100);
+              }
+            }
+            form {
+              button {
+                width: 100%;
+                text-align: start;
+              }
+            }
+          }
+        }
+      }
+      &.notifications-holder {
+        .dropdown {
+          // display: none;
+        }
+      }
+    }
+  }
+
+  @include min-width(medium) {
+    grid-template-areas:
+      "search logo actions"
+      "menu menu menu";
+    grid-template-columns: repeat(3, 1fr);
+    padding-block: 3em 0;
+    .logo {
+      font-size: 100px;
+      justify-self: center;
+    }
+    .nav-holder {
+      #navigation-menu-toggle {
+        display: none;
+      }
+      nav {
+        box-shadow: $boxShadow1;
+        position: unset;
+        background-color: unset;
+        top: unset;
+        left: unset;
+        height: unset;
+        width: unset;
+        padding: unset;
+        display: unset;
+        flex-direction: unset;
+        justify-content: unset;
+        align-items: unset;
+        gap: unset;
+        transition: unset;
+        &[aria-expanded="true"] {
+          left: unset;
+          z-index: unset;
+        }
+        ul {
+          @include flex(1em, row, center, center);
+          padding-block: unset;
+          overflow-y: unset;
+          box-shadow: $boxShadow5;
+          li {
+            a {
+              @include transition(background-color);
+              &:hover,
+              &[current-page="true"] {
+                background-color: var(--clr-accent-500);
+              }
+            }
+          }
+        }
+      }
+    }
+    .search-holder {
+      justify-self: self-start;
+      button {
+        @include transition(color);
+        &:hover {
+          color: var(--clr-main-300);
+        }
+      }
+    }
+    .user-actions-holder {
+      justify-self: self-end;
+
+      .dropdown-holder button:hover,
+      a:hover {
+        @include transition(color);
+      }
+      .dropdown-holder button:hover,
+      a:hover {
+        color: var(--clr-main-300);
+      }
+    }
+  }
+}

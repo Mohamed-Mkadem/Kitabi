@@ -1,0 +1,48 @@
+@use "../../Abstracts/" as *;
+
+.showcase {
+    background-image: url(../../../../public/assets/imgs/hero-bg.png);
+    min-height: 370px;
+    max-height: 450px;
+    padding: 2em 1em;
+    text-align: center;
+    color: white;
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+    }
+    > * {
+        z-index: 2;
+        position: relative;
+    }
+    h1 {
+        color: var(--clr-sand-700);
+        font-size: 35px;
+    }
+    p {
+        font-size: 18px;
+        margin-bottom: 1.5em;
+        line-height: 1.5;
+    }
+    a {
+        &.cta {
+            color: var(--clr-white);
+            &:hover {
+                color: var(--clr-sand-700) !important;
+            }
+        }
+    }
+    @include min-width(medium) {
+        h1 {
+            font-size: 45px;
+        }
+        p {
+            margin-inline: auto;
+            width: 55%;
+            font-size: 20px;
+        }
+    }
+}

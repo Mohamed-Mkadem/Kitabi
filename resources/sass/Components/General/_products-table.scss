@@ -1,0 +1,94 @@
+@use "../../Abstracts/" as *;
+
+.products-table {
+  margin-block: 2em;
+  table {
+    thead {
+      th {
+      }
+    }
+    tbody {
+      tr {
+        td {
+          font-size: 1.2em;
+          &.product-td {
+            $cols: 30px 80px 1fr;
+            @include detailledGrid($cols, 0, 0.75em);
+            &.inventory-td {
+              $cols: 80px 1fr;
+              @include detailledGrid($cols, 0, 0.75em);
+            }
+            &.two {
+              $cols: 80px 1fr;
+              @include detailledGrid($cols, 0, 0.75em);
+            }
+            > * {
+              flex-grow: 1;
+            }
+            button {
+              font-size: 1.5em;
+              color: var(--clr-red-600);
+              @include transition(color);
+              &:hover {
+                color: var(--clr-red-500);
+              }
+              i {
+                pointer-events: none;
+              }
+            }
+            .img-holder {
+              img {
+                width: 70px;
+              }
+            }
+            .product-info {
+              a {
+                font-weight: 600;
+                font-size: 1.2em;
+                color: var(--clr-main-600);
+                @include transition(color);
+                &:hover {
+                  color: var(--clr-teal-400);
+                }
+              }
+              p {
+                margin-block: 0.2em;
+                font-size: 1em;
+                font-weight: normal;
+              }
+            }
+          }
+          .quantity-holder {
+            @include flex(0.5em, row, space-between, stretch);
+            button {
+              @include transition(background-color);
+              color: var(--clr-black-200);
+              width: 35px;
+              border: 1px solid var(--clr-black-850);
+              background-color: var(--clr-white);
+              color: var(--clr-main-600);
+              border-radius: $radius5;
+              aspect-ratio: 1;
+              font-weight: 500;
+              &:hover {
+                background-color: var(--clr-black-950);
+              }
+            }
+            input {
+              text-align: center;
+              background-color: var(--clr-white);
+              height: 35px;
+              width: 70px;
+              color: var(--clr-main-600);
+              border-radius: $radius5;
+              &.danger {
+                background-color: var(--clr-red-700);
+                color: var(--clr-white);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

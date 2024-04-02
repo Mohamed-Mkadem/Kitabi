@@ -1,0 +1,54 @@
+@use "../../Abstracts/" as *;
+
+#about {
+  .row {
+    margin-block: 2em;
+    display: grid;
+    gap: 1em;
+    .col {
+      &.info {
+        text-align: center;
+        h2 {
+          color: var(--clr-red-400);
+          margin-block: 0 0.8em;
+          font-size: 30px;
+          letter-spacing: 1px;
+        }
+        p {
+          letter-spacing: 1px;
+          font-size: 18px;
+          line-height: 1.5;
+          color: var(--clr-black-200);
+        }
+      }
+      &.img-holder {
+        // margin-inline: auto;
+        img {
+          border-radius: $radius10;
+        }
+      }
+    }
+    @include min-width(medium) {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      justify-content: center;
+      gap: 2em;
+      width: min(1200px, 100%);
+      margin-inline: auto;
+      .col {
+        &.img-holder {
+          justify-self: end;
+        }
+      }
+      &.reverse {
+        .col {
+          &.img-holder {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+          }
+        }
+      }
+    }
+  }
+}

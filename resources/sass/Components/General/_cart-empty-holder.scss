@@ -1,0 +1,32 @@
+@use "../../Abstracts/" as *;
+
+.empty-cart-holder {
+  // display: none;
+  width: min(700px, 100%);
+  margin-inline: auto;
+  text-align: center;
+  margin-block: 3em;
+  img {
+    max-width: 400px;
+  }
+  p {
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+  a {
+    background-color: var(--clr-teal-400);
+    color: var(--clr-white);
+    display: block;
+    width: max-content;
+    margin-inline: auto;
+    padding: 0.65em 1em;
+    margin-block: 1.5em 1em;
+    border-radius: $radius5;
+    font-weight: 500;
+    letter-spacing: 1px;
+    @include transition(background-color);
+    &:hover {
+      background-color: var(--clr-teal-300);
+    }
+  }
+}

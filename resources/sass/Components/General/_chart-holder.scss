@@ -1,0 +1,29 @@
+@use "../../Abstracts/" as *;
+
+.chart-holder {
+  .chart-header {
+    @include flex(1em, row);
+    flex-wrap: wrap;
+    padding: 1em 0;
+    h2 {
+      color: var(--clr-main-500);
+    }
+    .chart-filters {
+      button.chart-filter {
+        background-color: var(--clr-white-900);
+        padding: 0.5em;
+        border-radius: $radius5;
+        color: var(--clr-main-600);
+        font-weight: 500;
+        @include transition(background-color);
+        &[aria-current="true"] {
+          background-color: var(--clr-main-500);
+          color: var(--clr-white);
+        }
+        &:hover:not([aria-current="true"]) {
+          background-color: var(--clr-black-850);
+        }
+      }
+    }
+  }
+}

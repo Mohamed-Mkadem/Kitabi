@@ -1,0 +1,40 @@
+@use "../../Abstracts/" as *;
+
+.form-grid {
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1em;
+    &.range-statueses-holder {
+      grid-template-columns: 1fr;
+    }
+    .range-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+      gap: 1em;
+      .range-holder {
+        p {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  @include min-width(xlarge) {
+    .row {
+      &.range-statueses-holder {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      }
+      .range-row {
+        .range-holder {
+          display: grid;
+          grid-template-columns: 30px 1fr;
+          gap: 0.5em;
+          align-items: center;
+          p {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

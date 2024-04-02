@@ -1,0 +1,11 @@
+@use "../../Abstracts/" as *;
+
+.logo {
+  font-size: 45px;
+  color: var(--clr-main-600);
+  &.light {
+    color: var(--clr-white);
+  }
+
+  font-family: $ff-logo;
+}

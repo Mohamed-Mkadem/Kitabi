@@ -1,0 +1,77 @@
+@use "../../Abstracts/" as *;
+
+%commonStyles {
+    @include transition(border);
+    color: var(--clr-main-600);
+    &:focus,
+    &:focus-visible {
+        border: 1px solid var(--clr-teal-300);
+    }
+}
+#authentication {
+    &.admin-login {
+        h1 {
+            color: var(--clr-main-600);
+            font-size: 25px;
+        }
+        background-image: url(../../../../public/assets/imgs/bg.jpg);
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.1);
+        }
+        > * {
+            z-index: 2;
+            position: relative;
+        }
+    }
+    .auth-wrapper {
+        background-color: var(--clr-blueGray-0);
+        padding: 1em;
+        border-radius: $radius10;
+        box-shadow: $boxShadow3;
+        margin-block: 2em 4em;
+        padding-block: 2em;
+        width: min(600px, 100%);
+        margin-inline: auto;
+        &.login {
+            width: min(400px, 100%);
+        }
+        form {
+            .row {
+                display: grid;
+                gap: 1em;
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(250px, 100%), 1fr)
+                );
+                &:not(:last-of-type) {
+                    margin-bottom: 1em;
+                }
+                .form-control {
+                    input {
+                        @extend %commonStyles;
+                    }
+                    .select-box {
+                        select {
+                            background-color: var(--clr-white);
+                        }
+                    }
+                }
+            }
+            > a {
+                color: var(--clr-blueGray-700);
+                // text-decoration: underline;
+                border-bottom: 1px solid currentColor;
+                width: max-content;
+                @include transition(color);
+                &:hover {
+                    color: var(--clr-teal-300);
+                }
+            }
+        }
+    }
+}

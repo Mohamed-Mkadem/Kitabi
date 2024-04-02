@@ -1,0 +1,85 @@
+@use "../../Abstracts/" as *;
+%common {
+  min-width: 170px;
+  text-align: center;
+  height: 45px;
+  line-height: 2.6;
+  padding-inline: 10px;
+  border-radius: $radius5;
+}
+%addButton {
+  color: var(--clr-white-1000);
+  border-color: var(--clr-green-1000);
+  background-color: var(--clr-green-400);
+  &:hover {
+    background-color: var(--clr-green-600);
+  }
+  padding: 0.75em 1em;
+  font-weight: 500;
+  border-radius: $radius5;
+  cursor: pointer;
+  @include transition(background-color);
+}
+#starter-header {
+  column-gap: 5px;
+  row-gap: 15px;
+  margin-bottom: 2em;
+  flex-direction: column;
+  .greeting-holder {
+    text-align: center;
+    h1 {
+      letter-spacing: 1px;
+      color: var(--clr-main-600);
+      margin: 0.3em 0;
+    }
+    p.today-stats {
+      color: var(--clr-main-600);
+    }
+  }
+  // Link Style
+  .buttons-holder {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  a.action-btn {
+    padding: 0.5em 1.5em;
+    color: var(--clr-main-600);
+    border: 2px solid currentColor;
+    border-radius: 5px;
+    @include transition(background-color);
+
+    font-weight: 600;
+    i {
+      font-weight: 600;
+      margin-right: 5px;
+    }
+    &:hover {
+      background-color: var(--clr-blueGray-0);
+    }
+  }
+  a.add-btn {
+    @extend %addButton;
+  }
+
+  // Buttons Style
+  button {
+    &.add-btn {
+      @extend %addButton;
+    }
+  }
+
+  @include min-width("xsmall") {
+    flex-direction: row;
+    .greeting-holder {
+      text-align: start;
+    }
+    .buttons-holder {
+      justify-content: flex-end;
+    }
+  }
+  @include min-width(medium) {
+    h1 {
+      font-size: 28px;
+    }
+  }
+}

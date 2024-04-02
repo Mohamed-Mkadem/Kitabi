@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'as' => 'client.'
+], function () {
+    Route::get('/', [FrontEndController::class, 'index'])->name('home');
+    Route::view('/about', 'client.about')->name('about');
+    Route::view('/faqs', 'client.faqs')->name('faqs');
+    Route::view('/terms', 'client.terms')->name('terms');
+    Route::view('/privacy', 'client.privacy')->name('privacy');
+    Route::view('/contact', 'client.contact')->name('contact');
 });
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,4 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

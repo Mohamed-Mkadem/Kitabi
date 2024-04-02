@@ -1,0 +1,29 @@
+@use "../../Abstracts/" as *;
+
+.select-box {
+  position: relative;
+  //   height: 45px;
+
+  select {
+    padding: 0 0.5em;
+    border-radius: $radius10;
+    width: 150px;
+    font-weight: 500;
+    height: 45px;
+  }
+  &::after {
+    position: absolute;
+    content: "\f078";
+    font-family: "Font Awesome 6 Free";
+    height: calc(100% - 2px);
+    width: 50px;
+    font-weight: bold;
+    background-color: var(--clr-blueGray-500);
+    color: var(--clr-white-900);
+    left: 1px;
+    top: 1px;
+    border-radius: $radius10 0 0 $radius10;
+    pointer-events: none;
+    @include flex(0, row, center, center);
+  }
+}

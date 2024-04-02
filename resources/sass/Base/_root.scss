@@ -1,0 +1,10 @@
+@use "../Abstracts/" as *;
+
+:root {
+  @each $clr, $shades in $colors {
+    @each $shade, $value in $shades {
+      --clr-#{$clr}-#{$shade}: #{$value};
+    }
+  }
+  --clr-white: white;
+}

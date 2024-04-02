@@ -1,0 +1,13 @@
+@use "../../Abstracts/" as *;
+#home {
+  section {
+    .cta {
+      color: var(--clr-white);
+      background-color: var(--clr-turquoise-300);
+      border-radius: $radius5;
+      &:hover {
+        background-color: var(--clr-main-600);
+      }
+    }
+  }
+}

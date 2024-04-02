@@ -1,0 +1,31 @@
+@use "../../Abstracts/" as *;
+
+section.why-us {
+  .why-us-grid {
+    padding-block: 1em 2em;
+    .grid-item {
+      // display: grid;
+      // grid-template-columns: 70px 1fr;
+      text-align: center;
+      i {
+        color: var(--clr-turquoise-300);
+        font-size: 35px;
+      }
+      p {
+        font-size: 20px;
+        color: var(--clr-main-600);
+        font-weight: 500;
+        margin-top: 1em;
+      }
+    }
+  }
+
+  $bgColor: var(--clr-yellow-900);
+  background-color: $bgColor;
+  margin-block-end: 0;
+  .section-title {
+    &::before {
+      background-color: $bgColor;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+@use "../../Abstracts/" as *;
+
+.pagination-holder {
+  gap: 20px;
+  margin-block: 20px;
+  @include flex(20px, row, center);
+  flex-wrap: wrap;
+  li {
+    &.page-item {
+      position: relative;
+      $size: 45px;
+      font-size: 20px;
+      width: $size;
+      height: $size;
+      background-color: var(--clr-mustard-700);
+      text-align: center;
+      color: var(--clr-main-600);
+      border-radius: $radius5;
+      @include transition(background-color);
+      @include flex(0, row, center);
+      &:hover {
+        background-color: var(--clr-mustard-600);
+      }
+    }
+    &.disabled {
+      cursor: no-drop;
+    }
+    &.active {
+      background-color: var(--clr-mustard-400);
+      color: var(--clr-white);
+    }
+    a {
+      color: inherit;
+      position: absolute;
+      inset: 0;
+      @include flex(0, row, center);
+    }
+  }
+}

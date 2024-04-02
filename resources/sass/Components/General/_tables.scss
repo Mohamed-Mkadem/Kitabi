@@ -1,0 +1,135 @@
+@use "../../Abstracts/" as *;
+
+%cellStyle {
+  padding: 1em 0.625em;
+  text-align: center;
+  border-inline: 1px solid var(--clr-black-850);
+  @include flex(0, row, center);
+  .modal {
+    text-align: initial;
+  }
+}
+%tdStyle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  color: var(--clr-main-600);
+  font-weight: 500;
+}
+.table-responsive {
+  overflow-x: auto;
+  table {
+    box-shadow: $boxShadow1;
+    width: 100%;
+    thead {
+      background-color: var(--clr-blueGray-0);
+      th {
+        @extend %cellStyle;
+        font-size: 1.2em;
+        color: var(--clr-main-600);
+      }
+    }
+    tbody {
+      tr {
+        @include trOddEven(var(--clr-black-900), var(--clr-black-950));
+        border-bottom: 1px solid var(--clr-black-850);
+        align-items: stretch;
+        &:last-of-type {
+          border: none;
+        }
+        td {
+          @extend %cellStyle;
+          &.start {
+            text-align: start;
+          }
+          @extend %tdStyle;
+          > * {
+            @extend %tdStyle;
+          }
+          a {
+            color: inherit;
+            text-decoration: underline;
+            @include transition(color);
+            &:hover {
+              color: var(--clr-teal-400);
+            }
+          }
+          ul {
+            &.td-actions {
+              @include flex(0.3em, row, center);
+              li {
+                %styles {
+                  background-color: var(--clr-blueGray-700);
+                  @include transition(background-color);
+                  color: var(--clr-white);
+                  padding: 0.3em 0.5em;
+                  font-size: 14px;
+                  border-radius: $radius5;
+                  &:hover {
+                    background-color: var(--clr-blueGray-500);
+                  }
+                  @include flex(0, row, center);
+                }
+                > a {
+                  @extend %styles;
+                }
+                > button {
+                  @extend %styles;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.products-table {
+    table {
+      tr {
+        $cols: minmax(400px, 1fr) repeat(3, 200px);
+        @include detailledGrid($cols);
+      }
+    }
+  }
+  &.admin-inventory {
+    table {
+      tr {
+        $cols: 80px minmax(400px, 1fr) 170px 200px repeat(4, 100px);
+        @include detailledGrid($cols);
+      }
+    }
+  }
+  &.client-orders {
+    table {
+      tr {
+        $cols: 250px repeat(3, minmax(200px, 1fr));
+        @include detailledGrid($cols);
+      }
+    }
+  }
+  &.admin-orders {
+    table {
+      tr {
+        $cols: 150px 1fr repeat(3, 220px);
+        @include detailledGrid($cols);
+      }
+    }
+  }
+  &.admin-clients {
+    table {
+      tr {
+        $cols: 100px minmax(200px, 1fr) 200px 150px 120px 140px 150px;
+        @include detailledGrid($cols);
+      }
+    }
+  }
+  &.admin-client-orders {
+    table {
+      tr {
+        $cols: 100px repeat(3, minmax(150px, 1fr));
+        @include detailledGrid($cols);
+      }
+    }
+  }
+}

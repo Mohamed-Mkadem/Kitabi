@@ -1,0 +1,37 @@
+@use "../../Abstracts/" as *;
+
+.breadcrumb {
+  @include flex(0.5em, row, flex-start, center);
+  &.dashboard {
+    a {
+      color: var(--clr-main-500);
+      i {
+        color: inherit;
+      }
+      &:hover {
+        color: var(--clr-main-400);
+        i {
+          color: inherit;
+        }
+      }
+    }
+  }
+  a {
+    color: var(--clr-black-250);
+    font-weight: 500;
+    @include transition(color);
+    &:hover {
+      color: var(--clr-blueGray-500);
+      i {
+        color: var(--clr-blueGray-500);
+      }
+    }
+    i {
+      @include transition(color);
+      color: var(--clr-black-500);
+    }
+  }
+  span {
+    color: var(--clr-blueGray-500);
+  }
+}

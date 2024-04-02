@@ -1,0 +1,33 @@
+@use "../../Abstracts/" as *;
+%commonStyles {
+  padding: 0.75em 2em;
+
+  color: var(--clr-white);
+  @include transition(background-color);
+  border-radius: $radius5;
+}
+.import-export-holder {
+  flex-wrap: wrap;
+  > a {
+    @extend %commonStyles;
+    background-color: var(--clr-blue-200);
+    &:hover {
+      background-color: var(--clr-blue-300);
+    }
+  }
+  > button {
+    @extend %commonStyles;
+    background-color: var(--clr-blue-500);
+    &:hover {
+      background-color: var(--clr-blue-600);
+    }
+  }
+  > button,
+  > a {
+    i {
+      margin-inline-start: 5px;
+    }
+  }
+  .modal-holder {
+  }
+}

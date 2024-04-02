@@ -1,0 +1,20 @@
+@use "../../Abstracts/" as *;
+
+#main-content {
+  // background-color: var(--clr-blueGray-0);
+  background-color: var(--clr-black-900);
+  min-height: 100vh;
+  margin-inline-start: 0;
+  transition: margin 0.3s ease;
+}
+
+@include min-width(medium) {
+  #main-content {
+    margin-inline-start: 250px;
+  }
+  .full-width {
+    #main-content {
+      margin-inline-start: 70px;
+    }
+  }
+}

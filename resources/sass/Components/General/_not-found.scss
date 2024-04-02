@@ -1,0 +1,22 @@
+@use "../../Abstracts/" as *;
+
+.not-found-wrapper {
+  width: min(500px, 100%);
+  margin-inline: auto;
+  padding: 2em;
+  margin-block: 3em;
+  text-align: center;
+  i {
+    color: var(--clr-mustard-500);
+    font-size: 45px;
+    display: block;
+    margin-inline: auto;
+    margin-bottom: 0.3em;
+  }
+  p {
+    color: var(--clr-main-600);
+    font-size: 1.3em;
+    line-height: 1.5;
+    letter-spacing: 1px;
+  }
+}

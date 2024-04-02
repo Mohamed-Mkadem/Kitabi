@@ -1,0 +1,51 @@
+@use "../../Abstracts/" as *;
+
+span.status {
+  padding: 7px 15px;
+  border-radius: 3px;
+  display: inline-block;
+
+  &.shipped,
+  &.stock-alert,
+  &.new {
+    background-color: var(--clr-yellow-700);
+    color: var(--clr-black-250);
+  }
+  &.visited {
+    background-color: var(--clr-navy-700);
+    color: var(--clr-navy-400);
+  }
+  &.in-progress {
+    background-color: var(--clr-purple-500);
+    color: var(--clr-white);
+  }
+  &.pending {
+    background: var(--clr-black-650);
+    color: var(--clr-white-1000);
+  }
+  &.active,
+  &.delivered,
+  &.in-stock,
+  &.accepted {
+    background-color: var(--clr-teal-300);
+    color: var(--clr-white);
+  }
+  &.banned,
+  &.cancelled,
+  &.out-of-stock,
+  &.rejected {
+    background-color: var(--clr-red-500);
+    color: var(--clr-white);
+  }
+  &.returned,
+  &.picked,
+  &.closed {
+    background-color: var(--clr-purple-500);
+    color: var(--clr-white);
+  }
+
+  &.confirmed {
+    background-color: var(--clr-green-700);
+    color: var(--clr-black-400);
+  }
+}

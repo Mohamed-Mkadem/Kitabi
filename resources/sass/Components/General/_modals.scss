@@ -1,0 +1,7 @@
+@use "../../Abstracts/" as *;
+
+.modal {
+  &.inventory-modal {
+    width: min(400px, 100%);
+  }
+}

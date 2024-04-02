@@ -1,0 +1,60 @@
+@use "../../Abstracts/" as *;
+.icon-btn {
+  $size: 30px;
+  width: $size;
+  height: $size;
+  color: var(--clr-main-600);
+  font-size: 25px;
+  padding: 0;
+  @include flexCenter;
+}
+
+.cta {
+  display: block;
+  padding: 0.75em 1em;
+  font-weight: 500;
+  // color: var(--clr-white);
+  letter-spacing: 1px;
+  width: max-content;
+  margin-block: 2em;
+  @include transition(background-color);
+  &.outlined {
+    border: 2px solid currentColor;
+    @include transition(color);
+  }
+  &.centered {
+    margin-inline: auto;
+  }
+}
+
+%common {
+  padding: 0.5em 1.3em;
+  border-radius: $radius5;
+  @include transition(background-color);
+  font-weight: 500;
+}
+.cancelBtn {
+  @extend %common;
+  background-color: var(--clr-yellow-700);
+  &:hover {
+    background-color: var(--clr-yellow-500);
+  }
+}
+.deleteBtn,
+.confirmBtn {
+  @extend %common;
+  background-color: var(--clr-red-600);
+  color: var(--clr-white-1000);
+  &:hover {
+    background-color: var(--clr-red-700);
+  }
+}
+
+.greenBtn {
+  @extend %common;
+  background-color: var(--clr-green-500);
+  color: var(--clr-white-1000);
+  &:hover {
+    background-color: var(--clr-green-600);
+  }
+}

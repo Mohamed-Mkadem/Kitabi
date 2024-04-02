@@ -1,0 +1,152 @@
+@use "../../Abstracts/" as *;
+%commonHolderStyles {
+  padding: 1em;
+  background-color: var(--clr-white);
+  border-radius: $radius10;
+}
+#client-page {
+  ul.tabs-filters-grid {
+    li {
+      position: relative;
+      padding: 1em;
+      color: var(--clr-teal-400);
+      border-radius: $radius10;
+      background-color: var(--clr-white);
+      @include transition(background-color);
+      &:hover {
+        background-color: var(--clr-mustard-900);
+      }
+      &:has(button[aria-checked="true"]) {
+        background-color: var(--clr-mustard-900);
+        border: 2px solid currentColor;
+      }
+      h2 {
+        font-size: 20px;
+        font-weight: 600;
+        pointer-events: none;
+        text-align: center;
+      }
+      button {
+        position: absolute;
+        inset: 0;
+      }
+    }
+  }
+  .tab {
+    &[aria-expanded="true"] {
+      display: block;
+      margin-block: 1em;
+    }
+    display: none;
+
+    h3 {
+      color: var(--clr-teal-400);
+      font-size: 25px;
+      letter-spacing: 1px;
+      margin-bottom: 1em;
+    }
+    &.personal-info {
+      .personal-info-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1em;
+        .img-holder {
+          @extend %commonHolderStyles;
+          img {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: block;
+            margin-inline: auto;
+            margin-block: 2em 1em;
+            width: 150px;
+          }
+          p {
+            &.status {
+              font-weight: 600;
+              padding: 0.25em 0.5em;
+              color: var(--clr-white);
+              border-radius: $radius5;
+              background-color: var(--clr-green-400);
+              &.banned {
+                background-color: var(--clr-red-600);
+              }
+            }
+            &.name {
+              font-weight: 500;
+              font-size: 22px;
+              color: var(--clr-main-600);
+              text-align: center;
+            }
+          }
+          .stats-holder {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 100px);
+            margin-block: 1em 0;
+            gap: 0.5em;
+            justify-content: center;
+            .stat-item {
+              background-color: var(--clr-blueGray-0);
+              border-radius: $radius5;
+              padding: 1em;
+              text-align: center;
+              box-shadow: $boxShadow3;
+              color: var(--clr-teal-300);
+              i {
+                display: block;
+                margin-bottom: 0.5em;
+                font-size: 20px;
+              }
+              span {
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        .info {
+          @extend %commonHolderStyles;
+          .row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1em;
+            &:not(:last-of-type) {
+              margin-bottom: 1em;
+            }
+            .info-item {
+              @include flex(0.5em, row, flex-start, flex-start);
+              color: var(--clr-main-600);
+              font-size: 20px;
+              i {
+              }
+              p {
+              }
+            }
+          }
+        }
+      }
+    }
+    &.orders-tab {
+      .orders-info {
+        @extend %commonHolderStyles;
+      }
+      .orders-history {
+        @extend %commonHolderStyles;
+      }
+    }
+    &.reviews-tab {
+      @extend %commonHolderStyles;
+      .review-card {
+        background-color: var(--clr-blueGray-0);
+      }
+    }
+  }
+  @include min-width(large) {
+    .tab {
+      &.personal-info {
+        .personal-info-wrapper {
+          display: grid;
+          grid-template-columns: min(350px, 100%) 1fr;
+        }
+      }
+    }
+  }
+}

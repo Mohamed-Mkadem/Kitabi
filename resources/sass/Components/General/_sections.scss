@@ -1,0 +1,19 @@
+@use "../../Abstracts/" as *;
+section {
+  margin-block: 2em;
+  padding-block: 1em;
+  &.featured-products {
+    $bgColor: var(--clr-turquoise-900);
+    margin-block-start: 0;
+    background-color: $bgColor;
+    .section-title {
+      &::before {
+        background-color: $bgColor;
+      }
+    }
+  }
+  &.content {
+    margin: 0;
+    padding-block: 2em 6em;
+  }
+}

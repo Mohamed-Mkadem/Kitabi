@@ -1,0 +1,24 @@
+@use "../../Abstracts/" as *;
+ul.actions-holder {
+  @include dashDropDown(130px, var(--clr-white-1000), 15px, -5px);
+  border: 1px solid var(--clr-blueGray-300);
+
+  &.show {
+    display: block;
+  }
+  > li {
+    @include transition(background-color);
+    &:hover {
+      background-color: var(--clr-blueGray-0);
+    }
+    > a,
+    > button {
+      padding: 0.3em 0.8em;
+      display: block;
+      width: 100%;
+      text-align: start;
+      color: var(--clr-black-300);
+      letter-spacing: 1px;
+    }
+  }
+}

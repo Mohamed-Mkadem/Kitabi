@@ -1,0 +1,121 @@
+@use "../../Abstracts/" as *;
+
+#faqs {
+  .faqs-grid {
+    gap: 2em;
+    padding-block: 2em;
+    margin-block: 1em;
+    .tabs-filters {
+      ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+        gap: 1em;
+        li {
+          position: relative;
+          border-radius: $radius10;
+          padding: 0.875em;
+          background-color: var(--clr-mustard-800);
+          text-align: center;
+          @include transition(background-color);
+          &:hover {
+            background-color: var(--clr-mustard-600);
+          }
+          &:has(button[aria-checked="true"]) {
+            background-color: var(--clr-mustard-600);
+          }
+          button {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+          }
+          h2 {
+            color: var(--clr-mustard-100);
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 1;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+    .tabs-holder {
+      .tab {
+        display: none;
+
+        &[aria-expanded="true"] {
+          display: block;
+        }
+        .accordion {
+          @include transition(all);
+
+          &:not(:last-of-type) {
+            margin-bottom: 1em;
+          }
+          .accordion-header {
+            background-color: var(--clr-blueGray-0);
+            padding: 1em;
+            position: relative;
+            @include flex(0.5em);
+            border-radius: $radius5;
+            @include transition(background-color);
+            &:hover {
+              background-color: var(--clr-blueGray-100);
+            }
+            &:has(button[aria-checked="true"]) {
+              &::after {
+                rotate: 180deg;
+              }
+            }
+            &::after {
+              position: absolute;
+              content: "\f150";
+              color: var(--clr-blueGray-500);
+              font-family: "font awesome 6 free";
+              font-weight: 900;
+              left: 15px;
+              pointer-events: none;
+              @include transition(rotate);
+              @include centerVertically();
+            }
+            h3 {
+              pointer-events: none;
+              margin-inline-end: 20px;
+              font-size: 18px;
+              line-height: 1.2;
+              color: var(--clr-blueGray-700);
+            }
+            button {
+              position: absolute;
+              inset: 0;
+            }
+          }
+          .accordion-header:has(button[aria-checked="true"]) + .accordion-body {
+            max-height: max-content;
+            background-color: var(--clr-white);
+            box-shadow: $boxShadow4;
+            padding: 1em;
+            margin-top: 1em;
+            border-radius: $radius5;
+          }
+          .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            @include transition(all);
+            p {
+              letter-spacing: 1px;
+              line-height: 1.5;
+              font-size: 17px;
+            }
+          }
+        }
+      }
+    }
+    @include min-width(medium) {
+      grid-template-columns: 250px 1fr;
+    }
+    @include min-width(large) {
+      width: 80%;
+      margin-inline: auto;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@use "../../Abstracts/" as *;
+
+#maintenance {
+  .maintenance-holder {
+    width: min(100%, 800px);
+    margin-inline: auto;
+    text-align: center;
+    padding: 3em 1em;
+
+    img {
+      max-width: 400px;
+    }
+    p {
+      font-size: 30px;
+      margin-top: 0.5em;
+    }
+  }
+}

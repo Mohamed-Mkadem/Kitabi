@@ -1,0 +1,9 @@
+body {
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  &.gray {
+    background-color: var(--clr-black-900);
+  }
+}

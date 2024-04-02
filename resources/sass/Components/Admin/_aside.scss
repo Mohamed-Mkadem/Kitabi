@@ -1,0 +1,208 @@
+@use "../../Abstracts/" as *;
+
+#aside {
+  background-color: var(--clr-blueGray-900);
+  background-color: var(--clr-blue-100);
+  min-height: 100vh;
+  position: fixed;
+  right: 0;
+  z-index: 100;
+  width: 250px;
+  transition: margin 0.8s ease-in-out;
+  overflow-y: auto;
+  button {
+    color: var(--clr-white-1000);
+    font-size: 35px;
+    position: absolute;
+    top: 20px;
+    left: 15px;
+  }
+  a.logo {
+    text-align: center;
+    margin-block: 2em 0;
+    transition-delay: 10s;
+    i {
+      font-size: 30px;
+    }
+  }
+  ul.nav-links {
+    overflow-y: auto;
+    height: calc(100vh - 100px);
+    padding-block: 1em 3em;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+
+    li {
+      a {
+        position: relative;
+        &.notifiable {
+          &::before {
+            $size: 10px;
+            position: absolute;
+            content: "";
+            width: $size;
+            height: $size;
+            border-radius: 50%;
+            background-color: var(--clr-red-600);
+            left: 10px;
+            top: 50%;
+            translate: 0 -50%;
+          }
+        }
+        &.collapsed {
+          &.notifiable {
+            &::before {
+            }
+          }
+        }
+      }
+
+      a.nav-link {
+        line-height: 1;
+        color: var(--clr-white-1000);
+        @include flex(10px, row, flex-start, center);
+        font-size: 18px;
+        padding: 0.5em 0.8em;
+
+        height: 45px;
+        overflow-x: visible !important;
+        letter-spacing: 1px;
+        min-width: max-content;
+        position: relative;
+        &:hover,
+        &.active {
+          background-color: var(--clr-main-400);
+        }
+
+        &.collapsed {
+          position: relative;
+
+          &::after {
+            position: absolute;
+            font-family: "Font Awesome 6 Free";
+            left: 20px;
+            @include centerVertically();
+            content: "\f107";
+            font-weight: 900;
+          }
+          &:has(+ .nav-sub-dropdown.show) {
+            background-color: var(--clr-blueGray-500);
+            &::after {
+              rotate: 180deg;
+            }
+          }
+        }
+      }
+      .nav-sub-dropdown {
+        background-color: var(--clr-blueGray-800);
+
+        display: none;
+        &.show {
+          padding-block: 0.5em;
+
+          display: block;
+          & a.collapsed {
+          }
+        }
+
+        li {
+          padding: 0.5em 0.8em;
+          position: relative;
+          &::before {
+            position: absolute;
+            content: "-";
+            right: 18px;
+            top: 50%;
+            translate: 0 -50%;
+            color: var(--clr-white-900);
+          }
+          a {
+            display: block;
+            color: var(--clr-white-900);
+            margin-inline-start: 20px;
+            &:hover {
+              color: var(--clr-white-1000);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.full-width {
+  #aside {
+    margin-inline-start: -100%;
+  }
+}
+
+@include min-width(medium) {
+  .full-width {
+    #aside {
+      width: 70px;
+      margin-inline-start: 0;
+
+      a.logo {
+        span {
+          display: none;
+        }
+      }
+
+      ul.nav-links {
+        li {
+          a {
+            &.notifiable {
+              &::before {
+                left: 7px;
+
+                translate: none;
+              }
+              &.collapsed {
+                &::before {
+                  left: 7px !important;
+                }
+              }
+            }
+          }
+          a.nav-link {
+            justify-content: center;
+            &:hover {
+            }
+            span {
+              display: none;
+            }
+            &.collapsed {
+              &::after {
+                display: none;
+              }
+              &:hover {
+                &::after {
+                  display: block;
+                  top: 10px;
+                  right: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  #aside {
+    @include transition(width);
+
+    width: 250px;
+    margin-inline-start: 0;
+    button {
+      top: -50px;
+    }
+    a.logo {
+      margin-block: 15px;
+      span {
+        display: inline;
+      }
+    }
+  }
+}

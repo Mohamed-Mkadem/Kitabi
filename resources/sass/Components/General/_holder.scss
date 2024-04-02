@@ -1,0 +1,43 @@
+@use "../../Abstracts/" as *;
+
+.holder {
+  .header {
+    background-color: var(--clr-mustard-700);
+    padding: 1em;
+    margin-block: 2em;
+    border-radius: 5px;
+    h1 {
+      margin: 0;
+      font-size: 25px;
+      color: var(--clr-main-500);
+    }
+    p {
+      color: var(--clr-main-600);
+      &:not(:last-of-type) {
+        padding-inline-end: 1em;
+        border-inline-end: 1px solid currentColor;
+      }
+      a {
+        color: inherit;
+        @include transition(color);
+        text-decoration: underline;
+        &:hover {
+          color: var(--clr-teal-400);
+        }
+      }
+    }
+  }
+
+  background-color: var(--clr-white);
+  box-shadow: $boxShadow3;
+  border-radius: $radius10;
+  &.transparent {
+    background-color: transparent;
+  }
+  &.no-box-shadow {
+    box-shadow: none;
+  }
+  canvas {
+    width: 100% !important;
+  }
+}

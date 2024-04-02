@@ -1,0 +1,24 @@
+@use "../../Abstracts/" as *;
+
+.admin-categories {
+  .categories-grid {
+    .card.auth-cat-pub {
+      button.action-controller {
+        i {
+        }
+      }
+      h3 {
+      }
+      p {
+        &.count {
+        }
+        &.date {
+        }
+        i {
+        }
+        span {
+        }
+      }
+    }
+  }
+}

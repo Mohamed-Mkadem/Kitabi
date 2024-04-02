@@ -1,0 +1,22 @@
+@use "../../Abstracts/" as *;
+
+.contact-grid {
+  .grid-item {
+    text-align: center;
+    padding: 1em;
+    box-shadow: $boxShadow4;
+    border-radius: $radius10;
+    i {
+      color: var(--clr-turquoise-300);
+      font-size: 35px;
+      display: block;
+      margin-bottom: 0.8em;
+    }
+    p {
+      font-size: 20px;
+      color: var(--clr-main-600);
+      font-weight: 500;
+      margin-block: 0.3em;
+    }
+  }
+}

@@ -1,0 +1,172 @@
+@use "variables" as *;
+@use "breakpoints" as *;
+
+@mixin flexCenter($direction: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin transition($property: "all") {
+  transition: $property 0.3s ease-in;
+}
+
+@mixin flex($gap, $direction: row, $justify: space-between, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+@mixin dashDropDown($width, $bgColor, $left, $top, $boxShadow: $boxShadow3) {
+  position: absolute;
+  z-index: 10000;
+  border-radius: $radius5;
+  width: $width;
+  left: $left;
+  top: $top;
+  background-color: $bgColor;
+  box-shadow: $boxShadow;
+  display: none;
+}
+@mixin dropdown(
+  $width,
+  $bgColor,
+  $radius,
+  $boxShadow,
+  $directionValue,
+  $top,
+  $direction: "right"
+) {
+  display: none;
+  padding: 0.5em 1em;
+  border-radius: $radius;
+  box-shadow: $boxShadow;
+  z-index: 10000;
+  position: absolute;
+  width: $width;
+  top: $top;
+  background-color: $bgColor;
+  @if ($direction == "left") {
+    left: $directionValue;
+  }
+  @if ($direction == "right") {
+    right: $directionValue;
+  }
+  @if ($direction == "center") {
+    left: 50%;
+    translate: -50% 0;
+  }
+  &.show {
+    display: block;
+  }
+}
+
+// Min-width
+@mixin min-width($breakpoint) {
+  @if ($breakpoint == xsmall) {
+    @media (min-width: $xSmall) {
+      @content;
+    }
+  } @else if ($breakpoint == small) {
+    @media (min-width: $small) {
+      @content;
+    }
+  } @else if ($breakpoint == msmall) {
+    @media (min-width: $mSmall) {
+      @content;
+    }
+  } @else if ($breakpoint == medium) {
+    @media (min-width: $medium) {
+      @content;
+    }
+  } @else if ($breakpoint == large) {
+    @media (min-width: $large) {
+      @content;
+    }
+  } @else if ($breakpoint == xlarge) {
+    @media (min-width: $xLarge) {
+      @content;
+    }
+  } @else if ($breakpoint == xmlarge) {
+    @media (min-width: $xmLarge) {
+      @content;
+    }
+  } @else if ($breakpoint == xxLarge) {
+    @media (min-width: $xxLarge) {
+      @content;
+    }
+  }
+}
+// Max-width
+@mixin max-width($breakpoint) {
+  @if ($breakpoint == xsmall) {
+    @media (max-width: $xsmall) {
+      @content;
+    }
+  } @else if ($breakpoint == small) {
+    @media (max-width: $small) {
+      @content;
+    }
+  } @else if ($breakpoint == msmall) {
+    @media (max-width: $mSmall) {
+      @content;
+    }
+  } @else if ($breakpoint == medium) {
+    @media (max-width: $medium) {
+      @content;
+    }
+  } @else if ($breakpoint == large) {
+    @media (max-width: $large) {
+      @content;
+    }
+  } @else if ($breakpoint == xlarge) {
+    @media (max-width: $xLarge) {
+      @content;
+    }
+  } @else if ($breakpoint == xmlarge) {
+    @media (max-width: $xmLarge) {
+      @content;
+    }
+  } @else if ($breakpoint == xxLarge) {
+    @media (min-width: $xxLarge) {
+      @content;
+    }
+  }
+}
+
+@mixin centerHorizontally() {
+  left: 50%;
+  translate: -50% 0;
+}
+@mixin centerVertically() {
+  top: 50%;
+  translate: 0 -50%;
+}
+@mixin centerHorizontallyVertically() {
+  left: 50%;
+  top: 50%;
+  translate: -50%;
+}
+
+@mixin detailledGrid($cols, $rGap: null, $cGap: null, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+  @if ($rGap) {
+    row-gap: $rGap;
+  }
+  @if ($cGap) {
+    column-gap: $cGap;
+  }
+  @if ($gap) {
+    gap: $gap;
+  }
+}
+
+@mixin trOddEven($oddBg, $evenBg) {
+  &:nth-child(even) {
+    background-color: $oddBg;
+  }
+  &:nth-child(odd) {
+    background-color: $evenBg;
+  }
+}

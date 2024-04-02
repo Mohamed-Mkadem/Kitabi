@@ -1,0 +1,103 @@
+@use "../../Abstracts/" as *;
+
+footer {
+  background-color: var(--clr-teal-200);
+  text-align: center;
+  padding-block: 2em 6em;
+  letter-spacing: 1px;
+  .footer-grid {
+    .col {
+      margin-bottom: 1em;
+      &.logo-info-holder {
+        a.logo {
+          font-size: 80px;
+          color: var(--clr-yellow-800);
+        }
+      }
+      p {
+        margin-block: 1em;
+        color: var(--clr-white);
+        font-weight: bold;
+        font-size: 18px;
+        i {
+          color: var(--clr-yellow-800);
+        }
+      }
+      h2 {
+        color: var(--clr-yellow-800);
+        margin-bottom: 0.5em;
+        font-weight: 500;
+        font-size: 22px;
+      }
+      ul {
+        li {
+          margin-block: 0.5em;
+          a {
+            color: var(--clr-white);
+            @include transition(color);
+            &:hover {
+              color: var(--clr-yellow-800);
+            }
+          }
+        }
+      }
+      &.useful-links {
+      }
+      &.pages {
+      }
+      &.social-media {
+        ul {
+          @include flex(1em, row, center);
+          flex-wrap: wrap;
+          li {
+            a {
+              font-size: 28px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @include min-width(medium) {
+    text-align: start;
+    padding-block: 2em 0;
+    .footer-grid {
+      grid-template-areas: "logo links pages" "social-media social-media copyrights";
+      grid-template-columns: 2fr 1.4fr 1.5fr;
+      gap: 1em;
+      .col {
+        margin-bottom: 0;
+        h2 {
+          text-align: center;
+          font-size: 25px;
+        }
+        ul {
+          text-align: center;
+          li {
+            a {
+              font-size: 20px;
+            }
+          }
+        }
+
+        &.logo-info-holder {
+          grid-area: logo;
+        }
+        &.useful-links {
+          grid-area: links;
+        }
+        &.pages {
+          grid-area: pages;
+        }
+        &.social-media {
+          grid-area: social-media;
+          justify-self: start;
+        }
+        &.copyrights {
+          grid-area: copyrights;
+          justify-self: end;
+        }
+      }
+    }
+  }
+}
