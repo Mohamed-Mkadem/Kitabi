@@ -55,7 +55,12 @@
         </ul>
     </div>
     <div class="top-bar-menu">
-        <p>شحن مجاني للطلبات أكثر من 100 د.ت باستعمال قسيمة <span dir="ltr">FREE100</span></p>
+        @auth
+            <p>Authenitcated</p>
+        @endauth
+        @guest
+            <p>Guest</p>
+        @endguest
     </div>
     <div class="container">
         <div id="main-header">
@@ -107,7 +112,8 @@
 
                             <li><a href="account.html">الملف الشخصي</a></li>
                             <li>
-                                <form action="" method="post">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
                                     <button type="submit">خروج</button>
                                 </form>
                             </li>

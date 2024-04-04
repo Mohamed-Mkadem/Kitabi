@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+
     plugins: [
         laravel({
             input: [
@@ -28,15 +29,12 @@ export default defineConfig({
                 'resources/js/validate-login.js',
                 'resources/js/validate-signup.js',
                 'resources/js/Validator.js',
+                'resources/js/getCities.js',
 
 
             ],
-            refresh: true,
-            refresh: [
-                'resources/routes/**',
-                'routes/**',
-                'resources/views/**',
-            ],
+
+            refresh: true
         }),
     ],
 });
