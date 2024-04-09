@@ -1,4 +1,4 @@
-import { dropdowns, hideDropDowns, overlay, toggleOverlay, hideOverlay, preventBodyScroll, allowBodyScroll, closeAside, aside, navigationMenu, closeNavigationMenu, openNavigationMenu, navigationMenuToggler, showDropDown, dropDownBtns, modalHoldersTogglers, modalHolders, showModalHolder, closeModalHolder } from './functions.js';
+import { dropdowns, hideDropDowns, overlay, toggleOverlay, hideOverlay, preventBodyScroll, allowBodyScroll, closeAside, aside, navigationMenu, closeNavigationMenu, openNavigationMenu, navigationMenuToggler, showDropDown, dropDownBtns, modalHoldersTogglers, modalHolders, showModalHolder, closeModalHolder, hideAlerts } from './functions.js';
 
 if (window.location.pathname != '/Pages/client/shop.html' && sessionStorage.getItem('filters')) {
     sessionStorage.removeItem('filters')
@@ -52,3 +52,4 @@ if (overlay) {
 }
 
 hideDropDowns()
+hideAlerts()

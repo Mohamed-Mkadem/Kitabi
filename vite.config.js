@@ -30,6 +30,7 @@ export default defineConfig({
                 'resources/js/validate-signup.js',
                 'resources/js/Validator.js',
                 'resources/js/getCities.js',
+                'resources/js/updateAvatar.js',
 
 
             ],

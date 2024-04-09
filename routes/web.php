@@ -24,6 +24,13 @@ Route::group([
     Route::view('/terms', 'client.terms')->name('terms');
     Route::view('/privacy', 'client.privacy')->name('privacy');
     Route::view('/contact', 'client.contact')->name('contact');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
+    });
 });
 
 
@@ -33,10 +40,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
 
 require __DIR__ . '/auth.php';
