@@ -1,69 +1,82 @@
 @use "../../Abstracts/" as *;
 %commonStyles {
-  @include transition(border);
-  color: var(--clr-main-600);
-  &:focus,
-  &:focus-visible {
-    border: 1px solid var(--clr-teal-300);
-  }
+    @include transition(border);
+    color: var(--clr-main-600);
+    &:focus,
+    &:focus-visible {
+        border: 1px solid var(--clr-teal-300);
+    }
 }
 %wrapperStyles {
-  background-color: var(--clr-blueGray-0);
-  padding: 1em;
-  border-radius: $radius10;
-  box-shadow: $boxShadow3;
-  padding-block: 2em 1em;
+    background-color: var(--clr-blueGray-0);
+    padding: 1em;
+    border-radius: $radius10;
+    box-shadow: $boxShadow3;
+    padding-block: 2em 1em;
 }
 #edit-profile {
-  .forms-wrapper {
-    display: grid;
-    gap: 2em;
-    margin-block: 2em 4em;
-    grid-template-columns: 100%;
-    .account-info-wrapper {
-      @extend %wrapperStyles;
-      //   width: min(900px, 100%);
-      //   margin-inline: auto;
-    }
-    form {
-      .row {
-        display: grid;
-        gap: 1em;
-        grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-        &:not(:last-of-type) {
-          margin-bottom: 1em;
+    .email-verification-wrapper {
+        @extend %wrapperStyles;
+        padding: 1em;
+        p {
+            color: var(--clr-main-600);
+            line-height: 1.5;
+            letter-spacing: 1px;
+            font-weight: 500;
         }
-        .form-control {
-          input {
-            @extend %commonStyles;
-          }
-          .select-box {
-            select {
-              background-color: var(--clr-white);
-            }
-          }
-        }
-      }
     }
-    h2 {
-      color: var(--clr-blueGray-700);
-      margin-bottom: 0.5em;
-    }
-    .password-wrapper {
-      @extend %wrapperStyles;
-    }
-  }
-  @include min-width(medium) {
-    .forms-wrapper:not(.admin-account) {
-      gap: 1em;
-      grid-template-columns: 1fr 300px;
-      align-items: start;
-    }
-  }
-  @include min-width(large) {
     .forms-wrapper {
-      gap: 2em;
-      grid-template-columns: 1fr 400px;
+        display: grid;
+        gap: 2em;
+        margin-block: 2em 4em;
+        grid-template-columns: 100%;
+        .account-info-wrapper {
+            @extend %wrapperStyles;
+            //   width: min(900px, 100%);
+            //   margin-inline: auto;
+        }
+        form {
+            .row {
+                display: grid;
+                gap: 1em;
+                grid-template-columns: repeat(
+                    auto-fit,
+                    minmax(min(250px, 100%), 1fr)
+                );
+                &:not(:last-of-type) {
+                    margin-bottom: 1em;
+                }
+                .form-control {
+                    input {
+                        @extend %commonStyles;
+                    }
+                    .select-box {
+                        select {
+                            background-color: var(--clr-white);
+                        }
+                    }
+                }
+            }
+        }
+        h2 {
+            color: var(--clr-blueGray-700);
+            margin-bottom: 0.5em;
+        }
+        .password-wrapper {
+            @extend %wrapperStyles;
+        }
     }
-  }
+    @include min-width(medium) {
+        .forms-wrapper:not(.admin-account) {
+            gap: 1em;
+            grid-template-columns: 1fr 300px;
+            align-items: start;
+        }
+    }
+    @include min-width(large) {
+        .forms-wrapper {
+            gap: 2em;
+            grid-template-columns: 1fr 400px;
+        }
+    }
 }

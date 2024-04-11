@@ -1,52 +1,141 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.client')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@push('title')
+    <title>كتابي - حساب جديد</title>
+@endpush
+
+@push('script')
+    @vite(['resources/js/validate-signup.js', 'resources/js/getCities.js'])
+@endpush
+
+@section('content')
+    <main id="authentication">
+        <div class="container">
+
+            <h1 class="page-title">حساب جديد</h1>
+            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية" currUrl="{{ route('register') }}"
+                currValue="حساب جديد" />
+
+            <div class="container">
+                <div class="auth-wrapper">
+                    <form action="{{ route('register') }}" method="post" id="signup-form">
+                        @csrf
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="first_name" class="required">الإسم</label>
+                                <input required value="{{ old('first_name', '') }}" type="text" name="first_name"
+                                    id="first_name" placeholder="الإسم">
+                                <x-input-error field="first_name" />
+                                <p class="error-message "> هذا الحقل إحباري </p>
+                            </div>
+                            <div class="form-control">
+                                <label for="last_name" class="required">اللّقب</label>
+                                <input required type="text" value="{{ old('last_name', '') }}" name="last_name"
+                                    id="last_name" placeholder="اللّقب">
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="last_name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="email" class="required">البريد الالكتروني</label>
+                                <input required type="email" name="email" id="email" placeholder="البريد الالكتروني"
+                                    value="{{ old('email', '') }}">
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="email" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="phone" class="required">الهاتف</label>
+                                <input required type="text" name="phone" id="phone" placeholder="الهاتف"
+                                    value="{{ old('phone', '') }}">
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="phone" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="password" class="required">كلمة السر</label>
+                                <input required type="password" name="password" id="password" placeholder="كلمة السر">
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="password" />
+                            </div>
+                            <div class="form-control">
+                                <label for="confirm-password" class="required">تأكيد كلمة السر</label>
+                                <input required type="password" name="password_confirmation" id="confirm-password"
+                                    placeholder="تأكيد كلمة السر">
+
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="password_confirmation" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="state-options" class="required">الولاية</label>
+                                <div class="select-box">
+                                    <select id="state-options" name="state">
+
+
+                                        @if (old('state'))
+                                            @foreach ($states as $state)
+                                                <option value="{{ $state->id }}"
+                                                    @if (old('state') == $state->id) @selected(true) @endif>
+                                                    {{ $state->name }}
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            @foreach ($states as $state)
+                                                <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                            @endforeach
+                                        @endif
+
+                                    </select>
+                                </div>
+                                <p class="error-message " id="state-error">هذا الحقل إجباري</p>
+                                <x-input-error field="state" />
+                            </div>
+                            <div class="form-control">
+                                <label for="cities-options" class="required">المعتمديّة</label>
+                                <div class="select-box">
+
+                                    <select id="cities-options" name="city">
+
+                                        @if (old('city'))
+                                            @foreach ($states[old('state') - 1]->cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    @if (old('city') == $city->id) @selected(true) @endif>
+                                                    {{ $city->name }}</option>
+                                            @endforeach
+                                        @else
+                                            @foreach ($states[0]->cities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <p class="error-message" id="city-error">هذا الحقل إجباري</p>
+                                <x-input-error field="city" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-control">
+                                <label for="address" class="required">العنوان</label>
+                                <input type="text" name="address" id="address" placeholder="العنوان"
+                                    value="{{ old('address', '') }}">
+                                <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="address" />
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submitBtn d-block mb-1 mt-1 m-auto">إنشاء حساب</button>
+                        <a href="{{ route('login') }}" class="d-block m-auto t-center">هل لديك حساب بالفعل ؟ تسجيل
+                            الدخول</a>
+
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </main>
+@endsection

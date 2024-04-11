@@ -1,5 +1,6 @@
 
 
+import { data } from "autoprefixer";
 import { Validator } from "./Validator.js";
 let validator = new Validator;
 
@@ -57,4 +58,6 @@ signupForm.addEventListener('submit', function (event) {
         signupForm.submit();
     }
 });
+
+
 

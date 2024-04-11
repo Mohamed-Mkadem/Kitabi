@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
+use App\Models\City;
+use App\Models\User;
+use App\Models\State;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PasswordUpdateTest extends TestCase
 {
@@ -13,11 +15,11 @@ class PasswordUpdateTest extends TestCase
 
     public function test_password_can_be_updated(): void
     {
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $response = $this
             ->actingAs($user)
-            ->from('/profile')
+            ->from('/account')
             ->put('/password', [
                 'current_password' => 'password',
                 'password' => 'new-password',
@@ -26,18 +28,18 @@ class PasswordUpdateTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect('/account');
 
         $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
     }
 
     public function test_correct_password_must_be_provided_to_update_password(): void
     {
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $response = $this
             ->actingAs($user)
-            ->from('/profile')
+            ->from('/account')
             ->put('/password', [
                 'current_password' => 'wrong-password',
                 'password' => 'new-password',
@@ -45,7 +47,32 @@ class PasswordUpdateTest extends TestCase
             ]);
 
         $response
-            ->assertSessionHasErrorsIn('updatePassword', 'current_password')
-            ->assertRedirect('/profile');
+            ->assertSessionHasErrorsIn('current_password')
+            ->assertRedirect('/account');
+    }
+
+    private function getState()
+    {
+        $state = State::factory()->create();
+        return $state;
+    }
+    private function getCityId($state)
+    {
+
+        $city = City::factory()->create([
+            'state_id' => $state->id
+        ]);
+        return $city->id;
+    }
+    private function getUser()
+    {
+
+        $state = $this->getState();
+        $user = User::factory()->create([
+            'state_id' => $state->id,
+            'city_id' => $this->getCityId($state),
+
+        ]);
+        return $user;
     }
 }

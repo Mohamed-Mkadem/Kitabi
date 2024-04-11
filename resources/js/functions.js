@@ -16,7 +16,7 @@ export const modalHolders = Array.from(document.querySelectorAll('.modal-holder'
 export const listVueToggle = document.getElementById('list-vue')
 export const gridVueToggle = document.getElementById('grid-vue')
 export const productsGrid = document.querySelector('.products-grid');
-
+export const alerts = Array.from(document.querySelectorAll('.alert.show'))
 export function listenForAddingProductToCart(cart) {
     addToCartBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -184,4 +184,25 @@ export function showChoices(choicesArray) {
     choicesArray.forEach((choice) => {
         choice.style.display = 'flex'
     })
+}
+
+export function hideAlerts() {
+    setTimeout(() => {
+        alerts.forEach(alert => {
+            alert.classList.remove('show')
+        })
+
+    }, 5000);
+}
+export function alert(message, status, duration = 5000) {
+    let alertDiv = document.createElement('div')
+    alertDiv.className = 'alert show ' + status
+    let p = document.createElement('p')
+    p.textContent = message
+    alertDiv.append(p)
+    document.body.append(alertDiv)
+    setTimeout(() => {
+        let alert = document.querySelector('.alert.show')
+        alert.remove()
+    }, duration);
 }

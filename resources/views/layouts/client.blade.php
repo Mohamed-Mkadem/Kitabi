@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @stack('title')
+    @stack('meta')
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Stylesheets -->
 
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js//cart-actions.js'])
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js/cart-actions.js'])
     @stack('script')
 </head>
 
@@ -55,7 +56,12 @@
         </ul>
     </div>
     <div class="top-bar-menu">
-        <p>شحن مجاني للطلبات أكثر من 100 د.ت باستعمال قسيمة <span dir="ltr">FREE100</span></p>
+        @auth
+            <p>Authenitcated</p>
+        @endauth
+        @guest
+            <p>Guest</p>
+        @endguest
     </div>
     <div class="container">
         <div id="main-header">
@@ -98,16 +104,17 @@
                         <i class="fa-regular fa-circle-user"></i>
                     </button>
                     <ul class="dropdown">
-                        @guest()
+                        @guest
                             <li><a href="{{ route('register') }}">إنشاء حساب</a></li>
                             <li><a href="{{ route('login') }}">تسجيل الدخول</a></li>
                         @endguest
                         @auth
 
 
-                            <li><a href="account.html">الملف الشخصي</a></li>
+                            <li><a href=" {{ route('client.profile.index') }} ">الملف الشخصي</a></li>
                             <li>
-                                <form action="" method="post">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
                                     <button type="submit">خروج</button>
                                 </form>
                             </li>

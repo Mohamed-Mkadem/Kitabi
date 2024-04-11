@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Auth;
 
+use Tests\TestCase;
+use App\Models\City;
 use App\Models\User;
+use App\Models\State;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
 
 class PasswordResetTest extends TestCase
 {
@@ -23,7 +25,7 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
@@ -34,12 +36,12 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
+            $response = $this->get('/reset-password/' . $notification->token);
 
             $response->assertStatus(200);
 
@@ -51,7 +53,7 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
@@ -69,5 +71,30 @@ class PasswordResetTest extends TestCase
 
             return true;
         });
+    }
+
+    private function getState()
+    {
+        $state = State::factory()->create();
+        return $state;
+    }
+    private function getCityId($state)
+    {
+
+        $city = City::factory()->create([
+            'state_id' => $state->id
+        ]);
+        return $city->id;
+    }
+    private function getUser()
+    {
+
+        $state = $this->getState();
+        $user = User::factory()->create([
+            'state_id' => $state->id,
+            'city_id' => $this->getCityId($state),
+
+        ]);
+        return $user;
     }
 }
