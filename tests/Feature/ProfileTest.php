@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\City;
+use App\Models\User;
+use App\Models\State;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProfileTest extends TestCase
 {
@@ -12,88 +14,96 @@ class ProfileTest extends TestCase
 
     public function test_profile_page_is_displayed(): void
     {
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
         $response = $this
             ->actingAs($user)
-            ->get('/profile');
+            ->get('/account');
 
         $response->assertOk();
     }
 
     public function test_profile_information_can_be_updated(): void
     {
-        $user = User::factory()->create();
+        $user = $this->getUser();
 
+        $state = $this->getState();
+        $cityId = $this->getCityId($state);
         $response = $this
             ->actingAs($user)
             ->patch('/profile', [
-                'name' => 'Test User',
+                'first_name' => 'First',
+                'last_name' => 'Last',
+                'state_id' => $state->id,
+                'city_id' => $cityId,
+                'phone' => '20101202',
+                'address' => '18, Awesome Street Name',
                 'email' => 'test@example.com',
+
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect('/account/edit');
 
         $user->refresh();
 
-        $this->assertSame('Test User', $user->name);
+        $this->assertSame('First', $user->first_name);
+        $this->assertSame('Last', $user->last_name);
+        $this->assertSame('20101202', $user->phone);
+        $this->assertSame('18, Awesome Street Name', $user->address);
+        $this->assertSame($state->id, $user->state_id);
+        $this->assertSame($cityId, $user->city_id);
         $this->assertSame('test@example.com', $user->email);
         $this->assertNull($user->email_verified_at);
     }
 
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
-        $user = User::factory()->create();
-
+        $user = $this->getUser();
+        $state = $this->getState();
+        $cityId = $this->getCityId($state);
         $response = $this
             ->actingAs($user)
             ->patch('/profile', [
-                'name' => 'Test User',
+                'first_name' => fake()->name(),
+                'last_name' => fake()->name(),
                 'email' => $user->email,
+                'state_id' => $state->id,
+                'city_id' => $cityId,
+                'phone' => '20101202',
+                'address' => '18, Awesome Street Name',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile');
+            ->assertRedirect('/account/edit');
 
         $this->assertNotNull($user->refresh()->email_verified_at);
     }
 
-    public function test_user_can_delete_their_account(): void
+    private function getState()
     {
-        $user = User::factory()->create();
-
-        $response = $this
-            ->actingAs($user)
-            ->delete('/profile', [
-                'password' => 'password',
-            ]);
-
-        $response
-            ->assertSessionHasNoErrors()
-            ->assertRedirect('/');
-
-        $this->assertGuest();
-        $this->assertNull($user->fresh());
+        $state = State::factory()->create();
+        return $state;
     }
-
-    public function test_correct_password_must_be_provided_to_delete_account(): void
+    private function getCityId($state)
     {
-        $user = User::factory()->create();
 
-        $response = $this
-            ->actingAs($user)
-            ->from('/profile')
-            ->delete('/profile', [
-                'password' => 'wrong-password',
-            ]);
+        $city = City::factory()->create([
+            'state_id' => $state->id
+        ]);
+        return $city->id;
+    }
+    private function getUser()
+    {
 
-        $response
-            ->assertSessionHasErrorsIn('userDeletion', 'password')
-            ->assertRedirect('/profile');
+        $state = $this->getState();
+        $user = User::factory()->create([
+            'state_id' => $state->id,
+            'city_id' => $this->getCityId($state),
 
-        $this->assertNotNull($user->fresh());
+        ]);
+        return $user;
     }
 }

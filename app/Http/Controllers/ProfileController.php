@@ -66,6 +66,7 @@ class ProfileController extends Controller
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:png,jpg']
         ], [
+            'required' => 'الصورة إجبارية',
             'image' => 'صورة الملفّ الشخصي يجب أن تكون صورة',
             'mimes' => 'نوع الصورة يجب أن يكون أحد الامتدادات التالية, jpg, png'
         ]);
