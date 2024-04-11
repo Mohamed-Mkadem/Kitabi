@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -34,11 +35,18 @@ Route::group([
 });
 
 
+Route::group([
+    'as' => 'admin.',
+    'middleware' => ['auth', 'isAdmin']
+], function () {
+    Route::view('admin/login', 'admin.login');
+    Route::get('/dashboard', [AdminController::class, 'home'])->name('home');
+});
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 
 
