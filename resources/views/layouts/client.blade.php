@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ asset('assets/imgs/favicon.png') }}">
     @stack('title')
     @stack('meta')
     <!-- Google fonts -->
@@ -111,7 +112,11 @@
                         @auth
 
 
-                            <li><a href=" {{ route('client.profile.index') }} ">الملف الشخصي</a></li>
+                            <li><a
+                                    href="
+                                    {{ route(Auth::user()->isAdmin() ? 'admin.profile.index' : 'client.profile.index') }}
+                                    ">الملف
+                                    الشخصي</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
@@ -124,6 +129,7 @@
                 <a href="notifications.html" class="user-action-item notifications-item icon-btn">
                     <i class="fa-regular fa-bell"></i>
                 </a>
+
                 <a href="wishlist.html" class="user-action-item wishlist-item icon-btn">
                     <i class="fa-regular fa-heart"></i>
                 </a>
@@ -137,6 +143,7 @@
                         <p class="cart-empty">السلة فارغة</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

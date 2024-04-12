@@ -65,4 +65,12 @@ class User extends Authenticatable
             get: fn () => ucfirst($this->first_name) . ' ' . ucfirst($this->last_name)
         );
     }
+    public function isAdmin(): bool
+    {
+        return $this->role == 'admin';
+    }
+    public function isClient(): bool
+    {
+        return $this->role == 'user';
+    }
 }

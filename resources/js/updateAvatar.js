@@ -55,6 +55,9 @@ function updateProfileAvatar() {
 function changeImgSrc(newPath) {
     let img = document.getElementById('avatar-image')
     img.src = newPath
+
+    let headerImg = document.getElementById('header-avatar')
+    if (headerImg) headerImg.src = newPath
 }
 
 

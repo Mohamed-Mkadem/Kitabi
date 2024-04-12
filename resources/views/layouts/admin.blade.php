@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ asset('assets/imgs/favicon.png') }}">
     @stack('title')
     @stack('meta')
     @stack('script')
@@ -198,11 +199,12 @@
 
                     <div class="dropdown-holder">
                         <button id="profile-handler" class=" d-flex  a-center dropdown-toggle" aria-pressed="false">
-                            <img src="{{ asset('storage/' . request()->user()->photo) }}" alt="">
+                            <img id="header-avatar" src="{{ asset('storage/' . request()->user()->photo) }}"
+                                alt="">
                             <span>كتابي</span>
                         </button>
                         <ul class="dropdown-menu profile-dropdown  ">
-                            <li><a href="profile.html"> حسابي</a></li>
+                            <li><a href="{{ route('admin.profile.index') }}"> حسابي</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
@@ -224,7 +226,8 @@
 
 
 
-
+    {{-- @include('components.errors') --}}
+    @include('components.success-alert')
 </body>
 
 </html>

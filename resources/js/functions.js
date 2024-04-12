@@ -187,12 +187,14 @@ export function showChoices(choicesArray) {
 }
 
 export function hideAlerts() {
-    setTimeout(() => {
-        alerts.forEach(alert => {
-            alert.classList.remove('show')
-        })
+    if (alerts) {
+        setTimeout(() => {
+            alerts.forEach(alert => {
+                alert.classList.remove('show')
+            })
 
-    }, 5000);
+        }, 5000);
+    }
 }
 export function alert(message, status, duration = 5000) {
     let alertDiv = document.createElement('div')

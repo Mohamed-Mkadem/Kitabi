@@ -1,51 +1,33 @@
-@extends('layouts.client')
+@extends('layouts.admin')
 
 @push('title')
-    <title>كتابي -تعديل الملفّ الشخصي</title>
+    <title>لوحة التحكّم - تعديل الملفّ الشخصي</title>
 @endpush
 @push('script')
     @vite(['resources/js/edit-profile.js', 'resources/js/getCities.js'])
 @endpush
+
 @section('content')
-    <main id="edit-profile">
-        <div class="container">
-
-            <h1 class="page-title">تعديل الحساب</h1>
-            <x-breadcrumb prevUrl="{{ route('client.home') }}" prevValue="الرئيسية"
-                currUrl="{{ route('client.profile.edit') }}" currValue="  تعديل الملفّ الشخصي " />
-
-        </div>
-        @if (session()->has('success'))
-            <div class="alert success show"> {{ session()->get('success') }} </div>
-        @endif
-        @if (session('status') === 'verification-link-sent')
-            <div class="alert success show"> لقد تمّ إرسال رابط تأكيد جديد </div>
-        @endif
+    <div id="edit-profile">
+        <section class="content" id="content">
+            <!-- Start Starter Header -->
+            <div class="starter-header d-flex a-center j-between " id="starter-header">
+                <div class="greeting-holder">
+                    <h1>تعديل الحساب</h1>
 
 
-        @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
-            <div class="container">
-                <div class="email-verification-wrapper mt-2 mb-2"style="width:min(500px, 90%);">
-                    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-                        @csrf
-                        <div>
-                            <p class="mb-1">
-                                لقد قمت للتوّ بتغيير بريدك الالكتروني, لذلك نرجو أن تقوم بتأكيده من خلال رابط التأكيد الذي
-                                تمّ
-                                إرساله الأن لبريدك الالكتروني الجديد وذلك للتمكّن من مواصلة الانتفاع بكامل خدمات الموقع بشكل
-                                طبيعي
-                            </p>
-                            <button class="submitBtn">إرسال رابط تأكيد جديد</button>
-                        </div>
-                    </form>
+                    <x-breadcrumb class="dashboard" prevUrl="{{ route('admin.home') }}" prevValue="الرئيسية"
+                        currUrl="{{ route('admin.profile.edit') }}" currValue="تعديل الملفّ الشخصي" />
                 </div>
-            </div>
-        @endif
 
-        <div class="container">
-            <div class="forms-wrapper">
+
+
+            </div>
+            <!-- End Starter Header -->
+
+            <div class="forms-wrapper admin-account">
                 <div class="account-info-wrapper">
-                    <form action="{{ route('client.profile.update') }}" method="post" id="info-form">
+                    <form action="{{ route('admin.profile.update') }}" method="post" id="info-form" novalidate>
                         @csrf
                         @method('PATCH')
                         <h2>تعديل معلومات الحساب</h2>
@@ -54,32 +36,33 @@
                                 <label for="first_name">الإسم</label>
                                 <input required type="text" name="first_name" id="first_name" placeholder="الإسم"
                                     value="{{ $user->first_name }}">
-                                <p class="error-message">هذا الحقل اجباري</p>
                                 <x-input-error field="first_name" />
+                                <p class="error-message ">هذا الحقل اجباري</p>
                             </div>
                             <div class="form-control">
                                 <label for="last_name">اللّقب</label>
                                 <input required type="text" name="last_name" id="last_name" placeholder="اللّقب"
                                     value="{{ $user->last_name }}">
-                                <x-input-error field="last_name" />
                                 <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="last_name" />
+
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-control">
                                 <label for="email">البريد الالكتروني</label>
-                                <input required type="email" name="email" id="email" placeholder="البريد الالكتروني"
-                                    value="{{ $user->email }}">
-                                <x-input-error field="email" />
+                                <input required type="email" name="email" id="email" value="{{ $user->email }}"
+                                    placeholder="البريد الالكتروني">
                                 <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="email" />
                             </div>
                             <div class="form-control">
                                 <label for="phone">الهاتف</label>
                                 <input required type="text" name="phone" id="phone" placeholder="الهاتف"
                                     value="{{ $user->phone }}">
-                                <p class="error-message">هذا الحقل اجباري</p>
                                 <x-input-error field="phone" />
+                                <p class="error-message">هذا الحقل اجباري</p>
                             </div>
                         </div>
 
@@ -88,13 +71,11 @@
                                 <label for="state-options">الولاية</label>
                                 <div class="select-box">
                                     <select id="state-options" name="state_id">
-
                                         @foreach ($states as $state)
                                             <option value="{{ $state->id }}"
                                                 @if ($state->id == $user->state_id) @selected(true) @endif>
                                                 {{ $state->name }}</option>
                                         @endforeach
-
                                     </select>
                                 </div>
                                 <x-input-error field="state_id" />
@@ -120,10 +101,10 @@
                         <div class="row">
                             <div class="form-control">
                                 <label for="address">العنوان</label>
-                                <input required type="text" name="address" id="address" placeholder="العنوان"
-                                    value="{{ $user->address }}">
-                                <x-input-error field="address" />
+                                <input required type="text" name="address" value="{{ $user->address }}" id="address"
+                                    placeholder="العنوان">
                                 <p class="error-message">هذا الحقل اجباري</p>
+                                <x-input-error field="address" />
                             </div>
                         </div>
 
@@ -134,7 +115,7 @@
                 </div>
 
                 <div class="password-wrapper">
-                    <form action="{{ route('password.update') }}" method="post" id="passwords-form">
+                    <form action="{{ route('password.update') }}" method="post" id="passwords-form" novalidate>
                         @csrf
                         @method('PUT')
                         <h2>تغيير كلمة السرّ</h2>
@@ -165,9 +146,6 @@
                 </div>
             </div>
 
-        </div>
-
-
-
-    </main>
+        </section>
+    </div>
 @endsection
