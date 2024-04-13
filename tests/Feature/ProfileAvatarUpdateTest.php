@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\City;
@@ -34,7 +34,7 @@ class ProfileAvatarUpdateTest extends TestCase
                 'success', 'photo'
             ])->assertJsonMissingValidationErrors('avatar');
 
-        // Assert that the avatar path is saved in the user's profile
+
         $this->assertNotNull($user->photo);
         $this->assertStringContainsString('profiles_photos/', $user->photo);
     }
@@ -54,7 +54,7 @@ class ProfileAvatarUpdateTest extends TestCase
 
 
 
-    public function test_validation_fails_when_when_missing_the_avatar()
+    public function test_validation_fails_when_missing_the_avatar()
     {
 
         $user = $this->getUser();
@@ -66,18 +66,17 @@ class ProfileAvatarUpdateTest extends TestCase
 
         $response->assertJsonValidationErrorFor('avatar');
     }
-    public function test_validation_fails_when_when_the_avatar_mime_type_is_not_jpg_or_png()
+    public function test_validation_fails_when_the_avatar_mime_type_is_not_jpg_or_png()
     {
 
         Storage::fake('public');
         $user = $this->getUser();
-        $file = UploadedFile::fake()->image('avatar.jpg');
+        $file = UploadedFile::fake()->image('avatar.pdf');
 
         $response = $this->actingAs($user)
             ->postJson('/profile/avatar',  ['avatar' => $file], [
                 'X-Requested-With' => 'XMLHttpRequest',
             ]);
-
         $response->assertJsonValidationErrorFor('avatar');
     }
 
@@ -94,7 +93,7 @@ class ProfileAvatarUpdateTest extends TestCase
         ]);
         return $city->id;
     }
-    private function getUser()
+    private function getUser(): User
     {
 
         $state = $this->getState();

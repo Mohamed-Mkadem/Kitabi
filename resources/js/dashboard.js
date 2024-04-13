@@ -1,10 +1,12 @@
-import { hideOverlay, toggleOverlay, overlay, preventBodyScroll, allowBodyScroll } from "./functions.js";
+import { hideOverlay, toggleOverlay, overlay, preventBodyScroll, allowBodyScroll, hideAlerts } from "./functions.js";
 
 const layoutToggle = document.getElementById("layout-toggle");
 const root = document.documentElement;
 const aside = document.getElementById("aside");
 const asideToggle = document.getElementById("aside-toggle");
 const navLinks = document.querySelectorAll(".nav-link");
+
+hideAlerts()
 
 if (window.sessionStorage.preferedLayout == "full-width") {
     root.classList.add("full-width");

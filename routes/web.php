@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Client\FrontEndController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Client\FrontEndController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ Route::group([
     Route::view('/privacy', 'client.privacy')->name('privacy');
     Route::view('/contact', 'client.contact')->name('contact');
 
-    Route::middleware('auth')->group(function () {
+    Route::middleware('auth', 'isClient')->group(function () {
         Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -34,11 +36,31 @@ Route::group([
 });
 
 
+Route::view('admin/login', 'admin.login')
+    ->middleware('guest')
+    ->name('admin.login');
+Route::group([
+    'as' => 'admin.',
+    'middleware' => ['auth', 'isAdmin'],
+    'prefix' => 'dashboard'
+], function () {
+    Route::get('/home', [AdminController::class, 'home'])->name('home');
+    Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
+
+    // Categories
+    Route::get('/categories/filter', [CategoryController::class, 'filter'])->name('categories.filter');
+    Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
+    Route::post('categories/import', [CategoryController::class, 'import'])->name('categories.import');
+    Route::resource('categories', CategoryController::class)->except('create', 'edit', 'show');
+});
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 
 

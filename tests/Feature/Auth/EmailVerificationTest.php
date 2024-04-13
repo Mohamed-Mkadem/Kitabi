@@ -74,7 +74,7 @@ class EmailVerificationTest extends TestCase
         ]);
         return $city->id;
     }
-    private function getUser()
+    private function getUser(): User
     {
 
         $state = $this->getState();

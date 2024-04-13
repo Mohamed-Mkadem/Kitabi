@@ -4,10 +4,7 @@
     <title>كتابي -تعديل الملفّ الشخصي</title>
 @endpush
 @push('script')
-    @vite([
-        // 'resources/js/edit-profile.js',
-        'resources/js/getCities.js',
-    ])
+    @vite(['resources/js/edit-profile.js', 'resources/js/getCities.js'])
 @endpush
 @section('content')
     <main id="edit-profile">

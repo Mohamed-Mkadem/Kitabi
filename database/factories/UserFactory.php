@@ -22,6 +22,8 @@ class UserFactory extends Factory
             'last_name' => fake()->name(),
             'state_id' => 1,
             'city_id' => 1,
+            'role' => 'user',
+            'status' => 'active',
             'phone' => '20101202',
             'address' => '18, Awesome Street Name',
             'email' => fake()->unique()->safeEmail(),

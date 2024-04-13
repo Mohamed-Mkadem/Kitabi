@@ -19,6 +19,8 @@ class ProfileController extends Controller
     public function index(Request $request): View
     {
         $user = User::where('id', Auth::id())->with('state', 'city')->first();
+
+        if ($user->role == 'admin') return view('admin.profile.account', ['user' => $user]);
         return view('client.profile.account', ['user' => $user]);
     }
 
@@ -29,8 +31,16 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $states = State::with('cities')->get();
+        $user = $request->user();
+        if ($user->isAdmin()) {
+
+            return view('admin.profile.account-edit', [
+                'user' => $user,
+                'states' => $states
+            ]);
+        }
         return view('client.profile.profile-edit', [
-            'user' => $request->user(),
+            'user' => $user,
             'states' => $states
         ]);
     }
@@ -43,15 +53,18 @@ class ProfileController extends Controller
 
 
 
-        // dd($request);
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+        if ($user->isAdmin()) {
 
+            return Redirect::route('admin.profile.edit')->with('success', 'تمّ تعديل معلومات الحساب بنجاح');
+        }
 
         return Redirect::route('client.profile.edit')->with('success', 'تمّ تعديل معلومات الحساب بنجاح');
     }

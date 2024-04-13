@@ -187,12 +187,14 @@ export function showChoices(choicesArray) {
 }
 
 export function hideAlerts() {
-    setTimeout(() => {
-        alerts.forEach(alert => {
-            alert.classList.remove('show')
-        })
+    if (alerts) {
+        setTimeout(() => {
+            alerts.forEach(alert => {
+                alert.classList.remove('show')
+            })
 
-    }, 5000);
+        }, 5000);
+    }
 }
 export function alert(message, status, duration = 5000) {
     let alertDiv = document.createElement('div')
@@ -205,4 +207,21 @@ export function alert(message, status, duration = 5000) {
         let alert = document.querySelector('.alert.show')
         alert.remove()
     }, duration);
+}
+
+export function handlePaginationClick(nextPageUrl, container) {
+
+
+    fetch(nextPageUrl, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = data.html;
+            window.history.pushState({ path: nextPageUrl }, '', nextPageUrl);
+        })
+        .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
 }
