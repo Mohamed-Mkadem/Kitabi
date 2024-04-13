@@ -51,6 +51,7 @@ Route::group([
     Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
 
     Route::get('/categories/filter', [CategoryController::class, 'filter'])->name('categories.filter');
+    Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::resource('categories', CategoryController::class)->except('create', 'edit', 'show');
 });
 

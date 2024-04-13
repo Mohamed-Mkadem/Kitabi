@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CategoryExport;
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -26,7 +28,15 @@ class CategoryController extends Controller
         return view('admin.categories', ['categories' => $categories]);
     }
 
+    public function export(Request $request)
+    {
+        $query = $this->getQuery($request);
 
+        $export = new CategoryExport;
+        $export->setQuery($query);
+        return Excel::download($export, 'categories.xlsx');
+        // return Excel::download($export, 'categories.csv');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,6 +72,21 @@ class CategoryController extends Controller
 
     public function filter(Request $request)
     {
+        $query = $this->getQuery($request);
+        $categories = $query->paginate(20);
+
+        if ($request->ajax()) {
+            $view = view('admin.components.categories-table', ['categories' => $categories])->render();
+
+            return response()->json([
+                'html' => $view
+            ]);
+        }
+        return view('admin.categories', ['categories' => $categories]);
+    }
+
+    private function getQuery(Request $request)
+    {
         $query = Category::query();
 
         $search = $request->search ?? '';
@@ -86,16 +111,6 @@ class CategoryController extends Controller
         } else {
             $query->orderBy('created_at', 'desc');
         }
-
-        $categories = $query->paginate(20);
-
-        if ($request->ajax()) {
-            $view = view('admin.components.categories-table', ['categories' => $categories])->render();
-
-            return response()->json([
-                'html' => $view
-            ]);
-        }
-        return view('admin.categories', ['categories' => $categories]);
+        return $query;
     }
 }

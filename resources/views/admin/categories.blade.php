@@ -53,7 +53,7 @@
 
         <!-- Start Export / Import Holder -->
         <div class="import-export-holder d-flex a-center gap-1">
-            <a href="" class="">
+            <a href="{{ route('admin.categories.export') }}" id="export-link">
                 تصدير
                 <i class="fa-solid fa-file-arrow-down"></i>
             </a>
