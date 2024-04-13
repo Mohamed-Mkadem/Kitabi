@@ -1,4 +1,4 @@
-import { Validator } from "../../js/Validator.js";
+import { Validator } from "./Validator.js";
 let validator = new Validator;
 const addNewRecord = document.getElementById('new-record-form')
 

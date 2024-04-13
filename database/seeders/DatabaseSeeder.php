@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Admin\Category;
 use Illuminate\Database\Seeder;
 use Database\Seeders\StateSeeder;
 use Database\Seeders\CitiesSeeder;
@@ -20,10 +22,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call([
-            StateSeeder::class,
-            CitiesSeeder::class,
-            AdminSeeder::class
-        ]);
+
+        Category::factory(50)->create();
+        // $this->call([
+        //     StateSeeder::class,
+        //     CitiesSeeder::class,
+        //     AdminSeeder::class
+        // ]);
     }
 }

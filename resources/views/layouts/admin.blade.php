@@ -41,12 +41,14 @@
 
             <ul class="nav-links">
                 <li class="nav-item">
-                    <a href="{{ route('admin.home') }}" class="nav-link active">
+                    <a href="{{ route('admin.home') }}"
+                        class="nav-link {{ request()->is('dashboard/home*') ? 'active' : '' }}">
                         <i class="fa-solid fa-house"></i><span>الرئيسية </span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.categories.index') }}"
+                        class="nav-link {{ request()->is('dashboard/categories*') ? 'active' : '' }}">
                         <i class="fa-solid fa-list"></i><span>التصنيفات </span>
                     </a>
                 </li>

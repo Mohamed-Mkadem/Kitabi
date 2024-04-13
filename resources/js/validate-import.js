@@ -1,4 +1,4 @@
-import { Validator } from "../../js/Validator.js";
+import { Validator } from "./Validator.js";
 let validator = new Validator;
 const fileInput = document.getElementById('file-input')
 const fileInputErrorMessage = document.getElementById('file-input-error-message')

@@ -208,3 +208,20 @@ export function alert(message, status, duration = 5000) {
         alert.remove()
     }, duration);
 }
+
+export function handlePaginationClick(nextPageUrl, container) {
+
+
+    fetch(nextPageUrl, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = data.html;
+            window.history.pushState({ path: nextPageUrl }, '', nextPageUrl);
+        })
+        .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+}

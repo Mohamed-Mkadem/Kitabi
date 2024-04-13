@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Client\FrontEndController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Client\FrontEndController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +44,14 @@ Route::group([
     'middleware' => ['auth', 'isAdmin'],
     'prefix' => 'dashboard'
 ], function () {
-    Route::get('/', [AdminController::class, 'home'])->name('home');
-
+    Route::get('/home', [AdminController::class, 'home'])->name('home');
     Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
+
+    Route::get('/categories/filter', [CategoryController::class, 'filter'])->name('categories.filter');
+    Route::resource('categories', CategoryController::class)->except('create', 'edit', 'show');
 });
 
 
