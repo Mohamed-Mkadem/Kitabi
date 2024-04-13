@@ -70,7 +70,9 @@
                         </button>
                     </div>
 
-                    <form action="" method="post" id="import-form">
+                    <form action="{{ route('admin.categories.import') }}" method="post" id="import-form"
+                        enctype="multipart/form-data">
+                        @csrf
                         <div class="form-control">
                             <label class="form-label required">
                                 الملفّ
@@ -81,8 +83,7 @@
                                     <p>اضغط هنا لاختيار الملفّ</p>
                                     <p>الامتدادات المسموح بها هي xlsx, csv, xls</p>
                                 </label>
-                                <input type="file" name="" id="file-input"
-                                    accept="image/jpeg image/png, image/jpg, image/svg">
+                                <input type="file" name="file" id="file-input">
                             </div>
                             <p class="error-message" id="file-input-error-message">هذا الحقل إجباري</p>
                             <div class="upload-area d-flex j-start a-center ">
@@ -175,8 +176,6 @@
 
 
         <div class="results-container">
-
-
             @if (count($categories) > 0)
                 <div class="grid auth-cat-pub-grid">
                     @foreach ($categories as $category)

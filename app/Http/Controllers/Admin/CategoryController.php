@@ -8,6 +8,7 @@ use App\Models\Admin\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
+use App\Imports\CategoryImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
@@ -35,9 +36,18 @@ class CategoryController extends Controller
         $export = new CategoryExport;
         $export->setQuery($query);
         return Excel::download($export, 'categories.xlsx');
-        // return Excel::download($export, 'categories.csv');
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'mimes:xls,xlsx,csv']
+        ]);
+
+        Excel::import(new CategoryImport(), $request->file('file'));
+
+        return redirect()->back()->with('success', 'Categories Imported Successfully');
+    }
     /**
      * Store a newly created resource in storage.
      */

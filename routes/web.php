@@ -50,8 +50,10 @@ Route::group([
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
 
+    // Categories
     Route::get('/categories/filter', [CategoryController::class, 'filter'])->name('categories.filter');
     Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
+    Route::post('categories/import', [CategoryController::class, 'import'])->name('categories.import');
     Route::resource('categories', CategoryController::class)->except('create', 'edit', 'show');
 });
 
