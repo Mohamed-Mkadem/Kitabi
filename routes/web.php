@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\FrontEndController;
 
@@ -55,6 +56,11 @@ Route::group([
     Route::get('categories/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::post('categories/import', [CategoryController::class, 'import'])->name('categories.import');
     Route::resource('categories', CategoryController::class)->except('create', 'edit', 'show');
+    // Authors
+    Route::get('/authors/filter', [AuthorController::class, 'filter'])->name('authors.filter');
+    Route::get('authors/export', [AuthorController::class, 'export'])->name('authors.export');
+    Route::post('authors/import', [AuthorController::class, 'import'])->name('authors.import');
+    Route::resource('authors', AuthorController::class)->except('create', 'edit', 'show');
 });
 
 

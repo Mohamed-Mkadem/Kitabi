@@ -1,55 +1,57 @@
 @use "../../Abstracts/" as *;
 
 .card {
-  $cardPadding: 1em;
-  @include transition(background-color);
-  background-color: var(--clr-white);
-  border-radius: $radius5;
-  box-shadow: $boxShadow3;
-  padding: $cardPadding;
-  &.auth-cat-pub {
-    .card-header {
-      position: relative;
-      button.action-controller {
-        margin-inline-start: auto;
-        $size: 20px;
-        width: $size;
-        height: $size;
-        @include transition(background-color);
-        &:hover {
-          background-color: var(--clr-blueGray-0);
+    $cardPadding: 1em;
+    @include transition(background-color);
+    background-color: var(--clr-white);
+    border-radius: $radius5;
+    box-shadow: $boxShadow3;
+    padding: $cardPadding;
+    &.auth-cat-pub {
+        .card-header {
+            position: relative;
+            button.action-controller {
+                margin-inline-start: auto;
+                $size: 20px;
+                width: $size;
+                height: $size;
+                @include transition(background-color);
+                &:hover {
+                    background-color: var(--clr-blueGray-0);
+                }
+                i {
+                    pointer-events: none;
+                    z-index: 0;
+                }
+            }
         }
-        i {
+        .card-body {
+            @include flex(0, column, space-between, initial);
+            height: calc(100% - $cardPadding);
+            h3 {
+                color: var(--clr-main-500);
+                margin-block: 0.3em 1em;
+            }
+            .meta-data {
+                display: grid;
+                grid-template-columns: 70px 1fr;
+                gap: 0.5em;
+                width: 100%;
+                p {
+                    color: var(--clr-main-600);
+                    &.count {
+                    }
+                    &.date {
+                        justify-self: end;
+                    }
+                    i {
+                    }
+                    span {
+                    }
+                }
+            }
         }
-      }
     }
-    .card-body {
-      @include flex(0, column, space-between, initial);
-      height: calc(100% - $cardPadding);
-      h3 {
-        color: var(--clr-main-500);
-        margin-block: 0.3em 1em;
-      }
-      .meta-data {
-        display: grid;
-        grid-template-columns: 70px 1fr;
-        gap: 0.5em;
-        width: 100%;
-        p {
-          color: var(--clr-main-600);
-          &.count {
-          }
-          &.date {
-            justify-self: end;
-          }
-          i {
-          }
-          span {
-          }
-        }
-      }
-    }
-  }
 }
 
 // d-flex j-between a-center gap-1 f-wrap

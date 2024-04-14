@@ -53,7 +53,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.authors.index') }}"
+                        class="nav-link {{ request()->is('dashboard/authors*') ? 'active' : '' }}">
                         <i class="fa-regular fa-keyboard"></i>
                         <span>المؤلّفون </span>
                     </a>
