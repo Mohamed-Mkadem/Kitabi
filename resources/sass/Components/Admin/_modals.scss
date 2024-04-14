@@ -1,61 +1,64 @@
 @use "../../Abstracts/" as *;
 
 .modal {
-  background-color: var(--clr-white);
-  border-radius: $radius10;
-  box-shadow: $boxShadow3;
-  padding: 1em;
-  max-height: 90vh;
-  overflow-y: auto;
-  margin-block: 50px;
-  .modal-header {
-    margin-bottom: 2em;
-    h2 {
-      color: var(--clr-blueGray-600);
-      font-size: 25px;
+    background-color: var(--clr-white);
+    border-radius: $radius10;
+    box-shadow: $boxShadow3;
+    padding: 1em;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin-block: 50px;
+    .modal-header {
+        margin-bottom: 2em;
+        h2 {
+            color: var(--clr-blueGray-600);
+            font-size: 25px;
+        }
+        button.modal-closer {
+            background-color: var(--clr-red-600);
+            color: var(--clr-white-1000);
+            font-weight: bold;
+            width: 25px;
+            height: 25px;
+            border-radius: $radius5;
+            @include transition(background-color);
+            @include flex(0, row, center);
+            &:hover {
+                background-color: var(--clr-red-700);
+            }
+            i {
+                pointer-events: none;
+            }
+        }
     }
-    button.modal-closer {
-      background-color: var(--clr-red-600);
-      color: var(--clr-white-1000);
-      font-weight: bold;
-      width: 25px;
-      height: 25px;
-      border-radius: $radius5;
-      @include transition(background-color);
-      @include flex(0, row, center);
-      &:hover {
-        background-color: var(--clr-red-700);
-      }
+    form {
+        input {
+            background-color: var(--clr-black-950);
+            @include transition(border);
+            &:focus,
+            &:focus-visible {
+                border: 1px solid var(--clr-main-600);
+            }
+        }
     }
-  }
-  form {
-    input {
-      background-color: var(--clr-black-950);
-      @include transition(border);
-      &:focus,
-      &:focus-visible {
-        border: 1px solid var(--clr-main-600);
-      }
+    &.new-auth-cat-pub-modal {
+        width: min(500px, 90%);
     }
-  }
-  &.new-auth-cat-pub-modal {
-    width: min(500px, 90%);
-  }
-  &.confirm-form {
-    width: min(400px, 95%);
-    p {
-      margin-block: 1em;
-      color: var(--clr-main-600);
-      font-size: 20px;
-      text-wrap: balance;
+    &.confirm-form {
+        width: min(400px, 95%);
+        p {
+            margin-block: 1em;
+            color: var(--clr-main-600);
+            font-size: 20px;
+            text-wrap: balance;
+        }
+        i {
+            font-size: 30px;
+            margin-top: 0.5em;
+            color: var(--clr-main-600);
+        }
     }
-    i {
-      font-size: 30px;
-      margin-top: 0.5em;
-      color: var(--clr-main-600);
+    &.review-details {
+        width: min(500px, 90%);
     }
-  }
-  &.review-details {
-    width: min(500px, 90%);
-  }
 }

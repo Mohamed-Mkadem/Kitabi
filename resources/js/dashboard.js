@@ -5,6 +5,7 @@ const root = document.documentElement;
 const aside = document.getElementById("aside");
 const asideToggle = document.getElementById("aside-toggle");
 const navLinks = document.querySelectorAll(".nav-link");
+const contentSection = document.querySelector('section#content')
 
 hideAlerts()
 
@@ -42,10 +43,6 @@ if (asideToggle) {
         }
     });
 }
-
-
-
-
 
 const dropdownsTogglers = Array.from(
     document.querySelectorAll(".dropdown-toggle")
@@ -153,56 +150,6 @@ setTimeout(() => {
     }
 }, 1500);
 
-
-const cancelBtns = Array.from(document.querySelectorAll(".cancelBtn"));
-const modalsControllers = Array.from(document.querySelectorAll('.modal-controller'))
-const modalsClosers = Array.from(document.querySelectorAll('.modal-closer'))
-const modalHolders = Array.from(document.querySelectorAll('.modal-holder'))
-if (modalsClosers) {
-    modalsClosers.forEach(modalsCloser => {
-        modalsCloser.addEventListener('click', () => {
-            let modalHolder = modalsCloser.closest('.modal-holder')
-            modalHolder.classList.remove('show')
-            allowBodyScroll()
-        })
-    })
-}
-
-if (modalHolders) {
-    modalHolders.forEach(modalHolder => {
-        modalHolder.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal-holder')) {
-                modalHolder.classList.remove('show')
-                allowBodyScroll()
-            }
-        })
-    })
-}
-
-if (modalsControllers) {
-    modalsControllers.forEach(modalController => {
-        modalController.addEventListener('click', () => {
-            let modalHolder = modalController.nextElementSibling
-            modalHolder.classList.add('show')
-            preventBodyScroll()
-        })
-    })
-}
-
-
-
-const actionControllers = Array.from(document.querySelectorAll('.action-controller'))
-const actionHolders = Array.from(document.querySelectorAll('.actions-holder'))
-if (actionControllers) {
-    actionControllers.forEach(controller => {
-        controller.addEventListener('click', () => {
-            let actionHolder = controller.nextElementSibling
-            actionHolder.classList.toggle('show')
-            toggleOverlay()
-
-        })
-    })
-}
 if (overlay) {
     overlay.addEventListener('click', (e) => {
         if (e.target.classList.contains('overlay')) {
@@ -213,20 +160,10 @@ if (overlay) {
 }
 
 function hideActionHolders() {
+    const actionHolders = Array.from(document.querySelectorAll('.actions-holder'))
     actionHolders.forEach(holder => {
         holder.classList.remove('show')
     })
-}
-
-if (cancelBtns) {
-    cancelBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            let parentModalHolder = btn.closest('.modal-holder')
-            parentModalHolder.classList.remove("show");
-            allowBodyScroll()
-        });
-    });
 }
 
 
@@ -241,4 +178,53 @@ if (resetBtn) {
             })
         }
     })
+}
+
+
+contentSection.addEventListener('click', (e) => {
+    let target = e.target
+    if (target.classList.contains('action-controller')) {
+        toggleActionsHolder(target)
+    } else if (target.classList.contains('cancelBtn')) {
+        e.preventDefault();
+        manageCancelBtns(target)
+
+    } else if (target.classList.contains('modal-controller')) {
+        manageModalsControllers(target)
+    } else if (target.classList.contains('modal-holder')) {
+        manageModalsHolders(target)
+    } else if (target.classList.contains('modal-closer')) {
+        manageModalsClosers(target)
+    }
+
+})
+
+function toggleActionsHolder(actionController) {
+    let actionHolder = actionController.nextElementSibling
+    actionHolder.classList.toggle('show')
+    toggleOverlay()
+}
+
+function manageCancelBtns(target) {
+    let parentModalHolder = target.closest('.modal-holder')
+    parentModalHolder.classList.remove("show");
+    allowBodyScroll()
+}
+
+function manageModalsControllers(target) {
+
+    let modalHolder = target.nextElementSibling
+    modalHolder.classList.add('show')
+    preventBodyScroll()
+}
+
+function manageModalsHolders(target) {
+    target.classList.remove('show')
+    allowBodyScroll()
+}
+
+function manageModalsClosers(target) {
+    let modalHolder = target.closest('.modal-holder')
+    modalHolder.classList.remove('show')
+    allowBodyScroll()
 }
