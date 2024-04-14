@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 
 /*
@@ -61,6 +62,11 @@ Route::group([
     Route::get('authors/export', [AuthorController::class, 'export'])->name('authors.export');
     Route::post('authors/import', [AuthorController::class, 'import'])->name('authors.import');
     Route::resource('authors', AuthorController::class)->except('create', 'edit', 'show');
+    // Publishers
+    Route::get('/publishers/filter', [PublisherController::class, 'filter'])->name('publishers.filter');
+    Route::get('publishers/export', [PublisherController::class, 'export'])->name('publishers.export');
+    Route::post('publishers/import', [PublisherController::class, 'import'])->name('publishers.import');
+    Route::resource('publishers', PublisherController::class)->except('create', 'edit', 'show');
 });
 
 

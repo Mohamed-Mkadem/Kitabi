@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Author;
+namespace App\Http\Requests\Admin\Publisher;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAuthorRequest extends FormRequest
+class StorePublisherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreAuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'unique:authors,name']
+            'name' => ['required', 'string', 'unique:publishers,name']
         ];
     }
 }

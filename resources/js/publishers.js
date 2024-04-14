@@ -12,7 +12,7 @@ filterForm.addEventListener('submit', (e) => {
 
     let filters = createFilters();
     buildExportUrl()
-    let baseUrl = 'http://127.0.0.1:8000/dashboard/authors/filter'
+    let baseUrl = 'http://127.0.0.1:8000/dashboard/publishers/filter'
     let url = `${baseUrl}?${new URLSearchParams(filters)}`
     window.history.pushState({ path: url }, '', url);
     fetch(url, {
@@ -62,6 +62,6 @@ function createFilters() {
 
 function buildExportUrl() {
     let filters = createFilters()
-    let exportUrl = `http://127.0.0.1:8000/dashboard/authors/export?${new URLSearchParams(filters)}`
+    let exportUrl = `http://127.0.0.1:8000/dashboard/publishers/export?${new URLSearchParams(filters)}`
     exportLink.href = exportUrl
 }

@@ -60,11 +60,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.publishers.index') }}"
+                        class="nav-link {{ request()->is('dashboard/publishers*') ? 'active' : '' }}">
                         <i class="fa-solid fa-book-atlas"></i>
-                        <span> الناشرون </span>
+                        <span>الناشرون </span>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="#" role="button" aria-controls="#sub-menu" class="nav-link collapsed"> <i
                             class="fa-solid fa-book"></i> <span>الكتب</span></a>

@@ -1,11 +1,15 @@
 @extends('layouts.admin')
 
 @push('title')
-    <title>لوحة التحكّم - المؤلّفون</title>
+    <title>لوحة التحكّم - الناشرون</title>
 @endpush
 
 @push('script')
-    @vite(['resources/js/validate-auth-cat-pub.js', 'resources/js/authors.js', 'resources/js/validate-import.js'])
+    @vite([
+        'resources/js/validate-auth-cat-pub.js',
+        'resources/js/publishers.js',
+        'resources/js/validate-import.js',
+    ])
 @endpush
 
 
@@ -15,29 +19,29 @@
         <!-- Start Starter Header -->
         <div class="starter-header d-flex a-center j-between " id="starter-header">
             <div class="greeting-holder">
-                <h1>المؤلّفون</h1>
+                <h1>الناشرون</h1>
                 <x-breadcrumb class="dashboard" prevUrl="{{ route('admin.home') }}" prevValue="الرئيسية"
-                    currUrl="{{ route('admin.authors.index') }}" currValue="المؤلّفون" />
+                    currUrl="{{ route('admin.publishers.index') }}" currValue="الناشرون" />
             </div>
 
             <button class="starter-header-btn add-btn modal-controller" id="add-btn">
-                إضافة مؤلّف
+                إضافة ناشر
                 <i class="fa-solid fa-plus"></i>
             </button>
             <div class="modal-holder ">
                 <div class="modal new-auth-cat-pub-modal">
                     <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                        <h2>إضافة مؤلّف</h2>
+                        <h2>إضافة ناشر</h2>
                         <button class="modal-closer">
                             <i class="fa-solid fa-close"></i>
                         </button>
                     </div>
 
-                    <form action="{{ route('admin.authors.store') }}" method="post" id="new-record-form">
+                    <form action="{{ route('admin.publishers.store') }}" method="post" id="new-record-form">
                         @csrf
                         <div class="form-control mb-1">
-                            <label for="name-input" class="required">اسم المؤلّف</label>
-                            <input type="text" name="name" id="name-input" placeholder="اسم المؤلّف">
+                            <label for="name-input" class="required">اسم الناشر</label>
+                            <input type="text" name="name" id="name-input" placeholder="اسم الناشر">
                             <p class="error-message ">هذا الحقل إجباري</p>
                         </div>
 
@@ -53,7 +57,7 @@
 
         <!-- Start Export / Import Holder -->
         <div class="import-export-holder d-flex a-center gap-1">
-            <a href="{{ route('admin.authors.export') }}" id="export-link">
+            <a href="{{ route('admin.publishers.export') }}" id="export-link">
                 تصدير
                 <i class="fa-solid fa-file-arrow-down"></i>
             </a>
@@ -64,13 +68,13 @@
             <div class="modal-holder ">
                 <div class="modal new-auth-cat-pub-modal">
                     <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                        <h2>استيراد المؤلّفين</h2>
+                        <h2>استيراد الناشرين</h2>
                         <button class="modal-closer">
                             <i class="fa-solid fa-close"></i>
                         </button>
                     </div>
 
-                    <form action="{{ route('admin.authors.import') }}" method="post" id="import-form"
+                    <form action="{{ route('admin.publishers.import') }}" method="post" id="import-form"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-control">
@@ -111,12 +115,12 @@
                     <h2 class="mb-1 form-title">بحث متقدّم</h2>
                 </div>
                 <div class="filters-body">
-                    <form action="{{ route('admin.authors.filter') }}" method="get" class="form-grid" id="filter-form">
+                    <form action="{{ route('admin.publishers.filter') }}" method="get" class="form-grid" id="filter-form">
                         <div class="row mb-1">
                             <div class="form-control">
-                                <label for="name">اسم المؤلّف</label>
+                                <label for="name">اسم الناشر</label>
                                 <input class="form-element" type="text" name="search" id="name"
-                                    placeholder="اسم المؤلّف" value="{{ request()->query('search') }}">
+                                    placeholder="اسم الناشر" value="{{ request()->query('search') }}">
 
                             </div>
                             <div class="form-control">
@@ -176,10 +180,10 @@
 
 
         <div class="results-container">
-            @if (count($authors) > 0)
+            @if (count($publishers) > 0)
                 <div class="grid auth-cat-pub-grid">
-                    @foreach ($authors as $author)
-                        <!-- Start Author -->
+                    @foreach ($publishers as $publisher)
+                        <!-- Start publisher -->
                         <div class="card auth-cat-pub">
                             <div class="card-header d-flex j-end">
                                 <button class="action-controller">
@@ -191,20 +195,20 @@
                                         <div class="modal-holder ">
                                             <div class="modal new-auth-cat-pub-modal">
                                                 <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                                    <h2>تعديل المؤلّف</h2>
+                                                    <h2>تعديل الناشر</h2>
                                                     <button class="modal-closer">
                                                         <i class="fa-solid fa-close"></i>
                                                     </button>
                                                 </div>
 
-                                                <form action="{{ route('admin.authors.update', $author) }}"
+                                                <form action="{{ route('admin.publishers.update', $publisher) }}"
                                                     method="post" class="edit-form">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="form-control mb-1">
-                                                        <label for="name-input" class="required">اسم المؤلّف</label>
-                                                        <input type="text" name="name" value="{{ $author->name }}"
-                                                            placeholder="اسم المؤلّف">
+                                                        <label for="name-input" class="required">اسم الناشر</label>
+                                                        <input type="text" name="name"
+                                                            value="{{ $publisher->name }}" placeholder="اسم الناشر">
                                                         <p class="error-message ">هذا الحقل إجباري</p>
                                                     </div>
 
@@ -218,13 +222,13 @@
                                     <li>
                                         <button class="action-delete-btn modal-controller">حذف</button>
                                         <div class="modal-holder ">
-                                            <form action="{{ route('admin.authors.destroy', $author) }}" method="post"
-                                                class="modal t-center confirm-form">
+                                            <form action="{{ route('admin.publishers.destroy', $publisher) }}"
+                                                method="post" class="modal t-center confirm-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <i class=" fa-solid fa-trash"></i>
                                                 <p>
-                                                    هل أنت متأكد من أنّك تريد حذف هذا المؤلّف ؟
+                                                    هل أنت متأكد من أنّك تريد حذف هذا الناشر ؟
                                                 </p>
                                                 <div class="buttons d-flex j-center a-center gap-1 f-wrap">
                                                     <button class="cancelBtn">إلغاء</button>
@@ -236,7 +240,7 @@
                                 </ul>
                             </div>
                             <div class="card-body">
-                                <h3>{{ $author->name }}</h3>
+                                <h3>{{ $publisher->name }}</h3>
                                 <div class="meta-data ">
                                     <p class="count">
                                         <i class="fa-solid fa-book"></i>
@@ -244,17 +248,17 @@
                                     </p>
                                     <p class="date">
                                         <i class="fa-regular fa-clock"></i>
-                                        <span>{{ $author->created_at->format('d - m - Y') }}</span>
+                                        <span>{{ $publisher->created_at->format('d - m - Y') }}</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <!-- End Author -->
+                        <!-- End publisher -->
                     @endforeach
 
                 </div>
                 <!-- Start Pagination -->
-                {!! $authors->appends(request()->input())->links() !!}
+                {!! $publishers->appends(request()->input())->links() !!}
                 <!-- End Pagination -->
             @else
                 <div class="not-found-wrapper show">
