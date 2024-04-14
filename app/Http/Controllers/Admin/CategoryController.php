@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::latest()->paginate(20);
         if ($request->ajax()) {
-            $view = view('admin.components.categories-table', ['categories' => $categories])->render();
+            $view = view('admin.components.categories-results', ['categories' => $categories])->render();
 
             return response()->json([
                 'html' => $view
@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
         Excel::import(new CategoryImport(), $request->file('file'));
 
-        return redirect()->back()->with('success', 'Categories Imported Successfully');
+        return redirect()->back()->with('success', 'تمّ استيراد التصنيفات بنجاح');
     }
     /**
      * Store a newly created resource in storage.
@@ -86,7 +86,7 @@ class CategoryController extends Controller
         $categories = $query->paginate(20);
 
         if ($request->ajax()) {
-            $view = view('admin.components.categories-table', ['categories' => $categories])->render();
+            $view = view('admin.components.categories-results', ['categories' => $categories])->render();
 
             return response()->json([
                 'html' => $view

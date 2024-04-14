@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use Illuminate\Database\Seeder;
 use Database\Seeders\StateSeeder;
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Category::factory(50)->create();
+        Author::factory(30)->create();
         // $this->call([
         //     StateSeeder::class,
         //     CitiesSeeder::class,
