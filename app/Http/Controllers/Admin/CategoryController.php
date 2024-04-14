@@ -43,11 +43,35 @@ class CategoryController extends Controller
         $request->validate([
             'file' => ['required', 'mimes:xls,xlsx,csv']
         ]);
+        $oldCount = Category::count();
 
         Excel::import(new CategoryImport(), $request->file('file'));
 
-        return redirect()->back()->with('success', 'تمّ استيراد التصنيفات بنجاح');
+        $newCount = Category::count();
+
+        $message = $this->buildImportMessage($oldCount, $newCount);
+
+        return redirect()->back()->with('success', $message);
     }
+
+    private function buildImportMessage($oldCount, $newCount)
+    {
+        $message = '';
+        if ($newCount > $oldCount) {
+            $imported = $newCount - $oldCount;
+            if ($imported == 1) {
+                $message = 'تمّ استيراد تصنيف واحد بنجاح';
+            } else if ($imported > 1 and $imported <= 10) {
+                $message = "تمّ استيراد {$imported} تصنيفات بنجاح";
+            } else {
+                $message = "تمّ استيراد {$imported} تصنيفا بنجاح";
+            }
+        } else {
+            $message =  'لم يتمّ استيراد أي تصنيف من الملفّ. الملفّ خالي من البيانات الفريدة';
+        }
+        return $message;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

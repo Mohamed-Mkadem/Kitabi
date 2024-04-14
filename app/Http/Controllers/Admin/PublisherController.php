@@ -2,83 +2,84 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\AuthorExport;
-use App\Models\Admin\Author;
-use Illuminate\Http\Request;
+use App\Exports\PublisherExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Author\StoreAuthorRequest;
-use App\Http\Requests\Admin\Author\UpdateAuthorRequest;
-use App\Imports\AuthorImport;
+use App\Http\Requests\Admin\Publisher\StorePublisherRequest;
+use App\Http\Requests\Admin\Publisher\UpdatePublisherRequest;
+use App\Imports\PublisherImport;
+use App\Models\Publisher;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AuthorController extends Controller
+class PublisherController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $authors = Author::latest()->paginate(20);
+        $publishers = Publisher::latest()->paginate(20);
         if ($request->ajax()) {
-            $view = view('admin.components.authors-results', ['authors' => $authors])->render();
+            $view = view('admin.components.publishers-results', ['publishers' => $publishers])->render();
 
             return response()->json([
                 'html' => $view
             ]);
         }
-        return view('admin.authors', ['authors' => $authors]);
+        return view('admin.publishers', ['publishers' => $publishers]);
     }
+
 
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAuthorRequest $request)
+    public function store(StorePublisherRequest $request)
     {
-        Author::create($request->validated());
+        Publisher::create($request->validated());
 
-        return redirect()->back()->with('success', 'تمّ إضافة المؤلّف بنجاح');
+        return redirect()->back()->with('success', 'تمّ إضافة الناشر بنجاح');
     }
-
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAuthorRequest $request, Author $author)
+    public function update(UpdatePublisherRequest $request, Publisher $publisher)
     {
-        $author->update($request->validated());
+        $publisher->update($request->validated());
 
-        return redirect()->back()->with('success', 'تمّ تعديل المؤلّف بنجاح');
+        return redirect()->back()->with('success', 'تمّ تعديل الناشر بنجاح');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author)
+    public function destroy(Publisher $publisher)
     {
-        $author->delete();
-        return redirect()->back()->with('success', 'تمّ حذف المؤلّف بنجاح');
+
+        $publisher->delete();
+
+        return redirect()->back()->with('success', 'تمّ حذف الناشر بنجاح');
     }
+
+
 
     public function export(Request $request)
     {
         $query = $this->getQuery($request);
 
-        $export = new AuthorExport;
+        $export = new PublisherExport();
         $export->setQuery($query);
-
-        return Excel::download($export, 'authors.xlsx');
+        return Excel::download($export, 'publishers.xlsx');
     }
-
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => ['required', 'mimes:xls,xlsx,csv']
-        ]);
+        $request->validate(['file' => ['required', 'mimes:xlsx,csv,xls']]);
 
-        $oldCount = Author::count();
-        Excel::import(new AuthorImport(), $request->file('file'));
-        $newCount = Author::count();
+        $oldCount = Publisher::count();
+
+        Excel::import(new PublisherImport(), $request->file('file'));
+        $newCount = Publisher::count();
 
         $message = $this->buildImportMessage($oldCount, $newCount);
 
@@ -91,38 +92,35 @@ class AuthorController extends Controller
         if ($newCount > $oldCount) {
             $imported = $newCount - $oldCount;
             if ($imported == 1) {
-                $message = 'تمّ استيراد مؤلّف واحد بنجاح';
+                $message = 'تمّ استيراد ناشر واحد بنجاح';
             } else if ($imported > 1 and $imported <= 10) {
-                $message = "تمّ استيراد {$imported} مؤلّفين بنجاح";
+                $message = "تمّ استيراد {$imported} ناشرين بنجاح";
             } else {
-                $message = "تمّ استيراد {$imported} مؤلّفا بنجاح";
+                $message = "تمّ استيراد {$imported} ناشرا بنجاح";
             }
         } else {
-            $message =  'لم يتمّ استيراد أي مؤلّف من الملفّ. الملفّ خالي من البيانات الفريدة';
+            $message =  'لم يتمّ استيراد أي ناشر من الملفّ. الملفّ خالي من البيانات الفريدة';
         }
         return $message;
     }
-
-
     public function filter(Request $request)
     {
         $query = $this->getQuery($request);
-        $authors = $query->paginate(20);
+        $publishers = $query->paginate(20);
 
         if ($request->ajax()) {
-            $view = view('admin.components.authors-results', ['authors' => $authors])->render();
+            $view = view('admin.components.publishers-results', ['publishers' => $publishers])->render();
 
             return response()->json([
                 'html' => $view
             ]);
         }
-
-        return view('admin.authors', ['authors' => $authors]);
+        return view('admin.publishers', ['publishers' => $publishers]);
     }
 
     private function getQuery(Request $request)
     {
-        $query = Author::query();
+        $query = Publisher::query();
 
         $search = $request->search ?? '';
 
