@@ -99,6 +99,7 @@ function updateFilters() {
         }
     }
 
+
     const queryString = filtersArray.join('&');
     sessionStorage.setItem('filters', JSON.stringify(filters))
     const newUrl = `${window.location.pathname}?${queryString}`;

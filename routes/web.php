@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
@@ -67,6 +68,12 @@ Route::group([
     Route::get('publishers/export', [PublisherController::class, 'export'])->name('publishers.export');
     Route::post('publishers/import', [PublisherController::class, 'import'])->name('publishers.import');
     Route::resource('publishers', PublisherController::class)->except('create', 'edit', 'show');
+
+
+    // Books
+
+    Route::get('/books/filter', [BookController::class, 'filter'])->name('books.filter');
+    Route::resource('books', BookController::class);
 });
 
 

@@ -68,13 +68,14 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" role="button" aria-controls="#sub-menu" class="nav-link collapsed"> <i
+                    <a href="#" role="button" aria-controls="#sub-menu"
+                        class="nav-link collapsed {{ request()->is('dashboard/books*') ? 'active' : '' }}"> <i
                             class="fa-solid fa-book"></i> <span>الكتب</span></a>
                     <ul class="nav-sub-dropdown">
                         <li class="nav-item">
                             <a href="">إضافة كتاب</a>
                         </li>
-                        <li class="nav-item"><a href="">عرض الكتب</a></li>
+                        <li class="nav-item"><a href="{{ route('admin.books.index') }}">عرض الكتب</a></li>
                     </ul>
                 </li>
 
