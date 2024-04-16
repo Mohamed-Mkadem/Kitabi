@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\BookExport;
 use App\Models\Admin\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
 {
@@ -176,5 +178,14 @@ class BookController extends Controller
         }
 
         return $query;
+    }
+
+    public function export(Request $request)
+    {
+        $query = $this->getQuery($request);
+
+        $export = new BookExport();
+        $export->setQuery($query);
+        return Excel::download($export, 'books.xlsx');
     }
 }

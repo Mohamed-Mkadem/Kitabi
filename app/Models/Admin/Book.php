@@ -49,4 +49,10 @@ class Book extends Model
             get: fn () => number_format(($this->price / 1000), 3, ','),
         );
     }
+    public function formattedCostPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => number_format(($this->cost_price / 1000), 3, ','),
+        );
+    }
 }

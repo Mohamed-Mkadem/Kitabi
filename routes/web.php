@@ -72,6 +72,8 @@ Route::group([
 
     // Books
 
+    Route::get('/books/import', [BookController::class, 'import'])->name('books.import');
+    Route::get('/books/export', [BookController::class, 'export'])->name('books.export');
     Route::get('/books/filter', [BookController::class, 'filter'])->name('books.filter');
     Route::resource('books', BookController::class);
 });
