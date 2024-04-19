@@ -10,6 +10,8 @@
 
 @section('content')
     <section class="content" id="content">
+
+        @include('components.errors')
         <!-- Start Starter Header -->
         <div class="starter-header d-flex a-center j-between " id="starter-header">
             <div class="greeting-holder">
@@ -49,7 +51,9 @@
                         </button>
                     </div>
 
-                    <form action="" method="post" id="import-form">
+                    <form action="{{ route('admin.books.import') }}" method="post" id="import-form"
+                        enctype="multipart/form-data">
+                        @csrf
                         <div class="form-control">
                             <label class="form-label required">
                                 الملفّ
@@ -60,7 +64,7 @@
                                     <p>اضغط هنا لاختيار الملفّ</p>
                                     <p>الامتدادات المسموح بها هي xlsx, csv, xls</p>
                                 </label>
-                                <input type="file" name="" id="file-input"
+                                <input type="file" name="file" id="file-input"
                                     accept="image/jpeg image/png, image/jpg, image/svg">
                             </div>
                             <p class="error-message" id="file-input-error-message">هذا الحقل إجباري</p>

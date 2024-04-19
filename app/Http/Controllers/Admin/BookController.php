@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Book\StoreBookRequest;
 use App\Http\Requests\Admin\Book\UpdateBookRequest;
+use App\Imports\BookImport;
 use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
+use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
@@ -252,5 +254,38 @@ class BookController extends Controller
         $export = new BookExport();
         $export->setQuery($query);
         return Excel::download($export, 'books.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'mimes:xlsx,csv,xls']
+        ]);
+
+        $oldCount = Book::count();
+
+        Excel::import(new BookImport(), $request->file('file'));
+        $newCount = Book::count();
+
+        $message = $this->buildImportMessage($oldCount, $newCount);
+
+        return redirect()->back()->with('success', $message);
+    }
+    private function buildImportMessage($oldCount, $newCount)
+    {
+        $message = '';
+        if ($newCount > $oldCount) {
+            $imported = $newCount - $oldCount;
+            if ($imported == 1) {
+                $message = 'تمّ استيراد كتاب واحد بنجاح';
+            } else if ($imported > 1 and $imported <= 10) {
+                $message = "تمّ استيراد {$imported} كتب بنجاح";
+            } else {
+                $message = "تمّ استيراد {$imported} كتابا بنجاح";
+            }
+        } else {
+            $message =  'لم يتمّ استيراد أي كتاب من الملفّ. الملفّ خالي من البيانات الفريدة';
+        }
+        return $message;
     }
 }
