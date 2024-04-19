@@ -2,11 +2,12 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Admin\Book;
 use App\Traits\HasBooks;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Author extends Model
+class Publisher extends Model
 {
     use HasFactory, HasBooks;
 

@@ -2,12 +2,13 @@
 
 namespace App\Models\Admin;
 
+use App\Traits\HasBooks;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, HasBooks;
 
     protected $fillable = ['name'];
 }

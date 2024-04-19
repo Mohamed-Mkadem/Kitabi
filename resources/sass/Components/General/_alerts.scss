@@ -3,7 +3,7 @@
 .alert {
     width: min(300px, 100%);
     position: fixed;
-    top: -50px;
+    top: -300px;
     @include centerHorizontally;
     padding: 1em;
     border-radius: $radius10;

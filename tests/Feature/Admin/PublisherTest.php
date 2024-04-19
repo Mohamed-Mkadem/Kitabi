@@ -6,7 +6,7 @@ use Tests\TestCase;
 use App\Models\City;
 use App\Models\User;
 use App\Models\State;
-use App\Models\Publisher;
+use App\Models\Admin\Publisher;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

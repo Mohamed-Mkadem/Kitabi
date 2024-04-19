@@ -56,6 +56,11 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
+
+        if ($author->booksCount()) {
+            return redirect()->back()->with('error', 'الرجاء حذف كتب المؤلّف كي تتمكّن من حذف المؤلّف');
+        }
+
         $author->delete();
         return redirect()->back()->with('success', 'تمّ حذف المؤلّف بنجاح');
     }

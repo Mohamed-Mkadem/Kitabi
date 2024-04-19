@@ -10,8 +10,8 @@
 
 
 @section('content')
-    @include('components.errors')
     <section class="content" id="content">
+
         <!-- Start Starter Header -->
         <div class="starter-header d-flex a-center j-between " id="starter-header">
             <div class="greeting-holder">
@@ -240,7 +240,7 @@
                                 <div class="meta-data ">
                                     <p class="count">
                                         <i class="fa-solid fa-book"></i>
-                                        <span>15 كتابا</span>
+                                        <span>{{ $author->booksCount() }}</span>
                                     </p>
                                     <p class="date">
                                         <i class="fa-regular fa-clock"></i>
