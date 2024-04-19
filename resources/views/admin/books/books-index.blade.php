@@ -349,13 +349,13 @@
                                 </div>
                             </div>
                             <div class="img-holder">
-                                <img loading="lazy" src="{{ $book->image }}" alt="">
-                                {{-- <img loading="lazy" src="{{ asset('storage/' . $book->image) }}" alt=""> --}}
+                                {{-- <img loading="lazy" src="{{ $book->image }}" alt=""> --}}
+                                <img loading="lazy" src="{{ asset('storage/' . $book->image) }}" alt="">
                             </div>
                             <div class="product-info">
 
                                 <p class="category">{{ $book->category->name }}</p>
-                                <h3 class="title"><a href="{{ route('admin.books.edit', $book) }}">
+                                <h3 class="title"><a href="{{ route('admin.books.show', $book) }}">
                                         {{ $book->name }}</a></h3>
                                 <p class="price"><span> {{ $book->formattedPrice }} </span> د.ت</p>
                                 <p class="author"> {{ $book->author->name }}</p>

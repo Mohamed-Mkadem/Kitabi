@@ -55,4 +55,9 @@ class Book extends Model
             get: fn () => number_format(($this->cost_price / 1000), 3, ','),
         );
     }
+
+    public function isOutOfStock()
+    {
+        return $this->quantity == 0;
+    }
 }

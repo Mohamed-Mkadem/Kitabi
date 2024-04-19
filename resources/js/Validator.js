@@ -53,7 +53,9 @@ export class Validator {
     }
 
     validateFileType(actualFileInput, allowedExtensions) {
-        const fileName = actualFileInput.files[0].name;
+        const file = actualFileInput.files[0]
+        if (!file) return false
+        const fileName = file.name;
         const extension = '.' + fileName.split('.').pop();
         return allowedExtensions.some(allowedExt => allowedExt.toLowerCase() === extension.toLowerCase());
     }
@@ -87,7 +89,7 @@ export class Validator {
         if (fileName.length > 12) {
             const splitName = fileName.split('.');
             fileName = `${splitName[0].substring(0, 12)}... .${splitName[1]}`;
-            console.log(fileName);
+
         }
 
         // Display file information

@@ -48,49 +48,50 @@ const filterForm = document.getElementById('filter-form')
 
 
 
-
-buildExportUrl()
-
-filterForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-
-    let filters = createFilters();
+if (exportLink) {
     buildExportUrl()
-
-
-    const queryString = buildQueryString(filters);
-
-    const url = `http://127.0.0.1:8000/dashboard/books/filter?${queryString}`;
-    window.history.pushState({ path: url }, '', url);
-
-    fetch(url, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-        }
-
-    }).then(response => response.json())
-        .then(data => {
-
-            container.innerHTML = data.html
-
-        })
-        .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
-
-})
-
-
-
-
-container.addEventListener('click', (e) => {
-    let target = e.target
-    if (target.classList.contains('page-link') && target.tagName == 'A') {
+}
+if (filterForm) {
+    filterForm.addEventListener('submit', (e) => {
         e.preventDefault()
-        let nextPageUrl = target.href
-        handlePaginationClick(nextPageUrl, container)
-    }
-});
 
+        let filters = createFilters();
+        buildExportUrl()
+
+
+        const queryString = buildQueryString(filters);
+
+        const url = `http://127.0.0.1:8000/dashboard/books/filter?${queryString}`;
+        window.history.pushState({ path: url }, '', url);
+
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+
+        }).then(response => response.json())
+            .then(data => {
+
+                container.innerHTML = data.html
+
+            })
+            .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+
+    })
+}
+
+
+if (container) {
+    container.addEventListener('click', (e) => {
+        let target = e.target
+        if (target.classList.contains('page-link') && target.tagName == 'A') {
+            e.preventDefault()
+            let nextPageUrl = target.href
+            handlePaginationClick(nextPageUrl, container)
+        }
+    });
+}
 
 function createFilters() {
     let searchInputValue = filterForm.querySelector('input[name="search"').value

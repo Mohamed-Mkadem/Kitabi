@@ -73,7 +73,7 @@
                             class="fa-solid fa-book"></i> <span>الكتب</span></a>
                     <ul class="nav-sub-dropdown">
                         <li class="nav-item">
-                            <a href="">إضافة كتاب</a>
+                            <a href="{{ route('admin.books.create') }}">إضافة كتاب</a>
                         </li>
                         <li class="nav-item"><a href="{{ route('admin.books.index') }}">عرض الكتب</a></li>
                     </ul>
@@ -138,7 +138,7 @@
                             <ul class="notifications-wrapper">
                                 <!-- Start Notification -->
                                 <li class="notification unread">
-                                    <img src="../../assets/imgs/user.jpg" alt="">
+                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
                                     <div class="details">
                                         <p class="notification-body">
                                             <a href="" class="unread">
@@ -153,7 +153,7 @@
                                 <!-- End Notification -->
                                 <!-- Start Notification -->
                                 <li class="notification unread">
-                                    <img src="../../assets/imgs/user.jpg" alt="">
+                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
                                     <div class="details">
                                         <p class="notification-body">
                                             <a href="" class="unread">
@@ -168,7 +168,7 @@
                                 <!-- End Notification -->
                                 <!-- Start Notification -->
                                 <li class="notification ">
-                                    <img src="../../assets/imgs/user.jpg" alt="">
+                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
                                     <div class="details">
                                         <p class="notification-body">
                                             <a href="" class="unread">
@@ -183,7 +183,7 @@
                                 <!-- End Notification -->
                                 <!-- Start Notification -->
                                 <li class="notification unread">
-                                    <img src="../../assets/imgs/user.jpg" alt="">
+                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
                                     <div class="details">
                                         <p class="notification-body">
                                             <a href="" class="unread">
