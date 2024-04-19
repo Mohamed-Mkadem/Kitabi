@@ -98,6 +98,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
+        if ($category->booksCount()) {
+            return redirect()->back()->with('error', 'الرجاء حذف كتب التصنيف كي تتمكّن من حذف التصنيف');
+        }
+
         $category->delete();
 
         return redirect()->back()->with('success', 'تمّ حذف التصنيف بنجاح');

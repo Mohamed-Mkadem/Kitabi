@@ -57,6 +57,10 @@ class PublisherController extends Controller
     public function destroy(Publisher $publisher)
     {
 
+        if ($publisher->booksCount()) {
+            return redirect()->back()->with('error', 'الرجاء حذف كتب الناشر كي تتمكّن من حذف الناشر');
+        }
+
         $publisher->delete();
 
         return redirect()->back()->with('success', 'تمّ حذف الناشر بنجاح');

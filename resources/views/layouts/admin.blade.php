@@ -234,6 +234,7 @@
 
     {{-- @include('components.errors') --}}
     @include('components.success-alert')
+    @include('components.error-alert')
 </body>
 
 </html>
