@@ -36,7 +36,7 @@
             </li>
             <li>
 
-                <a href="shop.html" current-page="{{ request()->is('shop*') ? 'true' : '' }}">
+                <a href="{{ route('client.shop') }}" current-page="{{ request()->is('shop*') ? 'true' : '' }}">
                     <i class="fa-solid fa-shop"></i>
                     المتجر
                 </a>
@@ -84,7 +84,8 @@
                         <li><a current-page="{{ request()->is('/') ? 'true' : '' }}"
                                 href="{{ route('client.home') }}">الرئيسية</a>
                         </li>
-                        <li><a current-page="{{ request()->is('shop*') ? 'true' : '' }}" href="/shop">المتجر</a></li>
+                        <li><a current-page="{{ request()->is('shop*') ? 'true' : '' }}"
+                                href="{{ route('client.shop') }}">المتجر</a></li>
                         <li><a current-page="{{ request()->is('order*') ? 'true' : '' }}" href="/orders">الطلبات</a>
                         </li>
                         <li><a current-page="{{ request()->is('about') ? 'true' : '' }}"
@@ -187,7 +188,7 @@
                         <h2>الصفحات</h2>
                         <ul>
                             <li><a href="{{ route('client.home') }}">الرئيسية</a></li>
-                            <li><a href="/shop">المتجر</a></li>
+                            <li><a href="{{ route('client.shop') }}">المتجر</a></li>
                             <li><a href="{{ route('client.about') }} ">من نحن</a></li>
                             <li><a href="{{ route('client.contact') }}">اتصل بنا</a></li>
 

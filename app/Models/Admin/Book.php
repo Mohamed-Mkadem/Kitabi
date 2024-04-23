@@ -9,10 +9,11 @@ use App\Models\Admin\Publisher;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -46,13 +47,13 @@ class Book extends Model
     public function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => number_format(($this->price / 1000), 3, ','),
+            get: fn () => number_format(($this->price / 1000), 3),
         );
     }
     public function formattedCostPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => number_format(($this->cost_price / 1000), 3, ','),
+            get: fn () => number_format(($this->cost_price / 1000), 3),
         );
     }
 

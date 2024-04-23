@@ -17,30 +17,51 @@ export const listVueToggle = document.getElementById('list-vue')
 export const gridVueToggle = document.getElementById('grid-vue')
 export const productsGrid = document.querySelector('.products-grid');
 export const alerts = Array.from(document.querySelectorAll('.alert.show'))
+export const productsContainers = Array.from(document.querySelectorAll('.products-container'))
 export function listenForAddingProductToCart(cart) {
-    addToCartBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            let quantity = (btn.nextElementSibling.querySelector('input[type=number]').value).trim()
-            let link = btn.closest('.product').querySelector('h3.title a')
 
-            let product = {
-                productId: parseInt(btn.dataset.productId),
-                quantity: parseInt(quantity),
-                imageUrl: btn.closest('.product').querySelector('.img-holder img').src,
-                title: link ? link.textContent : btn.closest('.product').querySelector('h3.title ').textContent,
-                price: btn.closest('.product').querySelector('p.price span').textContent * 1000,
-                author: btn.closest('.product').querySelector('p.author').textContent,
-                publisher: btn.closest('.product').querySelector('p.publisher').textContent,
-                availability: true,
+    productsContainers.forEach(container => {
+        container.addEventListener('click', e => {
+            let target = e.target
+
+
+            if (target.classList.contains('add-to-cart-btn')) {
+                let quantity = (target.nextElementSibling.querySelector('input[type=number]').value).trim()
+                let link = target.closest('.product').querySelector('h3.title a')
+
+                let product = {
+                    productId: parseInt(target.dataset.productId),
+                    quantity: parseInt(quantity),
+                    imageUrl: target.closest('.product').querySelector('.img-holder img').src,
+                    title: link ? link.textContent : target.closest('.product').querySelector('h3.title ').textContent,
+                    price: target.closest('.product').querySelector('p.price span').textContent * 1000,
+                    author: target.closest('.product').querySelector('p.author').textContent,
+                    publisher: target.closest('.product').querySelector('p.publisher').textContent,
+                    availability: true,
+                }
+                cart.add(product)
+                target.setAttribute('disabled', 'true')
+                setTimeout(() => {
+                    target.removeAttribute('disabled')
+                }, 1000)
+            } else if (target.classList.contains('minus-btn')) {
+                let quantityInput = target.nextElementSibling
+                if (quantityInput.value == 1) return
+                quantityInput.value--
+            } else if (target.classList.contains('plus-btn')) {
+                let quantityInput = target.previousElementSibling
+                quantityInput.value++
+            } else if (target.classList.contains('quantity-input')) {
+                target.addEventListener('change', () => {
+                    if (0 >= target.value) {
+                        target.value = 1
+                    }
+                })
             }
-            cart.add(product)
-            btn.setAttribute('disabled', 'true')
-            setTimeout(() => {
-                btn.removeAttribute('disabled')
-            }, 1000)
-
         })
     })
+
+
 
 }
 
@@ -134,12 +155,14 @@ export function closeModalHolder(modalHolder) {
 export function addListVue() {
     listVueToggle.setAttribute('aria-selected', 'true')
     gridVueToggle.removeAttribute('aria-selected')
-    productsGrid.classList.add('list')
+    let resultsContainer = document.getElementById('results-container')
+    resultsContainer.classList.add('list')
 }
 export function removeListVue() {
     gridVueToggle.setAttribute('aria-selected', 'true')
     listVueToggle.removeAttribute('aria-selected')
-    productsGrid.classList.remove('list')
+    let resultsContainer = document.getElementById('results-container')
+    resultsContainer.classList.remove('list')
 }
 
 

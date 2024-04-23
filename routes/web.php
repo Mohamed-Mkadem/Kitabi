@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
+use App\Http\Controllers\Client\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ Route::group([
     'as' => 'client.'
 ], function () {
     Route::get('/', [FrontEndController::class, 'index'])->name('home');
+    Route::get('/shop/filter', [ShopController::class, 'filter'])->name('shop.filter');
+    Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
+    Route::get('/book/{book}', [ShopController::class, 'book'])->name('shop.book');
     Route::view('/about', 'client.about')->name('about');
     Route::view('/faqs', 'client.faqs')->name('faqs');
     Route::view('/terms', 'client.terms')->name('terms');
