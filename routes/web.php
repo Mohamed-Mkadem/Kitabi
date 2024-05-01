@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
+use App\Http\Controllers\Client\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,17 +25,25 @@ Route::group([
     'as' => 'client.'
 ], function () {
     Route::get('/', [FrontEndController::class, 'index'])->name('home');
+    Route::get('/shop/product/availability/{id}/{quantity}', [ShopController::class, 'isAvailableProduct'])->name('productAvailability');
+    Route::get('/cart', [FrontEndController::class, 'cart'])->name('cart');
+    Route::get('/shop/filter', [ShopController::class, 'filter'])->name('shop.filter');
+    Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
+    Route::get('/book/{book}', [ShopController::class, 'book'])->name('shop.book');
     Route::view('/about', 'client.about')->name('about');
     Route::view('/faqs', 'client.faqs')->name('faqs');
     Route::view('/terms', 'client.terms')->name('terms');
     Route::view('/privacy', 'client.privacy')->name('privacy');
     Route::view('/contact', 'client.contact')->name('contact');
 
-    Route::middleware('auth', 'isClient')->group(function () {
-        Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
+    Route::middleware('auth')->group(function () {
+        Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
+        Route::middleware('isClient')->group(function () {
+            Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
+            Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+            Route::post('/profile/avatar', [ProfileController::class, 'avatar'])->name('profile.avatar');
+        });
     });
 });
 

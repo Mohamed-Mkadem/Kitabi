@@ -1,9 +1,11 @@
 const stateSelect = document.getElementById('state-options')
 const citiesSelect = document.getElementById('cities-options')
 
-stateSelect.addEventListener('change', () => {
-    getCities(stateSelect.value)
-})
+if (stateSelect) {
+    stateSelect.addEventListener('change', () => {
+        getCities(stateSelect.value)
+    })
+}
 
 
 function getCities(stateId) {

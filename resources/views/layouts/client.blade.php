@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/imgs/favicon.png') }}">
     @stack('title')
     @stack('meta')
+    @stack('token')
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +37,7 @@
             </li>
             <li>
 
-                <a href="shop.html" current-page="{{ request()->is('shop*') ? 'true' : '' }}">
+                <a href="{{ route('client.shop') }}" current-page="{{ request()->is('shop*') ? 'true' : '' }}">
                     <i class="fa-solid fa-shop"></i>
                     المتجر
                 </a>
@@ -48,7 +49,7 @@
                 </a>
             </li>
             <li>
-                <a href="cart.html" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
+                <a href="{{ route('client.cart') }}" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
                     <span id="fixed-menu-count">9</span>
                     <i class="fa-solid fa-bag-shopping"></i>
                     السلّة
@@ -84,7 +85,8 @@
                         <li><a current-page="{{ request()->is('/') ? 'true' : '' }}"
                                 href="{{ route('client.home') }}">الرئيسية</a>
                         </li>
-                        <li><a current-page="{{ request()->is('shop*') ? 'true' : '' }}" href="/shop">المتجر</a></li>
+                        <li><a current-page="{{ request()->is('shop*') ? 'true' : '' }}"
+                                href="{{ route('client.shop') }}">المتجر</a></li>
                         <li><a current-page="{{ request()->is('order*') ? 'true' : '' }}" href="/orders">الطلبات</a>
                         </li>
                         <li><a current-page="{{ request()->is('about') ? 'true' : '' }}"
@@ -135,7 +137,7 @@
                 </a>
                 <div class="dropdown-holder cart-holder">
 
-                    <a href="cart.html" class="user-action-item icon-btn">
+                    <a href="{{ route('client.cart') }}" class="user-action-item icon-btn">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span id="cart-count">0</span>
                     </a>
@@ -187,7 +189,7 @@
                         <h2>الصفحات</h2>
                         <ul>
                             <li><a href="{{ route('client.home') }}">الرئيسية</a></li>
-                            <li><a href="/shop">المتجر</a></li>
+                            <li><a href="{{ route('client.shop') }}">المتجر</a></li>
                             <li><a href="{{ route('client.about') }} ">من نحن</a></li>
                             <li><a href="{{ route('client.contact') }}">اتصل بنا</a></li>
 
