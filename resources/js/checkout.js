@@ -1,12 +1,19 @@
 
-import { Cart } from '../../js/Cart.js'
-import { Validator } from '../../js/Validator.js'
+import { Cart } from './Cart.js'
+import { Validator } from './Validator.js'
 
 let cart = new Cart;
 let validator = new Validator;
-// Maybe we need to pass the user object to the method to print the user shipping details
-// Add the event listener to the form to send the request
-cart.printOnCheckoutPage()
+(async () => {
+    const hasUpdates = await cart.hasQuantityUpdates();
+    if (hasUpdates) {
+        cart.informUserToCheckQuantityUpdates()
+    } else {
+        cart.printOnCheckoutPage(window.user, window.statesData, window.cities, window.shippingCost)
+    }
+})();
+
+
 const checkoutForm = document.getElementById('checkout-form')
 
 if (checkoutForm) {
@@ -67,4 +74,6 @@ if (checkoutForm) {
             checkoutForm.submit();
         }
     })
+
+
 }

@@ -1,5 +1,5 @@
 import { Cart } from './Cart.js'
-
+import { alert } from "./functions.js";
 let cart = new Cart
 
 let cartContainer = cart.cartContainer
@@ -8,9 +8,10 @@ let cartContainer = cart.cartContainer
 
 
 cartContainer.addEventListener('click', e => {
+    let target = e.target
     // Product removal logic
-    if (e.target.classList.contains('remove-btn')) {
-        let targetTr = e.target.closest('tr')
+    if (target.classList.contains('remove-btn')) {
+        let targetTr = target.closest('tr')
 
         if (cart.remove(targetTr.dataset.product)) {
             targetTr.remove()
@@ -20,37 +21,44 @@ cartContainer.addEventListener('click', e => {
                 cart.printOnPage()
             }
         } else {
-            cart.generateAlertHtml('error', 'حصل خطأ ما أثناء حذف المنتج. الرجاء المحاولة لاحقا')
-            setTimeout(() => {
-                let alert = document.querySelector('.alert.show')
-                alert.remove()
-            }, 3000);
+            alert('حصل خطأ ما أثناء حذف المنتج. الرجاء المحاولة لاحقا', 'error')
         }
     }
 
     // Quantity update logic
-    if (e.target.classList.contains('plus-btn')) {
-        let targetTr = e.target.closest('tr')
-        let quantityInput = e.target.previousElementSibling
+    if (target.classList.contains('plus-btn')) {
+        let targetTr = target.closest('tr')
+        let quantityInput = target.previousElementSibling
         let totalPriceTd = targetTr.querySelector('.total-td')
         let existingProduct = cart.has(cart.getCart(), targetTr.dataset.product)
         if (existingProduct) {
-            quantityInput.value++
-            cart.update(existingProduct, 1, 'increment')
-
-            totalPriceTd.textContent = cart.productTotal(existingProduct.index)
-            cart.updateCartDetailsHolder()
+            let totalQuantity = existingProduct.product.quantity + 1
+            cart.checkAvailabilityInInventory(existingProduct.product.productId, totalQuantity)
+                .then(res => {
+                    if (!res.ok) throw new Error('حصل خطأ ما أثناء معالجة طلبكم, الرجاء المحاولة لاحقا')
+                    return res.json()
+                })
+                .then(data => {
+                    let isAvailable = data.availability
+                    let inventoryQuantity = data.quantity
+                    if (isAvailable) {
+                        quantityInput.value++
+                        cart.update(existingProduct, 1, 'increment')
+                        totalPriceTd.textContent = cart.productTotal(existingProduct.index)
+                        cart.updateCartDetailsHolder()
+                    } else {
+                        alert(`كمّية المنتج في مخازننا هي ${inventoryQuantity} فالرجاء عدم تجاوز هذه الكمّية`, 'error')
+                    }
+                })
+                .catch(err => alert(err.message, 'error'))
         } else {
-            cart.generateAlertHtml('error', 'حصل خطأ ما أثناء تحديث كمّية المنتج. الرجاء المحاولة لاحقا')
-            setTimeout(() => {
-                let alert = document.querySelector('.alert.show')
-                alert.remove()
-            }, 3000);
+
+            alert('حصل خطأ ما أثناء تحديث كمّية المنتج. الرجاء المحاولة لاحقا', 'error')
         }
     }
-    if (e.target.classList.contains('minus-btn')) {
-        let targetTr = e.target.closest('tr')
-        let quantityInput = e.target.nextElementSibling
+    if (target.classList.contains('minus-btn')) {
+        let targetTr = target.closest('tr')
+        let quantityInput = target.nextElementSibling
         let totalPriceTd = targetTr.querySelector('.total-td')
 
 
@@ -62,11 +70,8 @@ cartContainer.addEventListener('click', e => {
             totalPriceTd.textContent = cart.productTotal(existingProduct.index)
             cart.updateCartDetailsHolder()
         } else {
-            cart.generateAlertHtml('error', 'حصل خطأ ما أثناء تحديث كمّية المنتج. الرجاء المحاولة لاحقا')
-            setTimeout(() => {
-                let alert = document.querySelector('.alert.show')
-                alert.remove()
-            }, 3000);
+            alert('حصل خطأ ما أثناء تحديث كمّية المنتج. الرجاء المحاولة لاحقا', 'error')
+
         }
     }
 

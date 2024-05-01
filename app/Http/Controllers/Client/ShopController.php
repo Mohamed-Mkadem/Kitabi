@@ -99,4 +99,23 @@ class ShopController extends Controller
 
         return view('client.book', ['book' => $book]);
     }
+
+    public function isAvailableProduct($id, $quantity)
+    {
+        $book = Book::findOrFail($id);
+        // create the not found scenario on frontEnd
+        $book_quantity = $book->quantity;
+
+        if ($book_quantity >= $quantity) {
+            return [
+                'availability' => true,
+                'quantity' => $book_quantity
+            ];
+        }
+
+        return [
+            'availability' => false,
+            'quantity' => $book_quantity
+        ];
+    }
 }

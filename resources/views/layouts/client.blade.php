@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/imgs/favicon.png') }}">
     @stack('title')
     @stack('meta')
+    @stack('token')
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +49,7 @@
                 </a>
             </li>
             <li>
-                <a href="cart.html" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
+                <a href="{{ route('client.cart') }}" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
                     <span id="fixed-menu-count">9</span>
                     <i class="fa-solid fa-bag-shopping"></i>
                     السلّة
@@ -136,7 +137,7 @@
                 </a>
                 <div class="dropdown-holder cart-holder">
 
-                    <a href="cart.html" class="user-action-item icon-btn">
+                    <a href="{{ route('client.cart') }}" class="user-action-item icon-btn">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <span id="cart-count">0</span>
                     </a>

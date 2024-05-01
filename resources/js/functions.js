@@ -39,11 +39,38 @@ export function listenForAddingProductToCart(cart) {
                     publisher: target.closest('.product').querySelector('p.publisher').textContent,
                     availability: true,
                 }
-                cart.add(product)
-                target.setAttribute('disabled', 'true')
-                setTimeout(() => {
-                    target.removeAttribute('disabled')
-                }, 1000)
+                let totalQuantity = cart.getProductQuantity(product.productId, product.quantity)
+
+                cart.checkAvailabilityInInventory(product.productId, totalQuantity)
+
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error('حصل خطأ ما أثناء معالجة هذه العمليّة, الرجاء المحاولة لاحقا')
+                        }
+                        return res.json()
+                    })
+                    .then(data => {
+                        let isAvailable = data.availability
+                        let quantity = data.quantity
+                        if (!isAvailable && quantity == 0) {
+                            alert('للأسف لقد نفد هذا الكتاب من مخازننا', 'error')
+                        } else if (!isAvailable && quantity != 0) {
+                            alert(` للأسف الكمّية المضافة للسلّة أكثر ممّا هو موجود في مخازننا, لا يمكن تجاوز عدد ${quantity} كتاب `, 'error')
+
+                        } else {
+                            cart.add(product)
+                            alert('تمّ إضافة الكتاب إلى السلّة بنجاح', 'success')
+                            target.setAttribute('disabled', 'true')
+                            setTimeout(() => {
+                                target.removeAttribute('disabled')
+                            }, 1000)
+                        }
+                    }).catch(err => {
+                        alert(err.message, 'error')
+
+                    })
+
+
             } else if (target.classList.contains('minus-btn')) {
                 let quantityInput = target.nextElementSibling
                 if (quantityInput.value == 1) return
