@@ -30,6 +30,11 @@
 
         </div>
         <div class="container">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                    <div class="message error mb-n1 mt-2 show"> {{ $error }} </div>
+                @endforeach
+            @endif
 
         </div>
         <div class="container" id="checkout-container">

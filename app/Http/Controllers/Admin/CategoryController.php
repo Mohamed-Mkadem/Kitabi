@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\CategoryExport;
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
+use App\Exports\CategoryExport;
+use App\Imports\CategoryImport;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Admin\Category\StoreCategoryRequest;
 use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
-use App\Imports\CategoryImport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -18,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::latest()->paginate(20);
+        $categories = Category::latest()->withCount('books')->paginate(20);
         if ($request->ajax()) {
             $view = view('admin.components.categories-results', ['categories' => $categories])->render();
 
@@ -34,7 +35,7 @@ class CategoryController extends Controller
         $query = $this->getQuery($request);
 
         $export = new CategoryExport;
-        $export->setQuery($query);
+        $export->setQuery($query->withCount('books'));
         return Excel::download($export, 'categories.xlsx');
     }
 
@@ -112,7 +113,7 @@ class CategoryController extends Controller
     public function filter(Request $request)
     {
         $query = $this->getQuery($request);
-        $categories = $query->paginate(20);
+        $categories = $query->withCount('books')->paginate(20);
 
         if ($request->ajax()) {
             $view = view('admin.components.categories-results', ['categories' => $categories])->render();
@@ -126,14 +127,28 @@ class CategoryController extends Controller
 
     private function getQuery(Request $request)
     {
-        $query = Category::query();
 
+
+        $query = Category::query();
         $search = $request->search ?? '';
 
         $sort = $request->sort ?? 'newest';
 
         $min_date = $request->min_date ?? '';
         $max_date = $request->max_date ?? '';
+
+        $min_books_count = $request->input('min_books_count');
+        $max_books_count = $request->input('max_books_count');
+
+        if ($min_books_count !== null) {
+            $query->having('books_count', '>=', $min_books_count);
+        }
+
+        if ($max_books_count !== null) {
+            $query->having('books_count', '<=', $max_books_count);
+        }
+
+
 
         if (!empty($search)) {
             $query->where('name', 'like', "%$search%");

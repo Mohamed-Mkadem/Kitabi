@@ -18,7 +18,7 @@ class PublisherController extends Controller
      */
     public function index(Request $request)
     {
-        $publishers = Publisher::latest()->paginate(20);
+        $publishers = Publisher::latest()->withCount('books')->paginate(20);
         if ($request->ajax()) {
             $view = view('admin.components.publishers-results', ['publishers' => $publishers])->render();
 
@@ -73,7 +73,7 @@ class PublisherController extends Controller
         $query = $this->getQuery($request);
 
         $export = new PublisherExport();
-        $export->setQuery($query);
+        $export->setQuery($query->withCount('books'));
         return Excel::download($export, 'publishers.xlsx');
     }
     public function import(Request $request)
@@ -110,7 +110,7 @@ class PublisherController extends Controller
     public function filter(Request $request)
     {
         $query = $this->getQuery($request);
-        $publishers = $query->paginate(20);
+        $publishers = $query->withCount('books')->paginate(20);
 
         if ($request->ajax()) {
             $view = view('admin.components.publishers-results', ['publishers' => $publishers])->render();
@@ -132,6 +132,18 @@ class PublisherController extends Controller
 
         $min_date = $request->min_date ?? '';
         $max_date = $request->max_date ?? '';
+
+        $min_books_count = $request->input('min_books_count');
+        $max_books_count = $request->input('max_books_count');
+
+        if ($min_books_count !== null) {
+            $query->having('books_count', '>=', $min_books_count);
+        }
+
+        if ($max_books_count !== null) {
+            $query->having('books_count', '<=', $max_books_count);
+        }
+
 
         if (!empty($search)) {
             $query->where('name', 'like', "%$search%");

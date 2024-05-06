@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\ShopController;
 
 /*
@@ -38,6 +39,8 @@ Route::group([
 
     Route::middleware('auth')->group(function () {
         Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
+        Route::patch('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+        Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
         Route::middleware('isClient')->group(function () {
             Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
