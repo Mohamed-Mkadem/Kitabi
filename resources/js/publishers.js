@@ -49,8 +49,12 @@ function createFilters() {
     let sortInpuValuet = filterForm.querySelector('select[name="sort"').value
     let minDateInputValue = filterForm.querySelector('input[name="min_date"').value
     let maxDateInputValue = filterForm.querySelector('input[name="max_date"').value
+    let minBookCountValue = filterForm.querySelector('input[name="min_books_count"]').value
+    let maxBookCountValue = filterForm.querySelector('input[name="max_books_count"]').value
 
     return {
+        min_books_count: minBookCountValue,
+        max_books_count: maxBookCountValue,
         search: searchInputValue,
         sort: sortInpuValuet,
         min_date: minDateInputValue,

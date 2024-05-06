@@ -70,8 +70,8 @@
             <div class="search-holder">
                 <button class="icon-btn modal-holder-toggler"><i class="fa-solid fa-magnifying-glass"></i></button>
                 <div class="modal-holder ">
-                    <form action="" method="get" id="search-form">
-                        <input type="search" class="full-screen" placeholder="بحث عن كتاب">
+                    <form action="{{ route('client.shop.filter') }}" method="get" id="search-form">
+                        <input type="search" class="full-screen" name="search" placeholder="بحث عن كتاب">
                         <button type="submit">بحث</button>
                     </form>
                 </div>
@@ -87,7 +87,8 @@
                         </li>
                         <li><a current-page="{{ request()->is('shop*') ? 'true' : '' }}"
                                 href="{{ route('client.shop') }}">المتجر</a></li>
-                        <li><a current-page="{{ request()->is('order*') ? 'true' : '' }}" href="/orders">الطلبات</a>
+                        <li><a current-page="{{ request()->is('order*') ? 'true' : '' }}"
+                                href="{{ route('client.orders.index') }}">الطلبات</a>
                         </li>
                         <li><a current-page="{{ request()->is('about') ? 'true' : '' }}"
                                 href="{{ route('client.about') }}">
@@ -229,7 +230,7 @@
         </div>
     </footer>
 
-
+    @include('components.success-alert')
 
     <audio id="add-to-cart-sound-effect" src="{{ @asset('assets/sounds/add.wav') }}"></audio>
     <audio id="remove-from-cart-sound-effect" src=" {{ @asset('assets/sounds/remove.mp3') }}"></audio>

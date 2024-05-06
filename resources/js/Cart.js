@@ -184,6 +184,7 @@ export class Cart {
         let html = ''
         let token = document.querySelector('meta[name=token]').content
         let stringifiedCart = JSON.stringify(cart)
+        console.log(stringifiedCart);
         if (cart.length > 0) {
             html += `
             <div class=" checkout-wrapper mt-2 mb-2">
@@ -226,41 +227,44 @@ export class Cart {
         </div>
         <div class="col shipping-info">
             <h2>معلومات التسليم</h2>
-            <form action="" method="post" id="checkout-form">
+            <form action="/orders" method="post" id="checkout-form">
             <input type="hidden" name="_token" value="${token}">
-            <input type="hidden" name="cart" value="${stringifiedCart}">
+            <input type="hidden" name="shipping_cost" value="${shippingCost * 1000}">
+
+            <input type="hidden" name="cart" value='${stringifiedCart}'>
                 <div class="row">
                     <div class="form-control">
-                        <label for="first_name">الاسم</label>
-                        <input type="text" name="" id="first_name" value="${user.first_name}" placeholder="الإسم">
+                        <label for="first_name" class="required">الاسم</label>
+                        <input type="text" name="first_name" id="first_name" value="${user.first_name}" placeholder="الإسم">
                        <p class="error-message">هذا الحقل إجباري</p>
                     </div>
                     <div class="form-control">
-                        <label for="last_name">اللقب</label>
-                        <input type="text" name="" id="last_name" value="${user.last_name}" placeholder="اللّقب">
-                       <p class="error-message">هذا الحقل إجباري</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-control">
-                        <label for="phone">الهاتف</label>
-                        <input type="text" name="" id="phone" value="${user.phone}" placeholder="رقم هاتف يتكوّن من 8 أرقام">
+                        <label for="last_name"class="required">اللقب</label>
+                        <input type="text" name="last_name" id="last_name" value="${user.last_name}" placeholder="اللّقب">
                        <p class="error-message">هذا الحقل إجباري</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-control">
-                        <label for="address">العنوان</label>
-                        <input type="text" name="" placeholder="عنوان التسليم" id="address" value="${user.address}">
+                        <label for="phone"class="required">الهاتف <small>(سيتمّ استخدام هذا الهاتف لتأكيد
+                            الطلبات)</small></label>
+                        <input type="text" name="phone" id="phone" value="${user.phone}" placeholder="رقم هاتف يتكوّن من 8 أرقام">
+                       <p class="error-message">هذا الحقل إجباري</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-control">
+                        <label for="address" class="required">العنوان</label>
+                        <input type="text" name="address" placeholder="عنوان التسليم" id="address" value="${user.address}">
 
                        <p class="error-message">هذا الحقل إجباري</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-control">
-                        <label for="state-options">الولاية</label>
+                        <label for="state-options" class="required">الولاية</label>
                         <div class="select-box">
-                            <select id="state-options">
+                            <select id="state-options" name="state_id">
                                 `
             states.forEach(state => {
                 html += `
@@ -273,9 +277,9 @@ export class Cart {
                        <p class="error-message" id="state-error">هذا الحقل إجباري</p>
                     </div>
                     <div class="form-control">
-                        <label for="cities-options">المعتمديّة</label>
+                        <label for="cities-options" class="required">المعتمديّة</label>
                         <div class="select-box">
-                            <select id="cities-options">
+                            <select id="cities-options" name="city_id">
                                 `
             cities.forEach(city => {
                 if (city.state_id == user.state_id) {
@@ -294,7 +298,7 @@ export class Cart {
                 <div class="row">
                     <div class="form-control">
                         <label for="note">ملاحظات تريد إضافتها للبائع (اختياري)</label>
-                        <textarea name="" id="note" cols="30" rows="10" placeholder="اكتب ملاحظتك هنا"></textarea>
+                        <textarea name="note" id="note" cols="30" rows="10" placeholder="اكتب ملاحظتك هنا"></textarea>
                     </div>
                 </div>
                 <div class="row payment-row">

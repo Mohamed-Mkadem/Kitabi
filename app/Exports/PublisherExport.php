@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class PublisherExport implements FromQuery, WithHeadings, WithMapping
+class PublisherExport implements FromQuery, WithHeadings, WithMapping, WithStrictNullComparison
 {
 
     protected $query;
@@ -26,15 +27,17 @@ class PublisherExport implements FromQuery, WithHeadings, WithMapping
     public function map($publisher): array
     {
         $formattedDate = Carbon::parse($publisher->created_at)->format('Y-m-d : H:i');
+        $booksCount = $publisher->books_count ?? 0;
         return [
             $publisher->name,
+            $booksCount,
             $formattedDate
         ];
     }
     public function headings(): array
     {
         return [
-            'Name', 'Creation Date'
+            'Name', 'Books Count', 'Creation Date'
         ];
     }
 }

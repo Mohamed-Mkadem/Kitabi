@@ -138,12 +138,13 @@
                                 <div class="range-row">
                                     <div class="range-holder number">
                                         <p>من : </p>
-                                        <input class="form-element" type="number" name="" placeholder="مثال : 10">
+                                        <input class="form-element" type="number" name="min_books_count"
+                                            placeholder="مثال : 10" value="{{ request('min_books_count') }}">
                                     </div>
                                     <div class="range-holder number">
                                         <p>إلى : </p>
-                                        <input class="form-element" type="number" name=""
-                                            placeholder="مثال : 100">
+                                        <input class="form-element" type="number" name="max_books_count"
+                                            placeholder="مثال : 100" value="{{ request('max_books_count') }}">
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +241,7 @@
                                 <div class="meta-data ">
                                     <p class="count">
                                         <i class="fa-solid fa-book"></i>
-                                        <span>{{ $category->booksCount() }}</span>
+                                        <span>{{ $category->books_count }}</span>
                                     </p>
                                     <p class="date">
                                         <i class="fa-regular fa-clock"></i>

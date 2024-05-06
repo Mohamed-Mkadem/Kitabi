@@ -9,8 +9,9 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class CategoryExport implements FromQuery, WithMapping, WithHeadings
+class CategoryExport implements FromQuery, WithMapping, WithHeadings, WithStrictNullComparison
 {
     protected $query;
     public function setQuery($query)
@@ -22,19 +23,20 @@ class CategoryExport implements FromQuery, WithMapping, WithHeadings
     {
         return $this->query;
     }
-    public function map($category): array
+    public function map($publisher): array
     {
-        $formattedDate = Carbon::parse($category->created_at)->format('Y-m-d : H:i');
+        $formattedDate = Carbon::parse($publisher->created_at)->format('Y-m-d : H:i');
+        $booksCount = $publisher->books_count ?? 0;
         return [
-            $category->name,
+            $publisher->name,
+            $booksCount,
             $formattedDate
         ];
     }
-
     public function headings(): array
     {
         return [
-            'Name', 'Creation Date'
+            'Name', 'Books Count', 'Creation Date'
         ];
     }
 }

@@ -6,6 +6,8 @@ namespace App\Models\Admin;
 use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
+use App\Models\BookOrder;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,6 +45,14 @@ class Book extends Model
     {
         return $this->belongsTo(Author::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)->withPivot([
+            'price', 'quantity', 'sub_total', 'image'
+        ])->using(BookOrder::class);
+    }
+
 
     public function formattedPrice(): Attribute
     {
