@@ -32,7 +32,7 @@
                         <span class="status {{ $order->status }}">{{ __('statuses.' . $order->status) }}</span>
                     </div>
                     <div class="d-flex j-start a-center gap-1">
-                        <p>تمّ الطلب بتاريخ <span dir="ltr">{{ $order->created_at->format('Y - m - d : h:i') }}</span>
+                        <p>تمّ الطلب بتاريخ <span dir="ltr">{{ $order->created_at->format('Y - m - d : H:i') }}</span>
                         </p>
                         <p>قيمة الطلب : <span>{{ $order->formattedAmount }}</span> د.ت </p>
 
@@ -106,76 +106,31 @@
                         </div>
                         <div class="body">
                             <ul class="statuses">
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-cart-plus"></i>
+                                @foreach ($order->statusHistories as $history)
+                                    <li>
+                                        <div class="d-flex a-center gap-1">
+                                            <div class="icon-holder">
+                                                @if ($history->action == 'order created')
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                @elseif ($history->action == 'order confirmed')
+                                                    <i class="fa-solid fa-square-check"></i>
+                                                @elseif ($history->action == 'order cancelled')
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                @elseif ($history->action == 'order shipped')
+                                                    <i class="fa-solid fa-truck-fast"></i>
+                                                @elseif ($history->action == 'order delivered')
+                                                    <i class="fa-solid fa-bag-shopping"></i>
+                                                @elseif ($history->action == 'order returned')
+                                                    <i class="fa-solid fa-rotate-left"></i>
+                                                @endif
+                                            </div>
+                                            <div class="info">
+                                                <h3>{{ __('statuses.' . $history->action) }}</h3>
+                                                <p>{{ $history->created_at->format('Y - m - d : H:i') }}</p>
+                                            </div>
                                         </div>
-                                        <div class="info">
-                                            <h3>تمّ الإنشاء</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-square-check"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h3>تمّ التأكيد</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-truck-fast"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h3>تمّ الشحن</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-bag-shopping"></i>
-                                        </div>
-                                        <div class="info">
-
-                                            <h3>تمّ الاستلام</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-rotate-left"></i>
-                                        </div>
-                                        <div class="info">
-
-                                            <h3>تمّ الإرجاع</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex a-center gap-1">
-                                        <div class="icon-holder">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </div>
-                                        <div class="info">
-                                            <h3>تمّ الإلغاء</h3>
-                                            <p>25 - 04 - 2023 17:35</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
