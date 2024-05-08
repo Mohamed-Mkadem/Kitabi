@@ -1,4 +1,4 @@
-import { liveSearch, getChoices, showChoices, alert, handlePaginationClick } from "./functions.js";
+import { liveSearch, getChoices, showChoices, alert, handlePaginationClick, addLoader } from "./functions.js";
 import { Validator } from "./Validator.js";
 
 
@@ -63,6 +63,7 @@ if (filterForm) {
 
         const url = `http://127.0.0.1:8000/dashboard/books/filter?${queryString}`;
         window.history.pushState({ path: url }, '', url);
+        addLoader(container)
 
         fetch(url, {
             headers: {

@@ -1,4 +1,4 @@
-import { alert, handlePaginationClick } from "./functions.js";
+import { alert, handlePaginationClick, addLoader } from "./functions.js";
 const container = document.querySelector('.results-container')
 const exportLink = document.getElementById('export-link')
 const filterForm = document.getElementById('filter-form')
@@ -15,6 +15,7 @@ filterForm.addEventListener('submit', (e) => {
     let baseUrl = 'http://127.0.0.1:8000/dashboard/publishers/filter'
     let url = `${baseUrl}?${new URLSearchParams(filters)}`
     window.history.pushState({ path: url }, '', url);
+    addLoader(container)
     fetch(url, {
         headers: {
             'X-Requested-With': 'XMLHttpRequest',

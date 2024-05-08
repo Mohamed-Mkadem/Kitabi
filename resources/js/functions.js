@@ -275,3 +275,11 @@ export function handlePaginationClick(nextPageUrl, container) {
         })
         .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
 }
+
+export function addLoader(container) {
+    container.innerHTML = `<div class="spinner-container">
+                        <div class="spinner"></div>
+                        <p>جاري التحميل...</p>
+                    </div>
+                    `
+}
