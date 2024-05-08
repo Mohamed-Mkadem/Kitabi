@@ -47,6 +47,12 @@ class Order extends Model
             get: fn () => number_format(($this->amount / 1000), 3)
         );
     }
+    public function formattedShippingCost(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => number_format(($this->shipping_cost / 1000), 3)
+        );
+    }
     public function statusHistories()
     {
         return $this->morphMany(StatusHistory::class, 'statusable');

@@ -22,7 +22,7 @@
                         @csrf
                         <div class="row">
                             <div class="form-control">
-                                <label for="email">البريد الالكتروني</label>
+                                <label for="email" class="required">البريد الالكتروني</label>
                                 <input required type="email" name="email" id="email"
                                     placeholder="البريد الالكتروني">
                                 <p class="error-message">هذا الحقل اجباري</p>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="form-control">
-                                <label for="password">كلمة السر</label>
+                                <label for="password" class="required">كلمة السر</label>
                                 <input required type="password" name="password" id="password" placeholder="كلمة السر">
                                 <p class="error-message">هذا الحقل اجباري</p>
                                 <x-input-error field="password" />

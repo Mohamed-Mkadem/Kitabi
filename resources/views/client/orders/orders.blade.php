@@ -39,7 +39,7 @@
                                         <td><span
                                                 class="status {{ $order->status }} ">{{ __('statuses.' . $order->status) }}</span>
                                         </td>
-                                        <td dir="ltr">{{ $order->created_at->format('Y - m - d : h:i') }}</td>
+                                        <td dir="ltr">{{ $order->created_at->format('Y - m - d : H:i') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
