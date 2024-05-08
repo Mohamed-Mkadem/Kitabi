@@ -100,6 +100,8 @@ function createFilters() {
     let maxDateInputValue = filterForm.querySelector('input[name="max_date"').value
     let minPriceInputValue = filterForm.querySelector('input[name="min_price"').value
     let maxPriceInputValue = filterForm.querySelector('input[name="max_price"').value
+    let minOrdersInputValue = filterForm.querySelector('input[name="min_orders"').value
+    let maxOrdersInputValue = filterForm.querySelector('input[name="max_orders"').value
     let minQuantityInputValue = filterForm.querySelector('input[name="min_quantity"').value
     let maxQuantityInputValue = filterForm.querySelector('input[name="max_quantity"').value
     let authors = filterForm.querySelectorAll('input[name="authors[]"]:checked')
@@ -121,7 +123,9 @@ function createFilters() {
         authors: {},
         categories: {},
         publishers: {},
-        statuses: {}
+        statuses: {},
+        min_orders: minOrdersInputValue,
+        max_orders: maxOrdersInputValue,
     }
 
     authors.forEach(author => {

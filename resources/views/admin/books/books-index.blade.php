@@ -368,7 +368,7 @@
                             <div class="meta-data">
                                 <p>
                                     <i class="fa-solid fa-cart-arrow-down"></i>
-                                    350
+                                    {{ $book->order_items_sum_quantity ?? '0' }}
                                 </p>
                                 <p>
                                     <i class="fa-regular fa-clock"></i>

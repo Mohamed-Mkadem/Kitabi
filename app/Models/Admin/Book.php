@@ -53,6 +53,10 @@ class Book extends Model
         ])->using(BookOrder::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(BookOrder::class);
+    }
 
     public function formattedPrice(): Attribute
     {
