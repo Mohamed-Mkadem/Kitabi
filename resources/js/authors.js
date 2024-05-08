@@ -1,4 +1,4 @@
-import { alert, handlePaginationClick, addLoader } from "./functions.js";
+import { alert, handlePaginationClick, addLoader, addError } from "./functions.js";
 const container = document.querySelector('.results-container')
 const exportLink = document.getElementById('export-link')
 const filterForm = document.getElementById('filter-form')
@@ -22,13 +22,15 @@ filterForm.addEventListener('submit', (e) => {
             'Content-Type': 'application/json'
         }
 
-    }).then(response => response.json())
+    }).then(response => {
+        if (response.ok) return response.json()
+        throw new Error('حصل خطأ ما أثناء معالجة الطلب, الرجاء المحاولة لاحقا')
+    }
+    )
         .then(data => {
-
             container.innerHTML = data.html
-
         })
-        .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+        .catch(err => addError(container, err.message));
 
 })
 

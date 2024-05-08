@@ -1,0 +1,16 @@
+@use "../../Abstracts/" as *;
+
+.error-container {
+    padding: 2em;
+    text-align: center;
+    i {
+        display: block;
+        font-size: 35px;
+        color: var(--clr-teal-300);
+    }
+    p {
+        margin-top: 1em;
+        font-size: 25px;
+        color: var(--clr-teal-300);
+    }
+}

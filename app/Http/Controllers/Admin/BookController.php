@@ -24,7 +24,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $books = Book::with(['author', 'publisher', 'category'])->withSum('orderItems', 'quantity')->latest()->paginate();
-
+        // dd($books);
         $authors = Author::all();
         $publishers = Publisher::all();
         $categories = Category::all();
@@ -195,10 +195,10 @@ class BookController extends Controller
 
 
         if (!empty($min_orders)) {
-            $query->having('orders_count', '>=', $min_orders);
+            $query->havingRaw('COALESCE(order_items_sum_quantity, 0) >= ?', [$min_orders]);
         }
         if (!empty($max_orders)) {
-            $query->having('orders_count', '<=', $max_orders);
+            $query->havingRaw('COALESCE(order_items_sum_quantity, 0) <= ?', [$max_orders]);
         }
 
         if (!empty($categories)) {

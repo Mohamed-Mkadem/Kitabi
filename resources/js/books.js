@@ -1,4 +1,4 @@
-import { liveSearch, getChoices, showChoices, alert, handlePaginationClick, addLoader } from "./functions.js";
+import { liveSearch, getChoices, showChoices, alert, handlePaginationClick, addLoader, addError } from "./functions.js";
 import { Validator } from "./Validator.js";
 
 
@@ -71,13 +71,15 @@ if (filterForm) {
                 'Content-Type': 'application/json'
             }
 
-        }).then(response => response.json())
+        }).then(response => {
+            if (response.ok) return response.json()
+            throw new Error('حصل خطأ ما أثناء معالجة الطلب, الرجاء المحاولة لاحقا')
+        }
+        )
             .then(data => {
-
                 container.innerHTML = data.html
-
             })
-            .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+            .catch(err => addError(container, err.message));
 
     })
 }

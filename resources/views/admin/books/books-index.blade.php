@@ -221,12 +221,12 @@
                                     <div class="range-holder number">
                                         <p>من : </p>
                                         <input class="form-element" type="number" name="min_orders"
-                                            placeholder="مثال : 10">
+                                            placeholder="مثال : 10" value="{{ request()->min_orders }}">
                                     </div>
                                     <div class="range-holder number">
                                         <p>إلى : </p>
                                         <input class="form-element" type="number" name="max_orders"
-                                            placeholder="مثال : 100">
+                                            placeholder="مثال : 100" value="{{ request()->max_orders }}">
                                     </div>
                                 </div>
                             </div>
@@ -235,11 +235,13 @@
                                 <div class="range-row">
                                     <div class="range-holder date">
                                         <p>من : </p>
-                                        <input class="form-element" type="date" name="min_date">
+                                        <input class="form-element" type="date" name="min_date"
+                                            value="{{ request()->min_date }}">
                                     </div>
                                     <div class="range-holder date">
                                         <p>إلى : </p>
-                                        <input class="form-element" type="date" name="max_date">
+                                        <input class="form-element" type="date" name="max_date"
+                                            value="{{ request()->max_date }}">
                                     </div>
                                 </div>
                             </div>

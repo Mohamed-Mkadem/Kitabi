@@ -283,3 +283,10 @@ export function addLoader(container) {
                     </div>
                     `
 }
+export function addError(container, message) {
+    container.innerHTML = `<div class="error-container">
+    <i class="fa-solid fa-face-frown"></i>
+                        <p>${message}</p>
+                    </div>
+                    `
+}
