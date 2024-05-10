@@ -45,7 +45,7 @@ class OrderController extends Controller
             $order->save();
             $this->attachBooks($order, $cart);
             $this->deductProductsQuantities($cart);
-
+            $this->attachStatusHistory($order);
             DB::commit();
 
             return redirect()->route('client.orders.show', $order)->with('success', 'تمّ استلام الطلب بنجاح');
@@ -60,7 +60,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $this->authorize('view', $order);
-        $order->load(['books.author', 'books.publisher']);
+        $order->load(['books.author', 'books.publisher', 'statusHistories']);
 
         return view('client.orders.order', ['order' => $order]);
     }
@@ -92,5 +92,14 @@ class OrderController extends Controller
                 'sub_total' => $book->quantity * $book->price
             ]);
         }
+    }
+
+    private function attachStatusHistory($order)
+    {
+        $order->statusHistories()->create([
+            'statusable_id' => $order->id,
+            'statusable_type' => 'App\Models\Order',
+            'action' => 'order created'
+        ]);
     }
 }

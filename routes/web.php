@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Client\ShopController;
 
 /*
@@ -88,6 +89,15 @@ Route::group([
     Route::get('/books/export', [BookController::class, 'export'])->name('books.export');
     Route::get('/books/filter', [BookController::class, 'filter'])->name('books.filter');
     Route::resource('books', BookController::class);
+
+    // Orders
+    Route::get('orders/filter', [AdminOrderController::class, 'filter'])->name('orders.filter');
+    Route::patch('orders/cancel/{order}', [AdminOrderController::class, 'cancel'])->name('orders.cancel');
+    Route::patch('orders/confirm/{order}', [AdminOrderController::class, 'confirm'])->name('orders.confirm');
+    Route::patch('orders/ship/{order}', [AdminOrderController::class, 'ship'])->name('orders.ship');
+    Route::patch('orders/deliver/{order}', [AdminOrderController::class, 'deliver'])->name('orders.deliver');
+    Route::patch('orders/return/{order}', [AdminOrderController::class, 'return'])->name('orders.return');
+    Route::resource('orders', AdminOrderController::class)->only('show', 'index');
 });
 
 

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\BookExport;
 use App\Models\Admin\Book;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Book\StoreBookRequest;
-use App\Http\Requests\Admin\Book\UpdateBookRequest;
+use App\Exports\BookExport;
 use App\Imports\BookImport;
 use App\Models\Admin\Author;
+use Illuminate\Http\Request;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
-use Maatwebsite\Excel\Excel as ExcelExcel;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel as ExcelExcel;
+use App\Http\Requests\Admin\Book\StoreBookRequest;
+use App\Http\Requests\Admin\Book\UpdateBookRequest;
 
 class BookController extends Controller
 {
@@ -22,7 +23,7 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $books = Book::with(['author', 'publisher', 'category'])->latest()->paginate(5);
+        $books = Book::with(['author', 'publisher', 'category'])->withSum('orderItems', 'quantity')->latest()->paginate();
         $authors = Author::all();
         $publishers = Publisher::all();
         $categories = Category::all();
@@ -84,8 +85,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book->load('category', 'author', 'publisher');
-
+        $book->load('category', 'author', 'publisher')->loadSum('orderItems', 'quantity');
         return view('admin.books.books-show', ['book' => $book]);
     }
 
@@ -137,11 +137,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        // Check if the book exists in an order at least, so we soft delete it
-
-        /*
-        - Soft delete the books
-        */
+        if ($book->orders()->count()) {
+            $book->delete();
+            return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
+        }
 
         $book->forceDelete();
         return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
@@ -153,7 +152,7 @@ class BookController extends Controller
         $publishers = Publisher::all();
         $categories = Category::all();
         $query = $this->getQuery($request);
-        $books = $query->with(['author', 'category', 'publisher'])->paginate(5);
+        $books = $query->with(['author', 'category', 'publisher'])->withSum('orderItems', 'quantity')->paginate();
 
         if ($request->ajax()) {
             $view = view('admin.components.books-results', ['books' => $books])->render();
@@ -182,11 +181,22 @@ class BookController extends Controller
         $min_price = $request->min_price ?? '';
         $max_price = $request->max_price ?? '';
 
+        $min_orders = $request->min_orders ?? '';
+        $max_orders = $request->max_orders ?? '';
+
         $categories = $request->categories ?? [];
         $authors = $request->authors ?? [];
         $publishers = $request->publishers ?? [];
 
         $statuses = $request->statuses ?? [];
+
+
+        if (!empty($min_orders)) {
+            $query->havingRaw('COALESCE(order_items_sum_quantity, 0) >= ?', [$min_orders]);
+        }
+        if (!empty($max_orders)) {
+            $query->havingRaw('COALESCE(order_items_sum_quantity, 0) <= ?', [$max_orders]);
+        }
 
         if (!empty($categories)) {
             $query->whereIn('category_id', $categories);
@@ -240,6 +250,10 @@ class BookController extends Controller
             $query->orderBy('name', 'asc');
         } else if ($sort === 'z-a') {
             $query->orderBy('name', 'desc');
+        } else if ($sort === 'highest_orders') {
+            $query->orderBy('order_items_sum_quantity', 'desc');
+        } else if ($sort === 'lowest_orders') {
+            $query->orderBy('order_items_sum_quantity', 'asc');
         } else {
             $query->orderBy('created_at', 'desc');
         }
@@ -252,7 +266,7 @@ class BookController extends Controller
         $query = $this->getQuery($request);
 
         $export = new BookExport();
-        $export->setQuery($query);
+        $export->setQuery($query->with(['publisher', 'author', 'category'])->withSum('orderItems', 'quantity'));
         return Excel::download($export, 'books.xlsx');
     }
 

@@ -81,7 +81,8 @@
 
 
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.orders.index') }}"
+                        class="nav-link {{ request()->is('dashboard/orders*') ? 'active' : '' }}">
                         <i class="fa-solid fa-cart-arrow-down"></i>
                         <span> الطلبات </span>
                     </a>

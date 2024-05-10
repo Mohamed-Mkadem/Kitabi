@@ -6,8 +6,9 @@ use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class BookExport implements FromQuery, WithHeadings, WithMapping
+class BookExport implements FromQuery, WithHeadings, WithMapping, WithStrictNullComparison
 {
 
     protected $query;
@@ -24,11 +25,13 @@ class BookExport implements FromQuery, WithHeadings, WithMapping
     public function map($book): array
     {
         $formattedDate = Carbon::parse($book->created_at)->format('Y-m-d - H:i');
+        $numberOfOrders = $book->order_items_sum_quantity ?? 0;
         return [
             $book->name,
             $book->category->name,
             $book->author->name,
             $book->publisher->name,
+            $numberOfOrders,
             $book->status,
             $book->formattedCostPrice,
             $book->formattedPrice,
@@ -46,6 +49,7 @@ class BookExport implements FromQuery, WithHeadings, WithMapping
             'Category',
             'Author',
             'Publisher',
+            'Number of Orders',
             'Status',
             'Cost Price',
             'Price ',

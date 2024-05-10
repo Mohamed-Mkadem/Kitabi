@@ -1,4 +1,4 @@
-import { alert, handlePaginationClick } from "./functions.js";
+import { alert, handlePaginationClick, addLoader, addError } from "./functions.js";
 const container = document.querySelector('.results-container')
 const exportLink = document.getElementById('export-link')
 const filterForm = document.getElementById('filter-form')
@@ -15,19 +15,22 @@ filterForm.addEventListener('submit', (e) => {
     let baseUrl = 'http://127.0.0.1:8000/dashboard/authors/filter'
     let url = `${baseUrl}?${new URLSearchParams(filters)}`
     window.history.pushState({ path: url }, '', url);
+    addLoader(container)
     fetch(url, {
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Content-Type': 'application/json'
         }
 
-    }).then(response => response.json())
+    }).then(response => {
+        if (response.ok) return response.json()
+        throw new Error('حصل خطأ ما أثناء معالجة الطلب, الرجاء المحاولة لاحقا')
+    }
+    )
         .then(data => {
-
             container.innerHTML = data.html
-
         })
-        .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+        .catch(err => addError(container, err.message));
 
 })
 

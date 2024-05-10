@@ -1,4 +1,4 @@
-import { liveSearch, getChoices, showChoices, alert, handlePaginationClick } from "./functions.js";
+import { liveSearch, getChoices, showChoices, alert, handlePaginationClick, addLoader, addError } from "./functions.js";
 import { Validator } from "./Validator.js";
 
 
@@ -63,6 +63,7 @@ if (filterForm) {
 
         const url = `http://127.0.0.1:8000/dashboard/books/filter?${queryString}`;
         window.history.pushState({ path: url }, '', url);
+        addLoader(container)
 
         fetch(url, {
             headers: {
@@ -70,13 +71,15 @@ if (filterForm) {
                 'Content-Type': 'application/json'
             }
 
-        }).then(response => response.json())
+        }).then(response => {
+            if (response.ok) return response.json()
+            throw new Error('حصل خطأ ما أثناء معالجة الطلب, الرجاء المحاولة لاحقا')
+        }
+        )
             .then(data => {
-
                 container.innerHTML = data.html
-
             })
-            .catch(err => alert('حصل خطأ ما أثناء معالجة الطلب', 'error'));
+            .catch(err => addError(container, err.message));
 
     })
 }
@@ -100,6 +103,8 @@ function createFilters() {
     let maxDateInputValue = filterForm.querySelector('input[name="max_date"').value
     let minPriceInputValue = filterForm.querySelector('input[name="min_price"').value
     let maxPriceInputValue = filterForm.querySelector('input[name="max_price"').value
+    let minOrdersInputValue = filterForm.querySelector('input[name="min_orders"').value
+    let maxOrdersInputValue = filterForm.querySelector('input[name="max_orders"').value
     let minQuantityInputValue = filterForm.querySelector('input[name="min_quantity"').value
     let maxQuantityInputValue = filterForm.querySelector('input[name="max_quantity"').value
     let authors = filterForm.querySelectorAll('input[name="authors[]"]:checked')
@@ -121,7 +126,9 @@ function createFilters() {
         authors: {},
         categories: {},
         publishers: {},
-        statuses: {}
+        statuses: {},
+        min_orders: minOrdersInputValue,
+        max_orders: maxOrdersInputValue,
     }
 
     authors.forEach(author => {

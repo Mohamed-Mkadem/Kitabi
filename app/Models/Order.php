@@ -5,8 +5,9 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\BookOrder;
 use App\Models\Admin\Book;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\StatusHistory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
@@ -35,7 +36,7 @@ class Order extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class)->withPivot([
+        return $this->belongsToMany(Book::class)->withTrashed()->withPivot([
             'price', 'quantity', 'sub_total', 'image'
         ])->using(BookOrder::class);
     }
@@ -45,5 +46,15 @@ class Order extends Model
         return Attribute::make(
             get: fn () => number_format(($this->amount / 1000), 3)
         );
+    }
+    public function formattedShippingCost(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => number_format(($this->shipping_cost / 1000), 3)
+        );
+    }
+    public function statusHistories()
+    {
+        return $this->morphMany(StatusHistory::class, 'statusable');
     }
 }

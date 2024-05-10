@@ -35,9 +35,9 @@ class OrderPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Order $order): bool
+    public function update(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
