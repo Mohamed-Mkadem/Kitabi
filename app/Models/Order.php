@@ -36,7 +36,7 @@ class Order extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class)->withPivot([
+        return $this->belongsToMany(Book::class)->withTrashed()->withPivot([
             'price', 'quantity', 'sub_total', 'image'
         ])->using(BookOrder::class);
     }

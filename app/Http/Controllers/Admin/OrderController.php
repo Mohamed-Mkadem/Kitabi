@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\BookOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -113,9 +115,12 @@ class OrderController extends Controller
 
             return redirect()->back()->with('error', 'هذا الطلب ملغيّ بالفعل');
         }
+        DB::beginTransaction();
         $order->update([
             'status' => 'cancelled'
         ]);
+        $this->incrementBookQuantities($order);
+        db::commit();
 
         $this->attachStatusHistoryToOrder($order, 'order cancelled');
 
@@ -177,5 +182,18 @@ class OrderController extends Controller
             'statusable_id' => $order->id,
             'action' => $action
         ]);
+    }
+
+    private function incrementBookQuantities($order)
+    {
+        // Retrieve order items associated with the canceled order
+        $orderItems = BookOrder::where('order_id', $order->id)->get();
+
+        // Increment the quantities of the associated books
+        foreach ($orderItems as $orderItem) {
+            $book = $orderItem->book;
+            $book->quantity += $orderItem->quantity;
+            $book->save();
+        }
     }
 }

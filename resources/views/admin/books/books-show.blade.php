@@ -123,7 +123,7 @@
                 <div class="stat-item d-flex gap-0-5 f-wrap a-end j-between">
                     <div class="title-value-box">
                         <h2>عدد الطلبات</h2>
-                        <p>256</p>
+                        <p>{{ $book->order_items_sum_quantity ?? '0' }}</p>
                     </div>
                     <div class="icon-holder">
                         <i class="fa-solid fa-cart-arrow-down "></i>

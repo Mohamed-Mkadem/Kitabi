@@ -24,7 +24,6 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $books = Book::with(['author', 'publisher', 'category'])->withSum('orderItems', 'quantity')->latest()->paginate();
-        // dd($books);
         $authors = Author::all();
         $publishers = Publisher::all();
         $categories = Category::all();
@@ -86,8 +85,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book->load('category', 'author', 'publisher');
-
+        $book->load('category', 'author', 'publisher')->loadSum('orderItems', 'quantity');
         return view('admin.books.books-show', ['book' => $book]);
     }
 
@@ -139,11 +137,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        // Check if the book exists in an order at least, so we soft delete it
-
-        /*
-        - Soft delete the books
-        */
+        if ($book->orders()->count()) {
+            $book->delete();
+            return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
+        }
 
         $book->forceDelete();
         return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
