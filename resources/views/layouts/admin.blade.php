@@ -93,7 +93,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.clients.index') }}"
+                        class="nav-link {{ request()->is('dashboard/clients*') ? 'active' : '' }}">
                         <i class="fa-solid fa-users"></i>
                         <span> العملاء </span>
                     </a>

@@ -184,7 +184,6 @@ export class Cart {
         let html = ''
         let token = document.querySelector('meta[name=token]').content
         let stringifiedCart = JSON.stringify(cart)
-        console.log(stringifiedCart);
         if (cart.length > 0) {
             html += `
             <div class=" checkout-wrapper mt-2 mb-2">
