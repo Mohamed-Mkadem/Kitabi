@@ -24,6 +24,7 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+        $this->authorize('create', Order::class);
         $cart = json_decode($request->cart);
         $amount = $this->getAmount($cart);
 

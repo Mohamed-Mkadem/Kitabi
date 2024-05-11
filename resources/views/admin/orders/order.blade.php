@@ -149,7 +149,7 @@
                         <p>قيمة الطلب : <span>{{ $order->formattedAmount }}</span> د.ت </p>
                         <p>قيمة الشحن : <span>{{ $order->formattedShippingCost }}</span> د.ت </p>
                         <p>
-                            <a href="">{{ $order->customer_name }}</a>
+                            <a href="{{ route('admin.clients.show', $order->user) }}">{{ $order->customer_name }}</a>
                         </p>
 
                     </div>
