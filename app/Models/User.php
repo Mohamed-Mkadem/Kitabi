@@ -96,4 +96,8 @@ class User extends Authenticatable
     {
         return $this->status == 'active';
     }
+    public function isBanned(): bool
+    {
+        return $this->status == 'banned';
+    }
 }
