@@ -100,7 +100,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.inventory.index') }}"
+                        class="nav-link {{ request()->is('dashboard/inventory*') ? 'active' : '' }}">
                         <i class="fa-solid fa-warehouse"></i>
                         <span> المخزن </span>
                     </a>

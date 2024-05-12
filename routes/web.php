@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\Client\OrderController;
@@ -106,6 +107,12 @@ Route::group([
     Route::patch('clients/activate/{client}', [ClientController::class, 'activate'])->name('clients.activate');
     Route::get('clients/filter', [ClientController::class, 'filter'])->name('clients.filter');
     Route::resource('clients', ClientController::class)->only('show', 'index');
+
+
+    // Inventory
+    Route::patch('inventory/manage/{book}', [InventoryController::class, 'manage'])->name('inventory.manage');
+    Route::get('inventory/filter', [InventoryController::class, 'filter'])->name('inventory.filter');
+    Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
 });
 
 
