@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\Client\OrderController;
@@ -98,6 +100,19 @@ Route::group([
     Route::patch('orders/deliver/{order}', [AdminOrderController::class, 'deliver'])->name('orders.deliver');
     Route::patch('orders/return/{order}', [AdminOrderController::class, 'return'])->name('orders.return');
     Route::resource('orders', AdminOrderController::class)->only('show', 'index');
+
+
+    // Clients
+    Route::patch('clients/ban/{client}', [ClientController::class, 'ban'])->name('clients.ban');
+    Route::patch('clients/activate/{client}', [ClientController::class, 'activate'])->name('clients.activate');
+    Route::get('clients/filter', [ClientController::class, 'filter'])->name('clients.filter');
+    Route::resource('clients', ClientController::class)->only('show', 'index');
+
+
+    // Inventory
+    Route::patch('inventory/manage/{book}', [InventoryController::class, 'manage'])->name('inventory.manage');
+    Route::get('inventory/filter', [InventoryController::class, 'filter'])->name('inventory.filter');
+    Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
 });
 
 

@@ -155,7 +155,9 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td><a href="{{ route('admin.orders.show', $order) }}">#{{ $order->id }}</a></td>
-                                    <td> <a href="">{{ $order->customer_name }}</a> </td>
+                                    <td> <a
+                                            href="{{ route('admin.clients.show', $order->user) }}">{{ $order->customer_name }}</a>
+                                    </td>
                                     <td>{{ $order->formattedAmount }}</td>
                                     <td><span
                                             class="status {{ $order->status }} ">{{ __('statuses.' . $order->status) }}</span>

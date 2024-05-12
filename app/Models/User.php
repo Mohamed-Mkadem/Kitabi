@@ -28,7 +28,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'phone', 'address', 'state_id', 'city_id'
+        'phone', 'address', 'state_id', 'city_id', 'status'
     ];
 
     /**
@@ -72,6 +72,18 @@ class User extends Authenticatable
             get: fn () => ucfirst($this->first_name) . ' ' . ucfirst($this->last_name)
         );
     }
+    public function stateCity(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst($this->state->name) . ' - ' . ucfirst($this->city->name)
+        );
+    }
+    public function formattedSpentAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => number_format(($this->orders_sum_amount / 1000), 3)
+        );
+    }
     public function isAdmin(): bool
     {
         return $this->role == 'admin';
@@ -83,5 +95,9 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->status == 'active';
+    }
+    public function isBanned(): bool
+    {
+        return $this->status == 'banned';
     }
 }
