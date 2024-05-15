@@ -11,6 +11,11 @@ class ReviewController extends Controller
 {
     public function store(Request $request, Book $book)
     {
+        $user = $request->user();
+        if (!$user->hasBoughtThisBook($book->id) || $user->hasReviewedThisBook($book->id)) {
+            return abort(403);
+        }
+
         $request->validate([
             'comment' => ['string', 'nullable'],
             'stars' => ['required', 'in:1,2,3,4,5', 'numeric']
