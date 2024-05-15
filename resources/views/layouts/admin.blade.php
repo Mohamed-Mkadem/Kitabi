@@ -107,7 +107,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link notifiable">
+                    <a href="{{ route('admin.reviews.index') }}"
+                        class="nav-link notifiable {{ request()->is('dashboard/reviews*') ? 'active' : '' }}">
                         <i class="fa-regular fa-star"></i>
                         <span> التقييمات </span>
                     </a>

@@ -16,7 +16,7 @@ class ShopController extends Controller
         $categories = Category::all();
         $publishers = Publisher::all();
         $authors = Author::all();
-        $books = Book::with(['category', 'author', 'publisher'])->paginate();
+        $books = Book::with(['category', 'author', 'publisher'])->withCount('reviews')->paginate();
         if ($request->ajax()) {
             $view = view('client.components.shop-results-container', ['books' => $books])->render();
 
@@ -95,11 +95,44 @@ class ShopController extends Controller
 
     public function book(Book $book)
     {
-        $book->load(['category', 'author', 'publisher']);
-
-        return view('client.book', ['book' => $book]);
+        $book->load(['category', 'author', 'publisher', 'reviews.user'])->loadCount('reviews');
+        $starsCounts = $this->getStarsStatistics($book);
+        return view('client.book', ['book' => $book, 'starsCounts' => $starsCounts]);
     }
 
+    public function getStarsStatistics($book)
+    {
+        $reviewsCount = $book->reviews()->count();
+        $count = $fiveStarsCount = $book->reviews()->where('stars', 5)->count();
+        $fourStarsCount = $book->reviews()->where('stars', 4)->count();
+        $threeStarsCount = $book->reviews()->where('stars', 3)->count();
+        $twoStarsCount = $book->reviews()->where('stars', 2)->count();
+        $oneStarsCount = $book->reviews()->where('stars', 1)->count();
+        return [
+            '5' => [
+                'count' => $fiveStarsCount,
+                'percentage' => $reviewsCount ? round(($fiveStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '4' => [
+                'count' => $fourStarsCount,
+                'percentage' => $reviewsCount ? round(($fourStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '3' => [
+                'count' => $threeStarsCount,
+                'percentage' => $reviewsCount ? round(($threeStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '2' => [
+                'count' => $twoStarsCount,
+                'percentage' => $reviewsCount ? round(($twoStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '1' => [
+                'count' => $oneStarsCount,
+                'percentage' => $reviewsCount ? round(($oneStarsCount / $reviewsCount) * 100) : 0
+            ],
+
+
+        ];
+    }
     public function isAvailableProduct($id, $quantity)
     {
         $book = Book::findOrFail($id);

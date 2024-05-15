@@ -3,15 +3,16 @@
 namespace App\Models\Admin;
 
 
+use App\Models\Order;
+use App\Models\Review;
+use App\Models\BookOrder;
 use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
-use App\Models\BookOrder;
-use App\Models\Order;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -29,8 +30,27 @@ class Book extends Model
         'stock_alert',
         'cost_price',
         'description',
+        'rate'
     ];
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function updateRate()
+    {
+        $rateAvg = round($this->reviews()->avg('stars'));
+        $this->rate = number_format($rateAvg, 2);
+        $this->save();
+    }
+
+    public function formattedReviewsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->reviews_count >= 10 ? "$this->reviews_count تقييما" :  "$this->reviews_count تقييمات"
+        );
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);
