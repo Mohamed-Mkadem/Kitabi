@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\City;
 use App\Models\Order;
 use App\Models\State;
+use App\Models\Review;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -49,6 +50,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hasBoughtThisBook(int $bookId): bool
+    {
+        return $this->orders()->where('status', 'delivered')->whereHas('books', function ($query) use ($bookId) {
+            $query->where('book_id', $bookId);
+        })->exists();
+    }
+
+    public function hasReviewedThisBook(int $bookId): bool
+    {
+        return $this->reviews()->where('book_id', $bookId)->exists();
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function formattedReviewsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->reviews_count >= 10 ? "$this->reviews_count تقييما" :  "$this->reviews_count تقييمات"
+        );
+    }
 
     public function orders()
     {

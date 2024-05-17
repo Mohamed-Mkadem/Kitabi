@@ -12,7 +12,10 @@ use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Client\ReviewController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Client\ShopController;
+use Maatwebsite\Excel\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +48,7 @@ Route::group([
         Route::patch('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
         Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
         Route::middleware('isClient')->group(function () {
+            Route::post('reviews/store/{book}', [ReviewController::class, 'store'])->name('reviews.store');
             Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -113,6 +117,11 @@ Route::group([
     Route::patch('inventory/manage/{book}', [InventoryController::class, 'manage'])->name('inventory.manage');
     Route::get('inventory/filter', [InventoryController::class, 'filter'])->name('inventory.filter');
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
+
+
+    // Reviews
+    Route::get('reviews.filter', [AdminReviewController::class, 'filter'])->name('reviews.filter');
+    Route::resource('reviews', AdminReviewController::class)->only(['index', 'destroy']);
 });
 
 

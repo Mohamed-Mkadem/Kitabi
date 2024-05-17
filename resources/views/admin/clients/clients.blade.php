@@ -141,7 +141,7 @@
                             <div class="form-control">
                                 <label for="state-options">الولاية</label>
                                 <div class="select-box">
-                                    <select id="state-options" name="state_id" class="has-all">
+                                    <select id="state-options" name="state_id" class="has-all form-element">
                                         <option value="all" {{ request()->state_id == 'all' ? 'selected' : '' }}>الكلّ
                                         </option>
                                         @if (request()->state_id)
@@ -164,7 +164,7 @@
                                 <label for="cities-options">المدينة</label>
                                 <div class="select-box">
 
-                                    <select id="cities-options" name="city_id">
+                                    <select id="cities-options" name="city_id" class="form-element">
 
                                         @if (request()->state_id && request()->state_id != 'all')
                                             <option value="all" {{ request()->city_id == 'all' ? 'selected' : '' }}>

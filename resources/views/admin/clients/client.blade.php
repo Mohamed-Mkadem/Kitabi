@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="stat-item">
                                     <i class="fa-solid fa-star"></i>
-                                    <span>4</span>
+                                    <span>{{ $client->reviews_count }}</span>
                                 </div>
                                 <div class="stat-item">
                                     <i class="fa-solid fa-dollar"></i>
@@ -274,494 +274,94 @@
                 <!-- Start Tab -->
                 <div class="tab reviews-tab" data-tab="3" aria-expanded="false">
                     <div class="reviews-wrapper" id="admin-reviews">
-                        <h3>التقييمات : <span>14</span></h3>
+                        <h3>التقييمات : <span>{{ $client->reviews_count }}</span></h3>
 
                         <div class="grid reviews-grid">
 
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
+                            @forelse ($client->reviews as $review)
+                                <!-- Start Review -->
+                                <div class="card  review-card">
+                                    <button class="modal-controller"></button>
+                                    <div class="modal-holder">
+                                        <div class="modal review-details">
+                                            <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
+                                                <h2>تفاصيل التقييم</h2>
+                                                <button class="modal-closer">
+                                                    <i class="fa-solid fa-close"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3>الكتاب</h3>
+                                                <div class="info-wrapper book-holder">
+                                                    <img src="{{ $review->book->image }}" alt="">
+                                                    <div>
+                                                        @if ($review->book->deleted_at)
+                                                            <p>{{ $review->book->name }} <span>(محذوف)</span></p>
+                                                        @else
+                                                            <a
+                                                                href="{{ route('admin.books.show', $review->book) }}">{{ $review->book->name }}</a>
+                                                        @endif
+                                                        <p>{{ $review->book->author->name }} </p>
+                                                        <p>{{ $review->book->publisher->name }} </p>
+
+                                                        <div class="rate-holder">
+                                                            <span class="rate">{{ $review->book->rate }}</span>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <span
+                                                                class="reviews-count">({{ $review->book->formattedReviewsCount }})</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
+                                                <h3>التقييم</h3>
+                                                <div class="d-flex a-center f-wrap stars-holder">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <i
+                                                            class="fa-solid fa-star {{ $i <= $review->stars ? 'filled' : '' }}"></i>
+                                                    @endfor
+                                                </div>
+                                                <p class="comment ">
+                                                    {{ $review->comment }}
+                                                </p>
+                                                <div class="d-flex j-end mt-1">
 
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
-                                                    </div>
+                                                    <form action="{{ route('admin.reviews.destroy', $review) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="deleteBtn">حذف التقييم</button>
+                                                    </form>
                                                 </div>
                                             </div>
-
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
-
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
-
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
+                                    <div class="card-header d-flex j-between f-wrap gap-1 a-center">
+                                        <p class="date">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span dir="ltr">
+                                                {{ $review->created_at->format('Y - m - d : H:i') }}</span>
+                                        </p>
+                                        <div class="d-flex a-center j-between f-wrap stars-holder">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i
+                                                    class="fa-solid fa-star {{ $i <= $review->stars ? 'filled' : '' }}"></i>
+                                            @endfor
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
+                                    <div class="card-body ">
+                                        <div class="book-holder ">
+                                            <img src="{{ $review->book->image }}" alt="">
+                                            <h2>{{ $review->book->name }}</h2>
                                         </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
-
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        <p>
+                                            {{ $review->comment }}
+                                        </p>
                                     </div>
                                 </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
-
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="card  review-card">
-                                <button class="modal-controller"></button>
-                                <div class="modal-holder">
-                                    <div class="modal review-details">
-                                        <div class="modal-header d-flex j-between a-center gap-1 f-wrap">
-                                            <h2>تفاصيل التقييم</h2>
-                                            <button class="modal-closer">
-                                                <i class="fa-solid fa-close"></i>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h3>الكتاب</h3>
-                                            <div class="info-wrapper book-holder">
-                                                <img src="https://picsum.photos/200/300" alt="">
-                                                <div>
-                                                    <a href="book.html">هذا النص هو مثال لنص يمكن استبداله في
-                                                        نفس المساح</a>
-                                                    <p>اسم الكاتب</p>
-                                                    <p>اسم دار النشر</p>
-                                                    <div class="rate-holder">
-                                                        <span class="rate">86%</span>
-                                                        <i class="fa-solid fa-star"></i>
-                                                        <span class="reviews-count">(25 تقييما)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h3>التقييم</h3>
-                                            <div class="d-flex a-center f-wrap stars-holder">
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star filled"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                            <p class="comment ">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </p>
-                                            <div class="d-flex j-end mt-1">
-
-                                                <form action="" method="post">
-                                                    <input type="hidden">
-                                                    <button class="deleteBtn">حذف التقييم</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-header d-flex j-between f-wrap gap-1 a-center">
-                                    <p class="date">
-                                        <i class="fa-regular fa-clock"></i>
-                                        25 - 02 - 2023
-                                    </p>
-                                    <div class="d-flex a-center j-between f-wrap stars-holder">
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star filled"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="card-body ">
-                                    <div class="book-holder ">
-                                        <img src="https://picsum.photos/200/300" alt="">
-                                        <h2>هذا النص هو مثال لنص يمكن استبداله في نفس المساح</h2>
-                                    </div>
-                                    <p>
-                                        هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا
-                                        النص من مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-
-
-
-
+                                <!-- End Review -->
+                            @empty
+                                <p>لم يقم هذا العميل بأي تقييم بعد</p>
+                            @endforelse
 
                         </div>
 

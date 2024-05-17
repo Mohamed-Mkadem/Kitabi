@@ -36,9 +36,9 @@
                         <p class="category">{{ $book->category->name }}</p>
                         <h3 class="title"> {{ $book->name }} </h3>
                         <div class="rate-holder">
-                            <span class="rate">86%</span>
+                            <span class="rate">{{ $book->rate }}</span>
                             <i class="fa-solid fa-star"></i>
-                            <span class="reviews-count">(25 تقييما)</span>
+                            <span class="reviews-count">({{ $book->formattedReviewsCount }})</span>
                         </div>
                         <p class="price"><span> {{ $book->formattedPrice }} </span> د.ت</p>
                         <p class="author">{{ $book->author->name }}</p>
@@ -57,8 +57,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             <div class="container">
                 <div class="tabs-section">
@@ -84,224 +82,143 @@
                         <!-- End Tab -->
                         <!-- Start Tab -->
                         <div class="tab" data-tab="2" aria-expanded="false">
+
                             <div class="row grid">
                                 <div class="col review-stats-holder">
-                                    <div class="review-stats-header">
-                                        <h4> تقييمات العملاء </h4>
-                                        <div class="rate-holder">
-                                            <span class="rate">86%</span>
-                                            <i class="fa-solid fa-star"></i>
-                                            <span class="reviews-count">(25 تقييما)</span>
+                                    @if ($book->reviews_count)
+                                        <div class="review-stats-header">
+                                            <h4> تقييمات العملاء </h4>
+                                            <div class="rate-holder">
+                                                <span class="rate">{{ $book->rate }}</span>
+                                                <i class="fa-solid fa-star"></i>
+                                                <span class="reviews-count">({{ $book->formattedReviewsCount }})</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="rate-stats-body">
-                                        <ul>
-                                            <!-- Start Li  -->
-                                            <li>
-                                                <div class="rate-list">
-                                                    <span>5</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" data-value="50%" style="width: 50%;">
-                                                            50%
+                                        <div class="rate-stats-body">
+                                            <ul>
+
+                                                @for ($i = 5; $i >= 1; $i--)
+                                                    <!-- Start Li  -->
+                                                    <li>
+                                                        <div class="rate-list">
+                                                            <div class="count-holders">
+                                                                <span>{{ $i }}</span> -
+                                                                <span>({{ $starsCounts[$i]['percentage'] . '%' }})</span>
+                                                            </div>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" data-value="50%"
+                                                                    style="width: {{ $starsCounts[$i]['percentage'] }}%;">
+
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Li  -->
-                                            <!-- Start Li  -->
-                                            <li>
-                                                <div class="rate-list">
-                                                    <span>4</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" data-value="20%" style="width: 20%;">
-                                                            20%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Li  -->
-                                            <!-- Start Li  -->
-                                            <li>
-                                                <div class="rate-list">
-                                                    <span>3</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" data-value="20%" style="width: 20%;">
-                                                            20%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Li  -->
-                                            <!-- Start Li  -->
-                                            <li>
-                                                <div class="rate-list">
-                                                    <span>2</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" data-value="7%" style="width: 7%;">
-                                                            7%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Li  -->
-                                            <!-- Start Li  -->
-                                            <li>
-                                                <div class="rate-list">
-                                                    <span>1</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" data-value="3%" style="width: 3%;">
-                                                            3%
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Li  -->
-                                        </ul>
-                                    </div>
+                                                    </li>
+                                                    <!-- End Li  -->
+                                                @endfor
+                                            </ul>
+
+                                        </div>
+                                    @else
+                                        <p>لا يوجد تقييمات لهذا الكتاب</p>
+                                    @endif
                                 </div>
                                 <div class="col new-review-holder">
                                     <div class="new-review-header">
                                         <h4>أضف تقييمك</h4>
                                     </div>
-                                    <div class="stars-holder">
-                                        <!-- Start Star  -->
-                                        <div class="star-holder">
-                                            <input type="radio" name="stars" id="stars-5">
-                                            <label for="stars-5"> <i class="fa-solid fa-star"></i> 5 </label>
-                                        </div>
-                                        <!-- End Star  -->
-                                        <!-- Start Star  -->
-                                        <div class="star-holder">
-                                            <input type="radio" name="stars" id="stars-4">
-                                            <label for="stars-4"> <i class="fa-solid fa-star"></i> 4 </label>
-                                        </div>
-                                        <!-- End Star  -->
-                                        <!-- Start Star  -->
-                                        <div class="star-holder">
-                                            <input type="radio" name="stars" id="stars-3">
-                                            <label for="stars-3"> <i class="fa-solid fa-star"></i> 3 </label>
-                                        </div>
-                                        <!-- End Star  -->
-                                        <!-- Start Star  -->
-                                        <div class="star-holder">
-                                            <input type="radio" name="stars" id="stars-2">
-                                            <label for="stars-2"> <i class="fa-solid fa-star"></i> 2 </label>
-                                        </div>
-                                        <!-- End Star  -->
-                                        <!-- Start Star  -->
-                                        <div class="star-holder">
-                                            <input type="radio" name="stars" id="stars-1">
-                                            <label for="stars-1"> <i class="fa-solid fa-star"></i> 1 </label>
-                                        </div>
-                                        <!-- End Star  -->
-                                    </div>
-                                    <textarea name="" id="review-message" cols="30" rows="10" placeholder="أضف تعليقك هنا"></textarea>
-                                    <button id="submit-review">إرسال</button>
+                                    @auth
+                                        @if (Auth::user()->hasBoughtThisBook($book->id) && !Auth::user()->hasReviewedThisBook($book->id))
+                                            <form action="{{ route('client.reviews.store', $book) }}" method="post">
+                                                @csrf
+                                                <div class="stars-holder">
+                                                    <!-- Start Star  -->
+                                                    <div class="star-holder">
+                                                        <input type="radio" name="stars" id="stars-5" value="5">
+                                                        <label for="stars-5"> <i class="fa-solid fa-star"></i> 5 </label>
+                                                    </div>
+                                                    <!-- End Star  -->
+                                                    <!-- Start Star  -->
+                                                    <div class="star-holder">
+                                                        <input type="radio" name="stars" id="stars-4" value="4">
+                                                        <label for="stars-4"> <i class="fa-solid fa-star"></i> 4 </label>
+                                                    </div>
+                                                    <!-- End Star  -->
+                                                    <!-- Start Star  -->
+                                                    <div class="star-holder">
+                                                        <input type="radio" name="stars" id="stars-3" value="3">
+                                                        <label for="stars-3"> <i class="fa-solid fa-star"></i> 3 </label>
+                                                    </div>
+                                                    <!-- End Star  -->
+                                                    <!-- Start Star  -->
+                                                    <div class="star-holder">
+                                                        <input type="radio" name="stars" id="stars-2" value="2">
+                                                        <label for="stars-2"> <i class="fa-solid fa-star"></i> 2 </label>
+                                                    </div>
+                                                    <!-- End Star  -->
+                                                    <!-- Start Star  -->
+                                                    <div class="star-holder">
+                                                        <input type="radio" name="stars" id="stars-1" value="1">
+                                                        <label for="stars-1"> <i class="fa-solid fa-star"></i> 1 </label>
+                                                    </div>
+                                                    <!-- End Star  -->
+                                                </div>
+                                                <textarea name="comment" id="review-message" cols="30" rows="10" placeholder="أضف تعليقك هنا"></textarea>
+                                                <button id="submit-review">إرسال</button>
+                                            </form>
+                                        @else
+                                            @if (Auth::user()->hasReviewedThisBook($book->id))
+                                                <p>لقد قمت بتقييم هذا الكتاب من قبل</p>
+                                            @else
+                                                <p>التقييم متاح فقط للعملاء الذين قاموا بشراء هذا الكتاب من قبل</p>
+                                            @endif
+                                        @endif
+                                    @endauth
+                                    @guest
+                                        <p>لإضافة تقييم, الرجاء تسجيل الدخول</p>
+                                    @endguest
                                 </div>
                             </div>
                             <div class="clients-reviews">
-                                <!-- Start Review -->
-                                <div class="client-review">
-                                    <div class="client-review-header">
-                                        <div class="reviewer-info">
-                                            <div class="img-holder">
-                                                <img src="../../assets/imgs/user.jpg" alt="">
+                                @foreach ($book->reviews as $review)
+                                    <!-- Start Review -->
+                                    <div class="client-review">
+                                        <div class="client-review-header">
+                                            <div class="reviewer-info">
+                                                <div class="img-holder">
+                                                    <img src="{{ asset('storage/' . $review->user->photo) }}"
+                                                        alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="client-name"> {{ $review->user->fullName }}</p>
+                                                    <p class="review-date">
+                                                        {{ $review->created_at->format('Y - m - d : H:i') }}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="client-name">User Name</p>
-                                                <p class="review-date">25 فيفري 2024</p>
-                                            </div>
-                                        </div>
-                                        <div class="review">
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-
-                                    </div>
-                                    <div class="review-body">
-                                        <p>
-                                            النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                            مولد
-                                            النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
-                                            إلى
-                                            زيادة عدد الحروف التى يولدها التطبيق.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- End Review -->
-                                <!-- Start Review -->
-                                <div class="client-review">
-                                    <div class="client-review-header">
-                                        <div class="reviewer-info">
-                                            <div class="img-holder">
-                                                <img src="../../assets/imgs/user.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="client-name">اسم مستخدم</p>
-
-                                                <p class="review-date">25 فيفري 2024</p>
+                                            <div class="review">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i
+                                                        class="fa-solid fa-star {{ $i <= $review->stars ? 'filled' : '' }}"></i>
+                                                @endfor
                                             </div>
 
                                         </div>
-                                        <div class="review">
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
+                                        <div class="review-body">
+                                            @if ($review->comment != null)
+                                                <p>{{ $review->comment }}</p>
+                                            @endif
+
                                         </div>
                                     </div>
-                                    <div class="review-body">
-                                        <p>
-                                            النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                            مولد
-                                            النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
-                                            إلى
-                                            زيادة عدد الحروف التى يولدها التطبيق.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- End Review -->
-                                <!-- Start Review -->
-                                <div class="client-review">
-                                    <div class="client-review-header">
-                                        <div class="reviewer-info">
-                                            <div class="img-holder">
-                                                <img src="../../assets/imgs/user.jpg" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="client-name">User Name</p>
-                                                <p class="review-date">25 فيفري 2024</p>
-                                            </div>
-                                        </div>
-                                        <div class="review">
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star filled "></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="review-body">
-                                        <p>
-                                            النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                            مولد
-                                            النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة
-                                            إلى
-                                            زيادة عدد الحروف التى يولدها التطبيق.
-                                        </p>
-                                    </div>
-                                </div>
-                                <!-- End Review -->
+                                    <!-- End Review -->
+                                @endforeach
                             </div>
+
                         </div>
-                        <!-- End Tab -->
                     </div>
+                    <!-- End Tab -->
                 </div>
             </div>
+        </div>
         </div>
 
     </main>

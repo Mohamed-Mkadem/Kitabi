@@ -1,130 +1,138 @@
 @use "../../Abstracts/" as *;
 %starsHolderStyles {
-  gap: 0.3em;
-  i {
-    &.filled {
-      color: var(--clr-yellow-500);
+    gap: 0.3em;
+    i {
+        &.filled {
+            color: var(--clr-yellow-500);
+        }
     }
-  }
 }
 #admin-reviews {
-  .card {
-    &.review-card {
-      position: relative;
+    .card {
+        &.review-card {
+            position: relative;
 
-      &:hover {
-        background-color: var(--clr-mustard-800);
-      }
-      .modal-controller {
-        position: absolute;
-        inset: 0;
-        z-index: 3;
-        padding: 0;
-        margin: 0;
-      }
-
-      .modal {
-        h3 {
-          color: var(--clr-teal-300);
-          margin-bottom: 0.65em;
-        }
-        .info-wrapper {
-          margin-block: 1em;
-          align-items: center;
-          gap: 1em;
-          a {
-            color: var(--clr-blue-300);
-            @include transition(color);
-            font-size: 20px;
             &:hover {
-              color: var(--clr-teal-400);
+                background-color: var(--clr-mustard-800);
             }
-          }
-          img {
-          }
-          a {
-          }
-          color: var(--clr-main-600);
-          &.book-holder {
-            $cols: 80px 1fr;
-            @include detailledGrid($cols);
-            p {
-              margin-bottom: 0.2em;
+            .modal-controller {
+                position: absolute;
+                inset: 0;
+                z-index: 3;
+                padding: 0;
+                margin: 0;
             }
-            .rate-holder {
-              i {
-                color: var(--clr-yellow-500);
-              }
-            }
-          }
-          &.client-holder {
-            $cols: 70px 1fr;
-            @include detailledGrid($cols);
-            img {
-              aspect-ratio: 1;
-              border-radius: 50%;
-            }
-          }
-        }
-        .stars-holder {
-          @extend %starsHolderStyles;
-        }
-        p {
-          &.comment {
-            color: var(--clr-main-600);
-            line-height: 1.5;
-            margin-block: 0.5em;
-          }
-        }
-        form {
-          button {
-          }
-        }
-      }
 
-      .card-header {
-        p.date {
-          color: var(--clr-blue-300);
-          font-weight: 500;
-          i {
-            margin-inline-end: 0.2em;
-          }
+            .modal {
+                h3 {
+                    color: var(--clr-teal-300);
+                    margin-bottom: 0.65em;
+                }
+                .info-wrapper {
+                    margin-block: 1em;
+                    align-items: center;
+                    gap: 1em;
+                    p {
+                        color: var(--clr-blue-300);
+                        @include transition(color);
+                        font-size: 20px;
+                        span {
+                            color: var(--clr-red-500);
+                        }
+                    }
+                    a {
+                        color: var(--clr-blue-300);
+                        @include transition(color);
+                        font-size: 20px;
+                        &:hover {
+                            color: var(--clr-teal-400);
+                        }
+                    }
+                    img {
+                    }
+                    a {
+                    }
+                    color: var(--clr-main-600);
+                    &.book-holder {
+                        $cols: 80px 1fr;
+                        @include detailledGrid($cols);
+                        p {
+                            margin-bottom: 0.2em;
+                        }
+                        .rate-holder {
+                            i {
+                                color: var(--clr-yellow-500);
+                            }
+                        }
+                    }
+                    &.client-holder {
+                        $cols: 70px 1fr;
+                        @include detailledGrid($cols);
+                        img {
+                            aspect-ratio: 1;
+                            border-radius: 50%;
+                        }
+                    }
+                }
+                .stars-holder {
+                    @extend %starsHolderStyles;
+                }
+                p {
+                    &.comment {
+                        color: var(--clr-main-600);
+                        line-height: 1.5;
+                        margin-block: 0.5em;
+                    }
+                }
+                form {
+                    button {
+                    }
+                }
+            }
+
+            .card-header {
+                p.date {
+                    color: var(--clr-blue-300);
+                    font-weight: 500;
+                    i {
+                        margin-inline-end: 0.2em;
+                    }
+                }
+                .stars-holder {
+                    @extend %starsHolderStyles;
+                }
+            }
+            .card-body {
+                margin-block: 1.5em 0;
+                .book-holder {
+                    $cols: 80px 1fr;
+                    @include detailledGrid($cols);
+                    gap: 1em;
+                    margin-bottom: 0.8em;
+                    align-items: center;
+                    img {
+                    }
+                    h2 {
+                        font-size: 20px;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        color: var(--clr-main-500);
+                    }
+                }
+                > p {
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    font-size: 18px;
+                    letter-spacing: 1px;
+                    color: var(--clr-main-600);
+                }
+            }
         }
-        .stars-holder {
-          @extend %starsHolderStyles;
-        }
-      }
-      .card-body {
-        margin-block: 1.5em 0;
-        .book-holder {
-          $cols: 80px 1fr;
-          @include detailledGrid($cols);
-          gap: 1em;
-          margin-bottom: 0.8em;
-          align-items: center;
-          img {
-          }
-          h2 {
-            font-size: 20px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            line-clamp: 3;
-            -webkit-box-orient: vertical;
-            color: var(--clr-main-500);
-          }
-        }
-        > p {
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          line-clamp: 3;
-          -webkit-box-orient: vertical;
-          font-size: 18px;
-          letter-spacing: 1px;
-          color: var(--clr-main-600);
-        }
-      }
     }
-  }
 }

@@ -85,10 +85,44 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book->load('category', 'author', 'publisher')->loadSum('orderItems', 'quantity');
-        return view('admin.books.books-show', ['book' => $book]);
+        $book->load('category', 'author', 'publisher', 'reviews.user')->loadSum('orderItems', 'quantity')->loadCount('reviews');
+        $starsCounts = $this->getStarsStatistics($book);
+        return view('admin.books.books-show', ['book' => $book, 'starsCounts' => $starsCounts]);
     }
 
+    private function getStarsStatistics($book)
+    {
+        $reviewsCount = $book->reviews()->count();
+        $count = $fiveStarsCount = $book->reviews()->where('stars', 5)->count();
+        $fourStarsCount = $book->reviews()->where('stars', 4)->count();
+        $threeStarsCount = $book->reviews()->where('stars', 3)->count();
+        $twoStarsCount = $book->reviews()->where('stars', 2)->count();
+        $oneStarsCount = $book->reviews()->where('stars', 1)->count();
+        return [
+            '5' => [
+                'count' => $fiveStarsCount,
+                'percentage' => $reviewsCount ? round(($fiveStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '4' => [
+                'count' => $fourStarsCount,
+                'percentage' => $reviewsCount ? round(($fourStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '3' => [
+                'count' => $threeStarsCount,
+                'percentage' => $reviewsCount ? round(($threeStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '2' => [
+                'count' => $twoStarsCount,
+                'percentage' => $reviewsCount ? round(($twoStarsCount / $reviewsCount) * 100) : 0
+            ],
+            '1' => [
+                'count' => $oneStarsCount,
+                'percentage' => $reviewsCount ? round(($oneStarsCount / $reviewsCount) * 100) : 0
+            ],
+
+
+        ];
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -236,6 +270,14 @@ class BookController extends Controller
             $maxDateTime = \Carbon\Carbon::parse($max_date)->endOfDay();
             $query->where('created_at', '<=', $maxDateTime);
         }
+
+        if ($sort === 'highest_rate') {
+            $query->orderBy('rate', 'desc');
+        }
+        if ($sort === 'lowest_rate') {
+            $query->orderBy('rate', 'asc');
+        }
+
         if ($sort === 'oldest') {
             $query->orderBy('created_at', 'asc');
         } else if ($sort === 'highest_price') {
