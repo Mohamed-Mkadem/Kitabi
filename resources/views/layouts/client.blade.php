@@ -42,12 +42,7 @@
                     المتجر
                 </a>
             </li>
-            <li>
-                <a href="wishlist.html" current-page="{{ request()->is('wishlist*') ? 'true' : '' }}">
-                    <i class="fa-regular fa-heart"></i>
-                    المفضلة
-                </a>
-            </li>
+           
             <li>
                 <a href="{{ route('client.cart') }}" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
                     <span id="fixed-menu-count">9</span>
@@ -133,9 +128,7 @@
                     <i class="fa-regular fa-bell"></i>
                 </a>
 
-                <a href="wishlist.html" class="user-action-item wishlist-item icon-btn">
-                    <i class="fa-regular fa-heart"></i>
-                </a>
+               
                 <div class="dropdown-holder cart-holder">
 
                     <a href="{{ route('client.cart') }}" class="user-action-item icon-btn">

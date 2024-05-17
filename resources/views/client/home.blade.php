@@ -20,8 +20,7 @@
                         <div class="product">
                             <div class="product-header">
                                 <div class="top-bar-info">
-                                    <button data-product-id="{{ $book->id }}"> <i class="fa-regular fa-heart"></i>
-                                    </button>
+                                    <p class="rate"> {{ $book->rate }} <i class="fa-solid fa-star filled"></i></p>
                                     <p class="status {{ $book->isOutOfStock() ? 'not-available' : '' }}">
                                         {{ $book->isOutOfStock() ? 'غير متوفّر' : 'متوفّر' }}
                                     </p>
@@ -67,8 +66,7 @@
                         <div class="product">
                             <div class="product-header">
                                 <div class="top-bar-info">
-                                    <button data-product-id="{{ $book->id }}"> <i class="fa-regular fa-heart"></i>
-                                    </button>
+                                    <p class="rate"> {{ $book->rate }} <i class="fa-solid fa-star filled"></i></p>
                                     <p class="status {{ $book->isOutOfStock() ? 'not-available' : '' }}">
                                         {{ $book->isOutOfStock() ? 'غير متوفّر' : 'متوفّر' }}
                                     </p>
