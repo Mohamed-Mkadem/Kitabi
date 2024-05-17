@@ -64,24 +64,24 @@
                         <ul>
                             <li>
                                 <h3>وصف المنتج</h3>
-                                <button data-index="1"></button>
+                                <button data-index="1" aria-checked="true"></button>
                             </li>
                             <li>
                                 <h3>التقييم</h3>
-                                <button data-index="2" aria-checked="true"></button>
+                                <button data-index="2"></button>
                             </li>
                         </ul>
                     </div>
                     <div class="tabs-holder">
                         <!-- Start Tab -->
-                        <div class="tab" data-tab="1" aria-expanded="false">
+                        <div class="tab" data-tab="1" aria-expanded="true">
                             <p>
                                 {{ $book->description }}
                             </p>
                         </div>
                         <!-- End Tab -->
                         <!-- Start Tab -->
-                        <div class="tab" data-tab="2" aria-expanded="true">
+                        <div class="tab" data-tab="2" aria-expanded="false">
 
                             <div class="row grid">
                                 <div class="col review-stats-holder">

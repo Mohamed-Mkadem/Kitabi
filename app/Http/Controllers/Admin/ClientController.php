@@ -23,7 +23,13 @@ class ClientController extends Controller
     {
         $this->authorize('view', $client);
 
-        $client->load(['orders.books', 'state', 'city'])->loadSum('orders', 'amount')->loadCount('orders');
+        $client->load([
+            'orders.books',
+            'state',
+            'city',
+            'reviews.book.publisher',
+            'reviews.book.author'
+        ])->loadSum('orders', 'amount')->loadCount('orders', 'reviews');
 
         $ordersStatusesCounts = $this->getOrderStatusesCounts($client);
         return view('admin.clients.client', ['client' => $client, 'ordersStatusesCounts' => $ordersStatusesCounts]);

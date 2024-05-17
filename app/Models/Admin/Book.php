@@ -40,8 +40,8 @@ class Book extends Model
 
     public function updateRate()
     {
-        $rateAvg = round($this->reviews()->avg('stars'));
-        $this->rate = number_format($rateAvg, 2);
+        $rateAvg = round($this->reviews()->avg('stars'), 2);
+        $this->rate = $rateAvg;
         $this->save();
     }
 
@@ -49,6 +49,13 @@ class Book extends Model
     {
         return Attribute::make(
             get: fn () => $this->reviews_count >= 10 ? "$this->reviews_count تقييما" :  "$this->reviews_count تقييمات"
+        );
+    }
+
+    public function rating(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->rate >= 10 ? "$this->reviews_count تقييما" :  "$this->reviews_count تقييمات"
         );
     }
     public function category()

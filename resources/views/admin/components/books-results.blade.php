@@ -10,7 +10,7 @@
                     </p>
                     <div class="top-bar-info">
                         <p class="rate">
-                            <span>86%</span>
+                            <span>{{ $book->rate }}</span>
                             <i class="fa-solid fa-star"></i>
                         </p>
                         <p class="quantity">
@@ -26,7 +26,7 @@
                 <div class="product-info">
 
                     <p class="category">{{ $book->category->name }}</p>
-                    <h3 class="title"><a href="{{ route('admin.books.edit', $book) }}">
+                    <h3 class="title"><a href="{{ route('admin.books.show', $book) }}">
                             {{ $book->name }}</a></h3>
                     <p class="price"><span> {{ $book->formattedPrice }} </span> د.ت</p>
                     <p class="author"> {{ $book->author->name }}</p>

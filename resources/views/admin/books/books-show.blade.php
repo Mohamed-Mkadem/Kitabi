@@ -70,9 +70,9 @@
                         <p class="category">{{ $book->category->name }}</p>
                         <h3 class="title"> {{ $book->name }} </h3>
                         <div class="rate-holder">
-                            <span class="rate">86%</span>
+                            <span class="rate">{{ $book->rate }}</span>
                             <i class="fa-solid fa-star"></i>
-                            <span class="reviews-count">(25 تقييما)</span>
+                            <span class="reviews-count">({{ $book->formattedReviewsCount }})</span>
                         </div>
 
                         <p class="author"> {{ $book->author->name }}</p>
@@ -195,75 +195,38 @@
                                 <div class="review-stats-header">
                                     <h2> تقييمات العملاء </h2>
                                     <div class="rate-holder">
-                                        <span class="rate">86%</span>
+                                        <span class="rate">{{ $book->rate }}</span>
                                         <i class="fa-solid fa-star"></i>
-                                        <span class="reviews-count">(25 تقييما)</span>
+                                        <span class="reviews-count">( {{ $book->formattedReviewsCount }} )</span>
                                     </div>
                                 </div>
-                                <div class="rate-stats-body">
-                                    <ul>
-                                        <!-- Start Li  -->
-                                        <li>
-                                            <div class="rate-list">
-                                                <span>5</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar" data-value="50%" style="width: 50%;">
-                                                        50%
+                                @if (count($book->reviews))
+                                    <div class="rate-stats-body">
+                                        <ul>
+
+                                            @for ($i = 5; $i >= 1; $i--)
+                                                <!-- Start Li  -->
+                                                <li>
+                                                    <div class="rate-list">
+                                                        <div class="count-holders">
+                                                            <span>{{ $i }}</span> -
+                                                            <span>({{ $starsCounts[$i]['percentage'] . '%' }})</span>
+                                                        </div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar" data-value="50%"
+                                                                style="width: {{ $starsCounts[$i]['percentage'] }}%;">
+
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- End Li  -->
-                                        <!-- Start Li  -->
-                                        <li>
-                                            <div class="rate-list">
-                                                <span>4</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar" data-value="20%" style="width: 20%;">
-                                                        20%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- End Li  -->
-                                        <!-- Start Li  -->
-                                        <li>
-                                            <div class="rate-list">
-                                                <span>3</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar" data-value="20%" style="width: 20%;">
-                                                        20%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- End Li  -->
-                                        <!-- Start Li  -->
-                                        <li>
-                                            <div class="rate-list">
-                                                <span>2</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar" data-value="7%" style="width: 7%;">
-                                                        7%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- End Li  -->
-                                        <!-- Start Li  -->
-                                        <li>
-                                            <div class="rate-list">
-                                                <span>1</span>
-                                                <div class="progress">
-                                                    <div class="progress-bar" data-value="3%" style="width: 3%;">
-                                                        3%
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <!-- End Li  -->
-                                    </ul>
-                                </div>
+                                                </li>
+                                                <!-- End Li  -->
+                                            @endfor
+                                        </ul>
+                                    </div>
+                                @else
+                                    <p>لم يتحصل هذا الكتاب على تقييمات بعد</p>
+                                @endif
                             </div>
                             <div class="col product-description">
                                 <h2>وصف المنتج</h2>
@@ -273,105 +236,43 @@
                             </div>
                         </div>
                         <div class="clients-reviews admin-dashboard">
-                            <!-- Start Review -->
-                            <div class="client-review">
-                                <div class="client-review-header">
-                                    <div class="reviewer-info">
-                                        <div class="img-holder">
-                                            <img src="../../assets/imgs/user.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="client-name">User Name</p>
-                                            <p class="review-date">25 فيفري 2024</p>
-                                        </div>
-                                    </div>
-                                    <div class="review">
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
 
-                                </div>
-                                <div class="review-body">
-                                    <p>
-                                        النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                        مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة
-                                        إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="client-review">
-                                <div class="client-review-header">
-                                    <div class="reviewer-info">
-                                        <div class="img-holder">
-                                            <img src="../../assets/imgs/user.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="client-name">اسم مستخدم</p>
+                            @foreach ($book->reviews as $review)
+                                <!-- Start Review -->
+                                <div class="client-review">
+                                    <div class="client-review-header">
+                                        <div class="reviewer-info">
+                                            <div class="img-holder">
+                                                <img src="{{ asset('storage/' . $review->user->photo) }}" alt="">
+                                            </div>
+                                            <div>
 
-                                            <p class="review-date">25 فيفري 2024</p>
+                                                <p class="client-name"> <a
+                                                        href="{{ route('admin.clients.show', $review->user) }}">{{ $review->user->fullName }}</a>
+                                                </p>
+                                                <p class="review-date">
+                                                    {{ $review->created_at->format('Y - m - d : H:i') }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="review">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i
+                                                    class="fa-solid fa-star {{ $i <= $review->stars ? 'filled' : '' }}"></i>
+                                            @endfor
                                         </div>
 
                                     </div>
-                                    <div class="review">
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
+                                    <div class="review-body">
+                                        @if ($review->comment != null)
+                                            <p>{{ $review->comment }}</p>
+                                        @endif
+
                                     </div>
                                 </div>
-                                <div class="review-body">
-                                    <p>
-                                        النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                        مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة
-                                        إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
-                            <!-- Start Review -->
-                            <div class="client-review">
-                                <div class="client-review-header">
-                                    <div class="reviewer-info">
-                                        <div class="img-holder">
-                                            <img src="../../assets/imgs/user.jpg" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="client-name">User Name</p>
-                                            <p class="review-date">25 فيفري 2024</p>
-                                        </div>
-                                    </div>
-                                    <div class="review">
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star filled "></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="review-body">
-                                    <p>
-                                        النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                                        مولد
-                                        النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى
-                                        إضافة
-                                        إلى
-                                        زيادة عدد الحروف التى يولدها التطبيق.
-                                    </p>
-                                </div>
-                            </div>
-                            <!-- End Review -->
+                                <!-- End Review -->
+                            @endforeach
+
+
                         </div>
                     </div>
 
