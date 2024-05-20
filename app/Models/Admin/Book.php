@@ -9,6 +9,7 @@ use App\Models\BookOrder;
 use App\Models\Admin\Author;
 use App\Models\Admin\Category;
 use App\Models\Admin\Publisher;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -32,6 +33,24 @@ class Book extends Model
         'description',
         'rate'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($book) {
+            Cache::forget('bestSellingBooks');
+            Cache::forget('latestBooks');
+        });
+
+        static::deleted(function ($book) {
+            Cache::forget('bestSellingBooks');
+            Cache::forget('latestBooks');
+        });
+    }
+
+
+
 
     public function reviews()
     {
