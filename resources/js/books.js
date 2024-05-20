@@ -111,6 +111,8 @@ function createFilters() {
     let categories = filterForm.querySelectorAll('input[name="categories[]"]:checked')
     let publishers = filterForm.querySelectorAll('input[name="publishers[]"]:checked')
     let statuses = filterForm.querySelectorAll('input[name="statuses[]"]:checked')
+    let minRateInputValue = filterForm.querySelector('input[name="min_rate"').value
+    let maxRateInputValue = filterForm.querySelector('input[name="max_rate"').value
 
 
 
@@ -129,6 +131,8 @@ function createFilters() {
         statuses: {},
         min_orders: minOrdersInputValue,
         max_orders: maxOrdersInputValue,
+        min_rate: minRateInputValue,
+        max_rate: maxRateInputValue,
     }
 
     authors.forEach(author => {

@@ -209,6 +209,9 @@ class BookController extends Controller
         $min_date = $request->min_date ?? '';
         $max_date = $request->max_date ?? '';
 
+        $min_rate = $request->min_rate ?? '';
+        $max_rate = $request->max_rate ?? '';
+
         $min_quantity = $request->min_quantity ?? '';
         $max_quantity = $request->max_quantity ?? '';
 
@@ -224,6 +227,12 @@ class BookController extends Controller
 
         $statuses = $request->statuses ?? [];
 
+        if (!empty($min_rate)) {
+            $query->where('rate', '>=', $min_rate);
+        }
+        if (!empty($max_rate)) {
+            $query->where('rate', '<=', $max_rate);
+        }
 
         if (!empty($min_orders)) {
             $query->havingRaw('COALESCE(order_items_sum_quantity, 0) >= ?', [$min_orders]);
