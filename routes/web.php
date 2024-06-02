@@ -8,12 +8,14 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Client\FrontEndController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Client\NotificationController as ClientNotificationController;
 use App\Http\Controllers\Client\ShopController;
 use Maatwebsite\Excel\Row;
 
@@ -42,6 +44,10 @@ Route::group([
     Route::view('/terms', 'client.terms')->name('terms');
     Route::view('/privacy', 'client.privacy')->name('privacy');
     Route::view('/contact', 'client.contact')->name('contact');
+
+    Route::get('notifications', [ClientNotificationController::class, 'index'])->name('notifications.index');
+    Route::get('notifications/filter', [ClientNotificationController::class, 'filter'])->name('notifications.filter');
+
 
     Route::middleware('auth')->group(function () {
         Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
@@ -122,6 +128,10 @@ Route::group([
     // Reviews
     Route::get('reviews.filter', [AdminReviewController::class, 'filter'])->name('reviews.filter');
     Route::resource('reviews', AdminReviewController::class)->only(['index', 'destroy']);
+
+    // Notifications
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('notifications/filter', [NotificationController::class, 'filter'])->name('notifications.filter');
 });
 
 

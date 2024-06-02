@@ -203,12 +203,12 @@
                                     <div class="range-holder number">
                                         <p>من : </p>
                                         <input class="form-element" type="number" name="min_rate"
-                                            value="{{ request()->min_rate }}" placeholder="مثال : 10" step="0.1">
+                                            value="{{ request()->min_rate }}" placeholder="مثال : 10" step="0.01">
                                     </div>
                                     <div class="range-holder number">
                                         <p>إلى : </p>
                                         <input class="form-element" type="number" name="max_rate"
-                                            value="{{ request()->max_rate }}" placeholder="مثال : 100" step="0.1">
+                                            value="{{ request()->max_rate }}" placeholder="مثال : 100" step="0.01">
                                     </div>
                                 </div>
                             </div>

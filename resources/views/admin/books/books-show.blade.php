@@ -133,17 +133,6 @@
                 <!-- Start stat item -->
                 <div class="stat-item d-flex gap-0-5 f-wrap a-end j-between">
                     <div class="title-value-box">
-                        <h2>عدد المفضلة</h2>
-                        <p>140</p>
-                    </div>
-                    <div class="icon-holder">
-                        <i class="fa-solid fa-heart "></i>
-                    </div>
-                </div>
-                <!-- End stat item -->
-                <!-- Start stat item -->
-                <div class="stat-item d-flex gap-0-5 f-wrap a-end j-between">
-                    <div class="title-value-box">
                         <h2> سعر التكلفة (د.ت)</h2>
 
                         <p>{{ $book->formattedCostPrice }}</p>

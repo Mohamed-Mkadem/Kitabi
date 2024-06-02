@@ -9,6 +9,8 @@ use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\StoreOrderRequest;
+use App\Models\User;
+use App\Notifications\Admin\OrderPlacedNotification;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,7 @@ class OrderController extends Controller
         $this->authorize('create', Order::class);
         $cart = json_decode($request->cart);
         $amount = $this->getAmount($cart);
-
+        $admin = User::where('role', 'admin')->first();
         try {
             DB::beginTransaction();
             $order = new Order([
@@ -47,6 +49,7 @@ class OrderController extends Controller
             $this->attachBooks($order, $cart);
             $this->deductProductsQuantities($cart);
             $this->attachStatusHistory($order);
+            $admin->notify(new OrderPlacedNotification($order, $request->user()));
             DB::commit();
 
             return redirect()->route('client.orders.show', $order)->with('success', 'تمّ استلام الطلب بنجاح');

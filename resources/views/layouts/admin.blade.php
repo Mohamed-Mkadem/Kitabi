@@ -17,7 +17,10 @@
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Stylesheets -->
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js'])
+    <script>
+        var userId = "{{ Auth::id() }}"
+    </script>
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js', 'resources/js/broadcast.js'])
 
 
 
@@ -88,7 +91,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
+                    <a href="{{ route('admin.notifications.index') }}"
+                        class="nav-link {{ request()->is('dashboard/notifications*') ? 'active' : '' }}">
                         <i class="fa-regular fa-bell"></i><span> الإشعارات </span>
                     </a>
                 </li>
@@ -132,80 +136,7 @@
 
                 <div class="dropdowns-holder d-flex  a-center">
 
-                    <div class="dropdown-holder">
-                        <button id="notifications-handler" data-count="99" class="top-bar-btn dropdown-toggle"
-                            aria-pressed="false">
-                            <i class="fa-regular fa-bell"></i>
-                        </button>
-                        <div class="dropdown-menu notifications-dropdown ">
-                            <h4>الإشعارات</h4>
-                            <ul class="notifications-wrapper">
-                                <!-- Start Notification -->
-                                <li class="notification unread">
-                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
-                                    <div class="details">
-                                        <p class="notification-body">
-                                            <a href="" class="unread">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </a>
-                                        </p>
-                                        <p class="notification-time">
-                                            <i class="fa-regular fa-clock"></i> منذ 4 ساعات
-                                        </p>
-                                    </div>
-                                </li>
-                                <!-- End Notification -->
-                                <!-- Start Notification -->
-                                <li class="notification unread">
-                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
-                                    <div class="details">
-                                        <p class="notification-body">
-                                            <a href="" class="unread">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </a>
-                                        </p>
-                                        <p class="notification-time">
-                                            <i class="fa-regular fa-clock"></i> منذ 4 ساعات
-                                        </p>
-                                    </div>
-                                </li>
-                                <!-- End Notification -->
-                                <!-- Start Notification -->
-                                <li class="notification ">
-                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
-                                    <div class="details">
-                                        <p class="notification-body">
-                                            <a href="" class="unread">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </a>
-                                        </p>
-                                        <p class="notification-time">
-                                            <i class="fa-regular fa-clock"></i> منذ 4 ساعات
-                                        </p>
-                                    </div>
-                                </li>
-                                <!-- End Notification -->
-                                <!-- Start Notification -->
-                                <li class="notification unread">
-                                    <img src="{{ asset('assets/imgs/user.jpg') }}" alt="">
-                                    <div class="details">
-                                        <p class="notification-body">
-                                            <a href="" class="unread">
-                                                هذا النص هو مثال لنص يمكن استبداله في نفس المساحة.
-                                            </a>
-                                        </p>
-                                        <p class="notification-time">
-                                            <i class="fa-regular fa-clock"></i> منذ 4 ساعات
-                                        </p>
-                                    </div>
-                                </li>
-                                <!-- End Notification -->
-
-
-                            </ul>
-                            <a href="notifications.html" class="see-all d-block t-center">See All</a>
-                        </div>
-                    </div>
+                    <x-admin.notification-menu />
 
                     <div class="dropdown-holder">
                         <button id="profile-handler" class=" d-flex  a-center dropdown-toggle" aria-pressed="false">

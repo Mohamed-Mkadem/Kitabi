@@ -7,6 +7,11 @@ use App\Models\BookOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\Client\OrderCancelleddNotification;
+use App\Notifications\Client\OrderConfirmedNotification;
+use App\Notifications\Client\OrderDeliveredNotification;
+use App\Notifications\Client\OrderReturnedNotification;
+use App\Notifications\Client\OrderShippedNotification;
 
 class OrderController extends Controller
 {
@@ -102,7 +107,7 @@ class OrderController extends Controller
         $order->update([
             'status' => 'confirmed'
         ]);
-
+        $order->user->notify(new OrderConfirmedNotification($order));
         $this->attachStatusHistoryToOrder($order, 'order confirmed');
 
         return redirect()->back()->with('success', 'تمّ تأكيد الطلب بنجاح');
@@ -121,7 +126,7 @@ class OrderController extends Controller
         ]);
         $this->incrementBookQuantities($order);
         db::commit();
-
+        $order->user->notify(new OrderCancelleddNotification($order));
         $this->attachStatusHistoryToOrder($order, 'order cancelled');
 
         return redirect()->back()->with('success', 'تمّ إلغاء الطلب بنجاح');
@@ -137,7 +142,7 @@ class OrderController extends Controller
         $order->update([
             'status' => 'shipped'
         ]);
-
+        $order->user->notify(new OrderShippedNotification($order));
         $this->attachStatusHistoryToOrder($order, 'order shipped');
 
         return redirect()->back()->with('success', 'تمّ تأكيد شحن هذاالطلب بنجاح');
@@ -153,7 +158,7 @@ class OrderController extends Controller
         $order->update([
             'status' => 'delivered'
         ]);
-
+        $order->user->notify(new OrderDeliveredNotification($order));
         $this->attachStatusHistoryToOrder($order, 'order delivered');
 
         return redirect()->back()->with('success', 'تمّ تأكيد استلام هذاالطلب بنجاح');
@@ -169,7 +174,7 @@ class OrderController extends Controller
         $order->update([
             'status' => 'returned'
         ]);
-
+        $order->user->notify(new OrderReturnedNotification($order));
         $this->attachStatusHistoryToOrder($order, 'order returned');
 
         return redirect()->back()->with('success', 'تمّ تأكيد إرجاع هذاالطلب بنجاح');
