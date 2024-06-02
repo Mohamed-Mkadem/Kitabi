@@ -18,6 +18,8 @@ export const gridVueToggle = document.getElementById('grid-vue')
 export const productsGrid = document.querySelector('.products-grid');
 export const alerts = Array.from(document.querySelectorAll('.alert.show'))
 export const productsContainers = Array.from(document.querySelectorAll('.products-container'))
+const notificationsHandler = document.getElementById("notifications-handler");
+const notificationsWrapper = document.getElementById("notifications-wrapper");
 export function listenForAddingProductToCart(cart) {
 
     productsContainers.forEach(container => {
@@ -289,4 +291,103 @@ export function addError(container, message) {
                         <p>${message}</p>
                     </div>
                     `
+}
+
+
+export function showNotification(data) {
+
+    let notificationModal = createNotificationModal(data)
+
+    document.body.append(notificationModal)
+
+    setTimeout(() => {
+        notificationModal.classList.remove('show')
+    }, 5000);
+}
+
+function createNotificationModal(data) {
+    let notificationModal = document.createElement("div");
+    notificationModal.className = "notification-modal show";
+    let notificationModalWrapper = document.createElement("div");
+    notificationModalWrapper.className =
+        "notification-modal-wrapper p-1 d-flex j-start gap-1 a-start";
+    let img = document.createElement("img");
+    img.className = "notification-modal-img";
+    img.src = `${data.image}`;
+
+    notificationModalWrapper.append(img);
+    let notificationModalBody = document.createElement("p");
+    notificationModalBody.textContent = data.body;
+    notificationModalWrapper.append(notificationModalBody);
+    let link = document.createElement("a");
+    link.className = "notification-modal-link";
+    link.href = ` ${data.url}`;
+
+    notificationModalWrapper.append(link);
+    notificationModal.append(notificationModalWrapper);
+    return notificationModal
+}
+
+
+
+
+export function incrementNotificationsCounter() {
+    notificationsHandler.classList.add("has-notifications");
+    notificationsHandler.dataset.count =
+        (parseInt(notificationsHandler.dataset.count) + 1);
+
+}
+
+
+export function addTheNewNotificationToTheNotificationsHolder(data) {
+    // Create the elements
+    const notification = document.createElement("li");
+    notification.className = "notification unread";
+
+    const img = document.createElement("img");
+    img.src = `${data.image}`;
+    img.alt = "";
+
+    const details = document.createElement("div");
+    details.className = "details";
+
+    const body = document.createElement("p");
+    body.className = "notification-body";
+    const link = document.createElement("a");
+    link.href = ` ${data.url}`;
+    link.textContent = data.body;
+    body.appendChild(link);
+
+    const time = document.createElement("p");
+    time.className = "notification-time";
+    const timeIcon = document.createElement("i");
+    timeIcon.className = "fa-regular fa-clock";
+    const timestamp = new Date(data.created_at * 1000); // Convert timestamp to milliseconds
+    const formattedTime = timestamp.toLocaleString("ar", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+    });
+    time.innerHTML = `${timeIcon.outerHTML} ${formattedTime}`;
+
+    // Append elements
+    details.appendChild(body);
+    details.appendChild(time);
+
+    notification.appendChild(img);
+    notification.appendChild(details);
+
+    // Prepend the notification to notificationsWrapper
+
+    notificationsWrapper.prepend(notification);
+
+    // Check if there are more than 4 notifications and remove the last one
+    const notifications =
+        notificationsWrapper.getElementsByClassName("notification");
+    if (notifications.length > 4) {
+        notifications[notifications.length - 1].remove();
+    }
 }

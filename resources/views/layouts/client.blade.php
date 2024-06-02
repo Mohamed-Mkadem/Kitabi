@@ -17,8 +17,10 @@
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Stylesheets -->
-
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js/cart-actions.js'])
+    <script>
+        let userId = "{{ Auth::id() }}"
+    </script>
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js/cart-actions.js', 'resources/js/broadcast.js'])
     @stack('script')
 </head>
 
@@ -42,7 +44,7 @@
                     المتجر
                 </a>
             </li>
-           
+
             <li>
                 <a href="{{ route('client.cart') }}" current-page="{{ request()->is('cart*') ? 'true' : '' }}">
                     <span id="fixed-menu-count">9</span>
@@ -124,11 +126,13 @@
                         @endauth
                     </ul>
                 </div>
-                <a href="notifications.html" class="user-action-item notifications-item icon-btn">
-                    <i class="fa-regular fa-bell"></i>
-                </a>
+                @auth
+                    @if (Auth::user()->isClient())
+                        <x-client.notification-item />
+                    @endif
+                @endauth
 
-               
+
                 <div class="dropdown-holder cart-holder">
 
                     <a href="{{ route('client.cart') }}" class="user-action-item icon-btn">
