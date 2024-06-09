@@ -11,7 +11,7 @@
 @section('content')
     <section class="content" id="content">
 
-        @include('components.errors')
+
         <!-- Start Starter Header -->
         <div class="starter-header d-flex a-center j-between " id="starter-header">
             <div class="greeting-holder">
@@ -31,6 +31,9 @@
 
         </div>
         <!-- End Starter Header -->
+
+        @include('components.error-messages')
+
 
         <!-- Start Export / Import Holder -->
         <div class="import-export-holder d-flex a-center gap-1">
