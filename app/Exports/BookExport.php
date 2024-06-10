@@ -46,19 +46,19 @@ class BookExport implements FromQuery, WithHeadings, WithMapping, WithStrictNull
     {
 
         return [
-            'Name',
-            'Category',
-            'Author',
-            'Publisher',
-            'Number of Orders',
-            'Rate',
-            'Status',
-            'Cost Price',
-            'Price ',
-            'Quantity',
-            'Stock Alert',
-            'Creation Date',
-            'Image',
+            'الإسم',
+            'التصنيف',
+            'المؤلف',
+            'دار النشر',
+            'عدد الطلبات',
+            'التقييم',
+            'الحالة',
+            'سعر التكلفة',
+            'السعر',
+            'الكمّية',
+            'كمّية التنبيه',
+            'تاريخ الإضافة',
+            'مسار الصورة',
         ];
     }
 }

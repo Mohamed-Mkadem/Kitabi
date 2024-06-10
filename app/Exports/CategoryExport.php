@@ -36,7 +36,7 @@ class CategoryExport implements FromQuery, WithMapping, WithHeadings, WithStrict
     public function headings(): array
     {
         return [
-            'Name', 'Books Count', 'Creation Date'
+            'الإسم', 'عدد الكتب', 'تاريخ الإضافة'
         ];
     }
 }
