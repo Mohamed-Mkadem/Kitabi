@@ -12,6 +12,7 @@ use App\Models\Admin\Publisher;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use App\Http\Requests\Admin\Book\StoreBookRequest;
 use App\Http\Requests\Admin\Book\UpdateBookRequest;
@@ -176,6 +177,9 @@ class BookController extends Controller
             return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
         }
 
+        if (Storage::disk('public')->exists($book->image)) {
+            Storage::disk('public')->delete($book->image);
+        }
         $book->forceDelete();
         return redirect()->route('admin.books.index')->with('success', 'تمّ حذف الكتاب بنجاح');
     }
