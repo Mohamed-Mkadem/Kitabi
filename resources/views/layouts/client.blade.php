@@ -20,11 +20,12 @@
     <script>
         let userId = "{{ Auth::id() }}"
     </script>
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js/cart-actions.js', 'resources/js/broadcast.js'])
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/main.js', 'resources/js/cart-actions.js', 'resources/js/broadcast.js', 'resources/js/preloader.js'])
     @stack('script')
 </head>
 
 <body>
+    <x-preloader />
 
     <div id="overlay"></div>
     <div id="fixed-menu">

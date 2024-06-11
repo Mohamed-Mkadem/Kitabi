@@ -20,7 +20,7 @@
     <script>
         var userId = "{{ Auth::id() }}"
     </script>
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js', 'resources/js/broadcast.js'])
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js', 'resources/js/broadcast.js', 'resources/js/preloader.js'])
 
 
 
@@ -28,7 +28,7 @@
 
 
 <body class="gray">
-
+    <x-preloader />
     <div id="overlay" class="overlay"></div>
     <div class="main-wrapper">
         <aside id="aside" aria-current="expanded">
