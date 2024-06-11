@@ -33,7 +33,7 @@
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-control">
                             <label for="avatar-input"> <i class="fa-solid fa-pen"></i> </label>
-                            <input type="file" id="avatar-input">
+                            <input type="file" id="avatar-input" data-userType="admin">
                         </div>
                     </form>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Book;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBookRequest extends FormRequest
@@ -24,7 +25,10 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', Rule::unique('books')->ignore($this->book->id)],
-            'image' => ['image', 'mimes:png,jpg', 'max:2048'],
+            // 'image' => ['required', 'image', 'mimes:png,jpg', 'max:2048'],
+            'image' => [
+                'nullable', File::image()->types(['png', 'jpg'])->max('2mb')->dimensions(Rule::dimensions()->height(750)->width(500))
+            ],
             'status' => ['required', 'in:published,hidden'],
             'category_id' => ['required', 'exists:categories,id'],
             'publisher_id' => ['required', 'exists:publishers,id'],
@@ -42,6 +46,7 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'price.gt' => 'يجب أن تكون قيمة سعر البيع أكير من قيمة سعر التكلفة',
+            'image.dimensions' => 'الرجاء رفع صورة بأبعاد 750 * 500'
         ];
     }
     public function attributes()

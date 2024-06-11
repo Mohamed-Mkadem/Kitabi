@@ -121,6 +121,7 @@
                                 <i class="fa-solid fa-cloud-arrow-up d-block"></i>
                                 <p>اضغط هنا لاختيار الصورة</p>
                                 <p>الامتدادات المسموح بها هي jpg, png</p>
+                                <p>أبعاد الصورة : 750 * 500</p>
                             </label>
                             <input type="file" name="image" id="file-input">
 

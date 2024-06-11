@@ -21,7 +21,7 @@ class ProfileAvatarUpdateTest extends TestCase
 
         $user = $this->getUser();
 
-        $file = UploadedFile::fake()->image('avatar.jpg');
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
 
         $response = $this->actingAs($user)
             ->postJson('/profile/avatar', ['avatar' => $file], [

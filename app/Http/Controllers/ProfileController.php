@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Models\State;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Log as FacadesLog;
@@ -70,18 +72,19 @@ class ProfileController extends Controller
     }
 
 
-    // if ($request->ajax()) return json_encode($request->attributes);
+
     public function avatar(Request $request)
     {
 
         if (!$request->ajax()) return abort(400);
 
         $request->validate([
-            'avatar' => ['required', 'image', 'mimes:png,jpg']
+            'avatar' => ['required', File::image()->types(['png', 'jpg'])->dimensions(Rule::dimensions()->height(500)->width(500))]
         ], [
             'required' => 'الصورة إجبارية',
             'image' => 'صورة الملفّ الشخصي يجب أن تكون صورة',
-            'mimes' => 'نوع الصورة يجب أن يكون أحد الامتدادات التالية, jpg, png'
+            'mimes' => 'نوع الصورة يجب أن يكون أحد الامتدادات التالية, jpg, png',
+            'dimensions' => 'الرجاء اختيار صورة بأبعاد 500 * 500'
         ]);
 
         $path = $request->file('avatar')->store(

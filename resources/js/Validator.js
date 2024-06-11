@@ -71,14 +71,17 @@ export class Validator {
     }
 
     showFileInfo(input) {
-        const errorMessage = input.parentElement.nextElementSibling;
-        const uploadArea = errorMessage.nextElementSibling;
+        const formControl = input.parentElement.parentElement
+        const errorMessage = formControl.querySelector('#file-input-error-message')
+        const serverErrorMessage = formControl.querySelector('.error-message.show')
+        const uploadArea = formControl.querySelector('.upload-area');
         const fileNameHolder = uploadArea.querySelector('.file-name');
         const fileSizeHolder = uploadArea.querySelector('.file-size');
 
         // Hide error message and clear its content
         errorMessage.classList.remove('show');
         errorMessage.textContent = '';
+        if (serverErrorMessage) serverErrorMessage.textContent = '';
 
         const file = input.files[0];
 

@@ -98,7 +98,7 @@ class BookTest extends TestCase
     {
         Storage::fake('public');
 
-        $file = UploadedFile::fake()->image('avatar.jpg');
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 750);
         $data = [
             'name' => 'Updated Book Name',
             'status' => 'published',
