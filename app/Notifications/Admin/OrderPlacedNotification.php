@@ -47,7 +47,7 @@ class OrderPlacedNotification extends Notification
             ->subject('طلب جديد')
             ->greeting("مرحبا {$notifiable->fullName}")
             ->line("قام {$this->client->fullName} بإنشاء طلب جديد")
-            ->line("(د.ت) قيمة الطلب : {$this->order->formattedAmount}")
+            ->line(" قيمة الطلب :  {$this->order->formattedAmount} (د.ت)")
             ->line("رقم الطلب : #{$this->order->id}")
             ->action('معالجة الطلب', $url)
             ->line('مؤسسة كتابي');
