@@ -45,7 +45,7 @@
             <ul class="nav-links">
                 <li class="nav-item">
                     <a href="{{ route('admin.home') }}"
-                        class="nav-link {{ request()->is('dashboard/home*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                         <i class="fa-solid fa-house"></i><span>الرئيسية </span>
                     </a>
                 </li>

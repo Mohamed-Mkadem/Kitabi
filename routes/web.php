@@ -15,6 +15,7 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Client\ReviewController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Client\NotificationController as ClientNotificationController;
 use App\Http\Controllers\Client\ShopController;
 use Maatwebsite\Excel\Row;
@@ -72,7 +73,7 @@ Route::group([
     'middleware' => ['auth', 'isAdmin'],
     'prefix' => 'dashboard'
 ], function () {
-    Route::get('/home', [AdminController::class, 'home'])->name('home');
+    Route::get('/', [AdminController::class, 'home'])->name('home');
     Route::get('/account', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/account/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -132,6 +133,9 @@ Route::group([
     // Notifications
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::get('notifications/filter', [NotificationController::class, 'filter'])->name('notifications.filter');
+
+    // Shipping cost
+    Route::patch('/shippingCost', [SettingController::class, 'setShippingCost'])->name('updateShippingCost');
 });
 
 
