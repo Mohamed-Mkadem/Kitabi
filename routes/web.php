@@ -45,12 +45,11 @@ Route::group([
     Route::view('/terms', 'client.terms')->name('terms');
     Route::view('/privacy', 'client.privacy')->name('privacy');
     Route::view('/contact', 'client.contact')->name('contact');
+    Route::view('banned', 'errors.banned')->name('profile.banned');
 
-    Route::get('notifications', [ClientNotificationController::class, 'index'])->name('notifications.index');
-    Route::get('notifications/filter', [ClientNotificationController::class, 'filter'])->name('notifications.filter');
-
-
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'isActive'])->group(function () {
+        Route::get('notifications', [ClientNotificationController::class, 'index'])->name('notifications.index');
+        Route::get('notifications/filter', [ClientNotificationController::class, 'filter'])->name('notifications.filter');
         Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
         Route::patch('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
         Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
