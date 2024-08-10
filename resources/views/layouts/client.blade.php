@@ -56,12 +56,7 @@
         </ul>
     </div>
     <div class="top-bar-menu">
-        @auth
-            <p>Authenitcated</p>
-        @endauth
-        @guest
-            <p>Guest</p>
-        @endguest
+        <p>نتمنّى لكم تجربة تسوّق مريحة</p>
     </div>
     <div class="container">
         <div id="main-header">

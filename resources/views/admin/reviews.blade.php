@@ -136,7 +136,7 @@
                                     <div class="modal-body">
                                         <h3>الكتاب</h3>
                                         <div class="info-wrapper book-holder">
-                                            <img src="{{ $review->book->image }}" alt="">
+                                            <img src="{{ asset('storage/' . $review->book->image) }}" alt="">
                                             <div>
                                                 <a
                                                     href="{{ route('admin.books.show', $review->book) }}">{{ $review->book->name }}</a>
@@ -201,7 +201,7 @@
                             </div>
                             <div class="card-body ">
                                 <div class="book-holder ">
-                                    <img src="{{ $review->book->image }}" alt="">
+                                    <img src="{{ asset('storage/' . $review->book->image) }}" alt="">
                                     <h2>{{ $review->book->name }}</h2>
                                 </div>
                                 <p>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @push('title')
-    <title>كتابي - تفاصيل الكتاب</title>
+    <title>لوحة التحكّم - تفاصيل الكتاب</title>
 @endpush
 
 

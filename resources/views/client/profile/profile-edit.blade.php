@@ -1,7 +1,7 @@
 @extends('layouts.client')
 
 @push('title')
-    <title>كتابي -تعديل الملفّ الشخصي</title>
+    <title>كتابي - تعديل الملفّ الشخصي</title>
 @endpush
 @push('script')
     @vite(['resources/js/edit-profile.js', 'resources/js/getCities.js'])

@@ -416,7 +416,7 @@
                                     </td>
                                     <td class="product-td inventory-td start">
                                         <div class="img-holder">
-                                            <img src="{{ $book->image }}" alt="">
+                                            <img src="{{ asset('storage/' . $book->image) }}" alt="">
                                         </div>
                                         <div class="product-info">
                                             <a href="{{ route('admin.books.show', $book) }}">{{ $book->name }}</a>

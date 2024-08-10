@@ -34,24 +34,26 @@ use Maatwebsite\Excel\Row;
 Route::group([
     'as' => 'client.'
 ], function () {
-    Route::get('/', [FrontEndController::class, 'index'])->name('home');
-    Route::get('/shop/product/availability/{id}/{quantity}', [ShopController::class, 'isAvailableProduct'])->name('productAvailability');
-    Route::get('/cart', [FrontEndController::class, 'cart'])->name('cart');
-    Route::get('/shop/filter', [ShopController::class, 'filter'])->name('shop.filter');
-    Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
-    Route::get('/book/{book}', [ShopController::class, 'book'])->name('shop.book');
-    Route::view('/about', 'client.about')->name('about');
-    Route::view('/faqs', 'client.faqs')->name('faqs');
-    Route::view('/terms', 'client.terms')->name('terms');
-    Route::view('/privacy', 'client.privacy')->name('privacy');
-    Route::view('/contact', 'client.contact')->name('contact');
-    Route::view('banned', 'errors.banned')->name('profile.banned');
+    Route::middleware('check.verified')->group(function () {
+        Route::get('/', [FrontEndController::class, 'index'])->name('home');
+        Route::get('/shop/product/availability/{id}/{quantity}', [ShopController::class, 'isAvailableProduct'])->name('productAvailability');
+        Route::get('/cart', [FrontEndController::class, 'cart'])->name('cart');
+        Route::get('/shop/filter', [ShopController::class, 'filter'])->name('shop.filter');
+        Route::get('/shop', [ShopController::class, 'shop'])->name('shop');
+        Route::get('/book/{book}', [ShopController::class, 'book'])->name('shop.book');
+        Route::view('/about', 'client.about')->name('about');
+        Route::view('/faqs', 'client.faqs')->name('faqs');
+        Route::view('/terms', 'client.terms')->name('terms');
+        Route::view('/privacy', 'client.privacy')->name('privacy');
+        Route::view('/contact', 'client.contact')->name('contact');
+        Route::view('banned', 'errors.banned')->name('profile.banned');
+    });
 
-    Route::middleware(['auth', 'isActive'])->group(function () {
+    Route::middleware(['auth', 'isActive', 'verified'])->group(function () {
         Route::get('notifications', [ClientNotificationController::class, 'index'])->name('notifications.index');
         Route::get('notifications/filter', [ClientNotificationController::class, 'filter'])->name('notifications.filter');
         Route::get('/checkout', [FrontEndController::class, 'checkout'])->name('checkout');
-        Route::patch('orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+
         Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
         Route::middleware('isClient')->group(function () {
             Route::post('reviews/store/{book}', [ReviewController::class, 'store'])->name('reviews.store');
