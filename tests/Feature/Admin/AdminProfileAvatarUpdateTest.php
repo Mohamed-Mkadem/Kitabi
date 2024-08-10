@@ -38,7 +38,7 @@ class AdminProfileAvatarUpdateTest extends TestCase
     {
         Storage::fake('public');
 
-        $file = UploadedFile::fake()->image('avatar.jpg');
+        $file = UploadedFile::fake()->image('avatar.jpg', 500, 500);
 
         $response = $this->actingAs($this->admin)
             ->postJson('/dashboard/profile/avatar', ['avatar' => $file], [

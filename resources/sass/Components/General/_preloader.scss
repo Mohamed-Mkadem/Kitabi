@@ -1,0 +1,17 @@
+@use "../../Abstracts/" as *;
+
+#pre-loader {
+    position: fixed;
+    inset: 0;
+    background-color: var(--clr-white);
+    z-index: 99999999999999999999999999999999;
+    display: none;
+    img {
+    }
+    a.logo {
+        font-size: 60px;
+    }
+    &.show {
+        @include flex(1em, column, center);
+    }
+}

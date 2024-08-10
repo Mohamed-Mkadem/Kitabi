@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Book;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBookRequest extends FormRequest
@@ -24,13 +25,16 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', Rule::unique('books')->ignore($this->book->id)],
-            'image' => ['image', 'mimes:png,jpg', 'max:2048'],
+            // 'image' => ['required', 'image', 'mimes:png,jpg', 'max:2048'],
+            'image' => [
+                'nullable', File::image()->types(['png', 'jpg'])->max('2mb')->dimensions(Rule::dimensions()->height(750)->width(500))
+            ],
             'status' => ['required', 'in:published,hidden'],
             'category_id' => ['required', 'exists:categories,id'],
             'publisher_id' => ['required', 'exists:publishers,id'],
             'author_id' => ['required', 'exists:authors,id'],
-            'cost_price' => ['required', 'numeric', 'integer', 'min:1'],
-            'price' => ['required', 'numeric', 'integer', 'min:1', 'gt:cost_price'],
+            'cost_price' => ['required', 'numeric', 'integer', 'min:100'],
+            'price' => ['required', 'numeric', 'integer', 'min:100', 'gt:cost_price'],
             'quantity' => ['required', 'numeric', 'integer', 'min:0'],
             'stock_alert' => ['required', 'numeric', 'integer', 'min:0'],
             'description' => ['required', 'string'],
@@ -42,6 +46,7 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             'price.gt' => 'يجب أن تكون قيمة سعر البيع أكير من قيمة سعر التكلفة',
+            'image.dimensions' => 'الرجاء رفع صورة بأبعاد 750 * 500'
         ];
     }
     public function attributes()
@@ -56,6 +61,7 @@ class UpdateBookRequest extends FormRequest
             'image' => 'الصورة',
             'quantity' => 'الكمّيّة',
             'status' => 'الحالة',
+            'description' => 'الوصف'
         ];
     }
 }

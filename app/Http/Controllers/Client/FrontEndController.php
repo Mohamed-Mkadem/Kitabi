@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Client;
 use App\Models\City;
 use App\Models\User;
 use App\Models\State;
+use App\Models\Setting;
 use App\Models\Admin\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -15,13 +17,6 @@ class FrontEndController extends Controller
 {
     public function index()
     {
-        // $bestSellingBooks = Book::with('category', 'author', 'publisher', 'orderItems')->withSum('orderItems', 'quantity')->orderBy('order_items_sum_quantity', 'desc')->take(8)->get();
-
-
-        // $latestBooks = Book::with('category', 'author', 'publisher')->latest()->take(8)->get();
-
-        // return view('client.home', ['bestSellingBooks' => $bestSellingBooks, 'latestBooks' => $latestBooks]);
-
 
         $oneDayInSeconds = 60 * 60 * 24;
         $bestSellingBooks = Cache::remember('bestSellingBooks', $oneDayInSeconds, function () {
@@ -58,7 +53,7 @@ class FrontEndController extends Controller
         $cities = City::all();
 
 
-        $shippingCost = 7;
+        $shippingCost = Setting::getShippingCost();
 
         return view('client.checkout', compact('user', 'states', 'cities', 'shippingCost'));
     }

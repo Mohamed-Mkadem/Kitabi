@@ -37,7 +37,7 @@ class PublisherExport implements FromQuery, WithHeadings, WithMapping, WithStric
     public function headings(): array
     {
         return [
-            'Name', 'Books Count', 'Creation Date'
+            'الإسم', 'عدد الكتب', 'تاريخ الإضافة'
         ];
     }
 }

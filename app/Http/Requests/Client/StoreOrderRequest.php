@@ -58,6 +58,14 @@ class StoreOrderRequest extends FormRequest
                 }
             }
 
+            // Validate that all books in the cart have a quantity field at least 1
+            foreach ($cart as $item) {
+
+                if ($item['quantity'] <= 0) {
+                    $validator->errors()->add('cart', ' أقلّ كمّية مسموح بها لهذا الكتاب هي 1 :  ' . $item['title']);
+                }
+            }
+
             // Validate that quantities of books in the cart are available in the inventory
             foreach ($cart as $item) {
                 $book = Book::find($item['productId']);

@@ -10,7 +10,7 @@
 
 
 @section('content')
-    @include('components.errors')
+
     <section class="content" id="content">
         <!-- Start Starter Header -->
         <div class="starter-header d-flex a-center j-between " id="starter-header">
@@ -50,6 +50,7 @@
         </div>
         <!-- End Starter Header -->
 
+        @include('components.error-messages')
 
         <!-- Start Export / Import Holder -->
         <div class="import-export-holder d-flex a-center gap-1">

@@ -4,11 +4,13 @@ namespace App\Imports;
 
 use App\Models\Admin\Author;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class AuthorImport implements ToModel, WithHeadingRow
+class AuthorImport implements ToModel, WithHeadingRow, WithValidation, SkipsEmptyRows
 {
     protected $authors;
 
@@ -25,5 +27,18 @@ class AuthorImport implements ToModel, WithHeadingRow
         return new Author([
             'name' => $row['name']
         ]);
+    }
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string']
+        ];
+    }
+
+    public function customValidationMessages(): array
+    {
+        return [
+            'name' => "حقل الإسم إحباري"
+        ];
     }
 }

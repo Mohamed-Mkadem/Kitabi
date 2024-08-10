@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckVerifiedMiddleware;
 use App\Http\Middleware\IsActiveMiddleware;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsClientMiddleware;
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isAdmin' => IsAdminMiddleware::class,
         'isClient' => IsClientMiddleware::class,
-        'isActive' => IsActiveMiddleware::class
+        'isActive' => IsActiveMiddleware::class,
+        'check.verified' => CheckVerifiedMiddleware::class
     ];
 }

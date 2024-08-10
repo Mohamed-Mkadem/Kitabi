@@ -1,7 +1,7 @@
 @extends('layouts.client')
 
 @push('title')
-    <title> الرئيسية - الأسئلة الشائعة </title>
+    <title> كتابي - الأسئلة الشائعة </title>
 @endpush
 @push('script')
     @vite('resources/js/faqs.js')

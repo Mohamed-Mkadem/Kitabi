@@ -17,6 +17,7 @@ export const listVueToggle = document.getElementById('list-vue')
 export const gridVueToggle = document.getElementById('grid-vue')
 export const productsGrid = document.querySelector('.products-grid');
 export const alerts = Array.from(document.querySelectorAll('.alert.show'))
+export const toastsHolder = document.querySelector('.toasts-holder')
 export const productsContainers = Array.from(document.querySelectorAll('.products-container'))
 const notificationsHandler = document.getElementById("notifications-handler");
 const notificationsWrapper = document.getElementById("notifications-wrapper");
@@ -245,6 +246,13 @@ export function hideAlerts() {
                 alert.classList.remove('show')
             })
 
+        }, 5000);
+    }
+}
+export function hideToasts() {
+    if (toastsHolder) {
+        setTimeout(() => {
+            toastsHolder.classList.remove('show')
         }, 5000);
     }
 }

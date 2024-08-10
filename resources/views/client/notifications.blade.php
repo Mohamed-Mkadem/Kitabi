@@ -3,7 +3,7 @@
     @vite('resources/js/notifications.js')
 @endpush
 @push('title')
-    <title> الرئيسية - الإشعارات </title>
+    <title> كتابي - الإشعارات </title>
 @endpush
 
 @section('content')

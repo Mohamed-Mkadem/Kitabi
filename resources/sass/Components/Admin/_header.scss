@@ -112,11 +112,11 @@
                             &.unread {
                                 background-color: var(--clr-navy-900);
                             }
-                            @include flex(10px, row, center, flex-start);
+                            @include flex(10px, row, flex-start);
 
                             // margin-bottom: 15px;
                             img {
-                                width: 35px;
+                                width: 45px;
                                 border-radius: 50%;
                                 margin-top: 5px;
                             }

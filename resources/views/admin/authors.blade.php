@@ -50,6 +50,7 @@
         </div>
         <!-- End Starter Header -->
 
+        @include('components.error-messages')
 
         <!-- Start Export / Import Holder -->
         <div class="import-export-holder d-flex a-center gap-1">

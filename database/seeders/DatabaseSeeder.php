@@ -11,6 +11,7 @@ use App\Models\Admin\Publisher;
 use Illuminate\Database\Seeder;
 use Database\Seeders\StateSeeder;
 use Database\Seeders\CitiesSeeder;
+use Database\Seeders\ShippingCostSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,12 +31,13 @@ class DatabaseSeeder extends Seeder
         // Author::factory(30)->create();
         // Publisher::factory(30)->create();
 
-        Book::factory(20)->create();
+        // Book::factory(20)->create();
 
-        // $this->call([
-        //     StateSeeder::class,
-        //     CitiesSeeder::class,
-        //     AdminSeeder::class
-        // ]);
+        $this->call([
+            // StateSeeder::class,
+            // CitiesSeeder::class,
+            // AdminSeeder::class
+            ShippingCostSeeder::class
+        ]);
     }
 }

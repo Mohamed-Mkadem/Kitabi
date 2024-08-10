@@ -7,7 +7,8 @@ const avatarInput = document.getElementById('avatar-input')
 
 avatarInput.addEventListener('change', (e) => {
     if (validator.validateFileType(avatarInput, allowedExtensions)) {
-        updateProfileAvatar()
+        let userType = avatarInput.dataset.usertype
+        updateProfileAvatar(userType)
 
     } else {
         avatarInput.value = ''
@@ -16,11 +17,12 @@ avatarInput.addEventListener('change', (e) => {
 })
 
 
-function updateProfileAvatar() {
+function updateProfileAvatar(userType) {
     const formData = new FormData()
     const avatar = avatarInput.files[0]
     formData.set('avatar', avatar)
-    fetch('http://127.0.0.1:8000/profile/avatar', {
+    let url = buildUrl(userType)
+    fetch(url, {
         method: 'POST',
         body: formData,
         headers: {
@@ -47,7 +49,11 @@ function updateProfileAvatar() {
 
 }
 
+function buildUrl(userType) {
+    let prefix = userType == 'admin' ? 'dashboard/' : ''
+    return `http://127.0.0.1:8000/${prefix}profile/avatar`
 
+}
 
 
 

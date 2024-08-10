@@ -20,7 +20,7 @@
     <script>
         var userId = "{{ Auth::id() }}"
     </script>
-    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js', 'resources/js/broadcast.js'])
+    @vite(['resources/sass/main.scss', 'resources/sass/utilities.scss', 'resources/js/dashboard.js', 'resources/js/broadcast.js', 'resources/js/preloader.js'])
 
 
 
@@ -28,7 +28,7 @@
 
 
 <body class="gray">
-
+    <x-preloader />
     <div id="overlay" class="overlay"></div>
     <div class="main-wrapper">
         <aside id="aside" aria-current="expanded">
@@ -45,7 +45,7 @@
             <ul class="nav-links">
                 <li class="nav-item">
                     <a href="{{ route('admin.home') }}"
-                        class="nav-link {{ request()->is('dashboard/home*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                         <i class="fa-solid fa-house"></i><span>الرئيسية </span>
                     </a>
                 </li>

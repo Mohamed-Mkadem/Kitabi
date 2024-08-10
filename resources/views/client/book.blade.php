@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="img-holder">
-                        <img loading="lazy" src="{{ $book->image }}" alt="">
+                        <img loading="lazy" src="{{ asset('storage/' . $book->image) }}" alt="">
                     </div>
                     <div class="product-info">
 

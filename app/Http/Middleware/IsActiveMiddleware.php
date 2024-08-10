@@ -16,8 +16,9 @@ class IsActiveMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
+
         if ($request->user()->status == 'banned') {
-            abort(403);
+            return redirect()->route('client.profile.banned');
         }
 
         return $next($request);

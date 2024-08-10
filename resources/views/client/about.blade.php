@@ -7,7 +7,7 @@
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 @endpush
 @push('title')
-    <title> الرئيسية - من نحن </title>
+    <title> كتابي - من نحن </title>
 @endpush
 
 @section('content')
